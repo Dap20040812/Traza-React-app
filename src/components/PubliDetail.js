@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styled from 'styled-components'
+import Info from './Info'
+import RequestForm from './RequestForm';
 
 function Detail() {
+  
+  const [page, setPage] = useState('Info')
+  const getContent = () => {
+    if(page === 'Info'){
+      return(
+        <Info/> 
+      )
+    }
+    else if (page === 'Request'){
+      return(
+        <RequestForm/>
+      )
+    }
+  }
+
+  const toPage = page => event =>{
+    event.preventDefault()
+    setPage(page) 
+  }
  
   return (
     <Container>
@@ -16,10 +37,10 @@ function Detail() {
                 $ 234556666.79
             </Price>
                 <Controls>
-                    <PlayButton>
+                    <PlayButton  onClick={toPage('Request')}>
                         <span>SOLICITAR</span>
                     </PlayButton>
-                    <TrailerButton>
+                    <TrailerButton  onClick={toPage('Info')}>
                         <span>+ INFO</span>
                     </TrailerButton>
                 </Controls>
@@ -32,9 +53,7 @@ function Detail() {
 
         </LeftData> 
         <RigthData>
-           <PubliTitle>
-               Bogota Portal Norte - Chia Terminal de Carga
-           </PubliTitle>
+            {getContent()}
         </RigthData>   
     </Container>
   )
@@ -67,15 +86,12 @@ const Background = styled.div`
     }
 `
 const ImageTitle = styled.div`
-    height: 35vh;
-    min-height: 170px;
-    width: 20vw;
-    min-width:: 200px;
+    height: (100vh - 65vh);
+    width: (100vh - 65vh);
 
     img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+        width: calc(100vh - 65vh);
+        height: calc(100vh - 65vh);
     }
 
 `
@@ -127,8 +143,10 @@ const LeftData = styled.div`
     border-radius: 10px;
     background-color: #929294BA;
     margin-top: 50px;
-    padding: 20px;
+    padding: 10px;
     opacity: 0.9;
+    max-height: 100vh;
+    max-width: 100vh;
     overflow: hidden;
     max-width: 350px;
     color: black;
@@ -142,9 +160,9 @@ const RigthData = styled.div`
     border-radius: 10px;
     background-color: #929294BA;
     margin-top: 50px;
-    min-width: 700px;
+    width: 130vh;
     margin-left: 70px;
-    max-height: max-content;
+    max-height: 150vh;
     overflow: hidden;
     color: black;
     border: 3px solid rgba(249, 249, 249, 0.7); 
@@ -166,3 +184,4 @@ const PubliTitle = styled.div`
 
 
 `
+

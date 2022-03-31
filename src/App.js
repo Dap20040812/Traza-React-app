@@ -6,6 +6,7 @@ import Login from './components/login';
 import Intro from './components/Intro';
 import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Detail from './components/PubliDetail';
+import PubliHome from './components/PubliHome';
 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path='/detail'>
           <Detail/>
+        </Route>
+        <Route path='/homepubli'>
+          <PubliHome/>
         </Route>
         <Route path='/'>
           <Home/>

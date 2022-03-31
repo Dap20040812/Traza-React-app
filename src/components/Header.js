@@ -14,14 +14,17 @@ function Header() {
         <Logo src="/images/traza.png"/>
         <NavMenu>
             <a>
-            <StyledLink to={`/`}>
-                <img src='/images/Home.png'></img> 
-                <span>INICIO</span>  
-            </StyledLink>                                
+              <StyledLink to={`/`}>
+                  <img src='/images/Home.png'></img> 
+                  <span>INICIO</span>  
+              </StyledLink>                                
             </a>
+              
             <a>
-               <img src='/images/search.png'></img>    
-               <span>BUSCAR</span>            
+              <StyledLink to={`/homepubli`}>
+                <img src='/images/search.png'></img>    
+                <span>BUSCAR</span>   
+              </StyledLink>
             </a>
             <a>
                <img src='/images/servi.png'></img>    
