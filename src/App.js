@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/login';
 import Intro from './components/Intro';
 import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import Detail from './components/PubliDetail';
 
 
 function App() {
@@ -16,8 +17,8 @@ function App() {
         <Route path='/intro'>
           <Intro/>
         </Route>
-        <Route path='/login'>
-          <Login/>
+        <Route path='/detail'>
+          <Detail/>
         </Route>
         <Route path='/'>
           <Home/>

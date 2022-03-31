@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux' ;
 
 
@@ -13,8 +14,10 @@ function Header() {
         <Logo src="/images/traza.png"/>
         <NavMenu>
             <a>
-               <img src='/images/Home.png'></img>    
-               <span>INICIO</span>            
+            <StyledLink to={`/`}>
+                <img src='/images/Home.png'></img> 
+                <span>INICIO</span>  
+            </StyledLink>                                
             </a>
             <a>
                <img src='/images/search.png'></img>    
@@ -80,7 +83,8 @@ const NavMenu = styled.div`
         span{
             font-size: 13px;
             letter-spacing: 1.42px;
-            position: relative; 
+            position: relative;
+            text-decoration: none; 
 
             &: after{
                 content:"";
@@ -160,3 +164,11 @@ const CloseWrapper = styled.div`
   justify-content: flex-end;
    
 `
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: white;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
