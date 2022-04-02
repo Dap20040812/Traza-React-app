@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import Info from './Info'
 import RequestForm from './RequestForm';
+import db from '../firebase'
+import { useParams } from 'react-router-dom'
+
 
 function Detail() {
+
+    const {id} = useParams();
+    const [publi, setPubli] = useState()
+
+    useEffect(() =>{
+        db.collection("publications")
+        .doc(id)
+        .get()
+        .then((doc) => {
+            if(doc.exists){
+                setPubli(doc.data());
+            }else {
+    
+            }
+        })
+      },[])
   
   const [page, setPage] = useState('Info')
   const getContent = () => {
@@ -26,35 +45,42 @@ function Detail() {
  
   return (
     <Container>
-        <Background>
-            <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
-        </Background>
-        <LeftData>
-            <ImageTitle>
-                <img src="https://us.123rf.com/450wm/putracetol/putracetol1805/putracetol180502430/101057512-dise%C3%B1o-del-icono-del-logotipo-de-entrega.jpg?ver=6"/>
-            </ImageTitle>
-            <Price>
-                $ 234556666.79
-            </Price>
-                <Controls>
-                    <PlayButton  onClick={toPage('Request')}>
-                        <span>SOLICITAR</span>
-                    </PlayButton>
-                    <TrailerButton  onClick={toPage('Info')}>
-                        <span>+ INFO</span>
-                    </TrailerButton>
-                </Controls>
-                <SubTitle>
-                    Nombre de la empresa
-                </SubTitle>
-                <Description>
-                    Datos del envio: no que escribir asi que estoy poniendo lo que estoy pensando en este momento pero ahorita mi mente no funciona , me quiero morir porque ser millonario es tan dificil.     
-                </Description>
+        { publi && (
+           <>
+                <Background>
+                    <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
+                </Background>
+                <LeftData>
+                    <ImageTitle>
+                        <img src="https://us.123rf.com/450wm/putracetol/putracetol1805/putracetol180502430/101057512-dise%C3%B1o-del-icono-del-logotipo-de-entrega.jpg?ver=6"/>
+                    </ImageTitle>
+                    <Price>
+                        $ {publi.price}
+                    </Price>
+                        <Controls>
+                            <PlayButton  onClick={toPage('Request')}>
+                                <span>SOLICITAR</span>
+                            </PlayButton>
+                            <TrailerButton  onClick={toPage('Info')}>
+                                <span>+ INFO</span>
+                            </TrailerButton>
+                        </Controls>
+                        <SubTitle>
+                            Nombre de la empresa
+                        </SubTitle>
+                        <Description>
+                            {publi.serviceDescription}
+                        </Description>
 
-        </LeftData> 
-        <RigthData>
-            {getContent()}
-        </RigthData>   
+                </LeftData> 
+                <RigthData>
+                    {getContent()}
+                </RigthData> 
+           </> 
+        )
+
+        }
+         
     </Container>
   )
 }
@@ -97,21 +123,28 @@ const ImageTitle = styled.div`
 `
 const Controls = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
+    flex-wrap: wrap;
 `
 
 const PlayButton = styled.button`
-    border-radius: 4px;
-    font-size: 15px;
-    padding: 0px 24px;
-    margin-right: 22px;
+    border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
     display: flex;
     align-items: center;
-    height: 56px;
+    width: 100%;
+    height: 6vh;
     background: rgb(249, 249, 249);
     border: none;
-    letter-spacing: 1.8px;
+    letter-spacing: 0.15vh;
     cursor: pointer;
+    text-align: center; 
+    
 
     &:hover {
         background: rgb(198, 198, 198);
@@ -126,43 +159,41 @@ const TrailerButton = styled(PlayButton)`
 `
 const SubTitle = styled.div`
     color: rgb(249, 249, 249);
-    font-size: 15px;
-    min-height: 20px;
-    margin-top: 26px;
+    font-size: 2vh;
+    min-height: 3vh;
+    margin-top: 3vh;
 `
 
 const Description = styled.div`
-    line-height: 1.4;
-    font-size: 20px;
-    margin-top: 16px;
+    line-height: 3vh;
+    font-size: 2.5vh;
+    margin-top: 1.5vh;
     color: rgb(249, 249, 249);
-    max-width: 760px;
+    max-width: 50vh;
 `
 
 const LeftData = styled.div`
-    border-radius: 10px;
+    border-radius: 1vh;
     background-color: #929294BA;
-    margin-top: 50px;
-    padding: 10px;
+    margin-top: 5vh;
+    padding: 2vh;
     opacity: 0.9;
     max-height: 100vh;
-    max-width: 100vh;
+    max-width: 40vh;
     overflow: hidden;
-    max-width: 350px;
     color: black;
     border: 3px solid rgba(249, 249, 249, 0.7); 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-
 `
 const RigthData = styled.div`
-    border-radius: 10px;
+    border-radius: 1vh;
     background-color: #929294BA;
-    margin-top: 50px;
+    margin-top: 5vh;
     width: 130vh;
-    margin-left: 70px;
-    max-height: 150vh;
+    margin-left: 8vh;
+    max-height: max-content;
     overflow: hidden;
     color: black;
     border: 3px solid rgba(249, 249, 249, 0.7); 
@@ -171,17 +202,8 @@ const RigthData = styled.div`
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 `
 const Price = styled.div`
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 35px;
-`
-const PubliTitle = styled.div`
-    margin: 10px;
-    padding: 10px;
-    font-size: 30px;
-    color: white;
-    font-weight: bold;
-
-
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    font-size: 4vh;
 `
 

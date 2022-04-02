@@ -16,16 +16,10 @@ function ImgSliderPubli() {
   return (
     <Carousel {...settings}>
         <Wrap>
-            <img src="/images/slider1.png"/>
+            <img src="https://img.freepik.com/foto-gratis/camion-remolque-contenedor-carga-carga-mercancias-paletas-almacen-logistica-industria-carga-transporte_36860-663.jpg"/>
         </Wrap>
         <Wrap>
-            <img src="/images/slider2.jpg"/>
-        </Wrap>
-        <Wrap>
-            <img src="/images/slider3.png"/>
-        </Wrap>
-        <Wrap>
-            <img src="/images/slider4.png"/>
+            <img src="https://media.istockphoto.com/photos/the-truck-container-docking-load-shipment-goods-pallet-hand-pallet-picture-id1195393617?k=20&m=1195393617&s=170667a&w=0&h=euPjGmZjL_Vu3H04XYdXX1HhVITFFmbx_td_DVXZo48="/>
         </Wrap>
     </Carousel>
   )
@@ -35,20 +29,15 @@ export default ImgSliderPubli
 
 const Carousel = styled(Slider)`
 
-
     ul li button{
         &:before{
             font-size: 10px;
             color: rgb(150, 158, 171); 
              
         }
-    }
-    
+    }    
     li.slick-active button:before{
         color: white;
-    }
-    .slick-list{
-        overflow: visible;
     }
     button {
         z-index: 1;
@@ -62,8 +51,8 @@ const Wrap = styled.div`
     img{
         border: 4px solid transparent;
         border-radius: 4px;
-        width: 100vh;
-        height: 50vh;
+        width: 100%;
+        height: 100%;
         box-shadow: rgb(0 0 0/69%) 0px 26px 30px -10px,
         rgb(0 0 0 / 73%) 0px 16px 10px -10px;
         transition-duration:300ms;

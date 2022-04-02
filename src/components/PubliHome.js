@@ -1,9 +1,26 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
+import db from '../firebase'
+import Publi from './Publi'
+import { useDispatch } from "react-redux"
+import { setPublis} from "../features/publi/publiSlice"
 
 
 
 function PubliHome() {
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+
+    db.collection("publications").onSnapshot((snapshot)=>{
+        let tempPublis = snapshot.docs.map((doc)=>{
+            return {id: doc.id, ...doc.data()}
+        }) 
+        console.log(tempPublis)
+        dispatch(setPublis(tempPublis));
+    })
+  },[])
+
   return (
     <Container>
         <Background>
@@ -30,6 +47,7 @@ function PubliHome() {
                 <span> 🔎</span>
             </Search>
         </Navegator>
+        <Publi/>
         
     </Container>
   )

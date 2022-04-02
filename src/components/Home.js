@@ -2,10 +2,14 @@ import React from 'react'
 import styled from 'styled-components' 
 import ImgSlider from './ImgSlider' 
 import Publi from './Publi'
+import { useDispatch } from "react-redux"
+import { setPublis} from "../features/publi/publiSlice"
 
 
 
 function Home() {
+
+  
   return (
     <Container>
         <ImgSlider/>

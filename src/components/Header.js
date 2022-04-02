@@ -36,18 +36,17 @@ function Header() {
             </a>
         </NavMenu>
         <RightMenu>
-            <UserImg src='https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1'/>
-            <CustomMenu onClick={()=> setBurgerStatus(true)}/>
+            <UserImg src='https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1' onClick={()=> setBurgerStatus(true)}/>
         </RightMenu>
         <BurgerNav show={burgerStatus}>
             <CloseWrapper>
                 <CustomClose onClick={()=> setBurgerStatus(false)}/>
             </CloseWrapper>
-            <li><a href="#">Existing Inventory</a></li>
-            <li><a href="#">Used Inventory</a></li>
-            <li><a href="#">Trade-in</a></li>
-            <li><a href="#">Cybertruck</a></li>
-            <li><a href="#">Roadaster</a></li>
+            <UserImg src='https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1'/>
+            <li><StyledLink1>Mis Publicaciones</StyledLink1></li>
+            <li><StyledLink1 to={`/publi/make`}>Realiza una Publicación</StyledLink1></li>
+            <li><StyledLink1>Perfil</StyledLink1></li>
+            <li><StyledLink1>Cerrar Sesión</StyledLink1></li>
         </BurgerNav>
     </Nav>
   )
@@ -118,6 +117,7 @@ const UserImg = styled.img`
    height: 48px;
    border-radius: 50%;
    cursor: pointer;
+   margin: 1vh;
 `
 
 const RightMenu = styled.div`
@@ -129,16 +129,16 @@ a{
   padding: 0 10px;
 }  
 `
-const CustomMenu = styled(MenuIcon)`
-  cursor: pointer;
-`
 
 const BurgerNav = styled.div`
   position: fixed;
   top: 0;
-  bottom: 0;
   right: 0;
   background: white;
+  border: 3px solid rgba(136, 148, 122, 0.7); 
+  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+  rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   width: 300px;
   z-index: 16;
   list-style: none;
@@ -155,11 +155,19 @@ const BurgerNav = styled.div`
     a{
       font-weight: 600; 
     }
+    &:hover {
+        border-radius: 0.6vh;
+        border-color: rgba(249, 249, 249 , 0.8);
+        color: white;
+        background-color: #0000003D;
+        opacity: 0.9;
+    }
   }
 `
 
 const CustomClose = styled(CloseIcon)`
   cursor: pointer;  
+  color: black;
 `
 
 const CloseWrapper = styled.div`
@@ -174,4 +182,12 @@ const StyledLink = styled(Link)`
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }
-`;
+`
+const StyledLink1 = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`

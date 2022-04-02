@@ -1,56 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import {selectPublis} from '../features/publi/publiSlice'
+import { useSelector } from 'react-redux'
+
 
 function Publi() {
-  let date = new Date();
-  var price = Math.random() * (10000000 - 100000) + 100000;
+    const publis = useSelector(selectPublis);  
+    console.log(publis)
 
   return (
     <Container>
-        <h4>Recomendados: </h4>
         <Content>
-            <StyledLink to={`/detail`}> 
-            <Wrap>
-                <img src='https://img.lalr.co/cms/2021/07/02092052/NRR2351-6-Alta-JPG.jpg?size=sm&ratio=sq&f=jpg'/>
-                <PubliContent>
-                    <h2>Bogota-Chia Empresa</h2>
-                    <h3>$ {price.toFixed(2)}</h3>
-                    <p>Fecha:  {String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()}</p>
-                </PubliContent>
-            </Wrap>
-            </StyledLink>
-            <StyledLink to={`/detail`}> 
-
-                <Wrap>
-                    <img src='https://auteco.vteximg.com.br/arquivos/ids/212961-1000-1000/Camion_STARK_E-TRUCK4_0T_Blanco_foto01.jpg'/>
-                    <PubliContent>
-                        <h2>Bogota-Chia Empresa</h2>
-                        <h3>$ {price.toFixed(2)}</h3>
-                        <p>Fecha:  {String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()}</p>
-                    </PubliContent>
-                </Wrap>
-            </StyledLink>
-            <StyledLink to={`/detail`}> 
-                <Wrap>
-                    <img src='http://centrodiesel.cl/wp-content/uploads/2018/01/seguridad_camion.jpg'/>
-                    <PubliContent>
-                        <h2>Bogota-Chia Empresa</h2>
-                        <h3>$ {price.toFixed(2)}</h3>
-                        <p>Fecha:  {String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()}</p>
-                    </PubliContent>
-            </Wrap>
-            </StyledLink>
-
-            <Wrap>
-                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzvQO-6wmHPH8gq8bkudTtvb_KUJSub8s5SQnn14XERui66lospz6N5HWFyaEm6odYGhc&usqp=CAU'/>
-                <PubliContent>
-                    <h2>Bogota-Chia Empresa</h2>
-                    <h3>$ {price.toFixed(2)}</h3>
-                    <p>Fecha:  {String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()}</p>
-                </PubliContent>
-            </Wrap>
-
+             { publis && 
+                publis.map((publi) => (
+                    <Wrap key={publi.id}>
+                        <StyledLink to={`/detail/${publi.id}`}>
+                            <img src='https://img.lalr.co/cms/2021/07/02092052/NRR2351-6-Alta-JPG.jpg?size=sm&ratio=sq&f=jpg'/>
+                        <PubliContent>
+                            <h2>{publi.originPlace} - {publi.destinationPlace}</h2>
+                            <h3>$ {publi.price}</h3>
+                            <p>Fecha: {publi.departureDate}</p>
+                        </PubliContent>
+                        </StyledLink>
+                    </Wrap>
+                    ))
+                }
         </Content>
     </Container>
   )
@@ -61,7 +36,7 @@ export default Publi
 const Container = styled.div`
     h4{
         color: #ff7300;
-        font-size: 35px;
+        font-size: 5vh;
     }
 `
 const Content = styled.div`
@@ -97,13 +72,20 @@ const Wrap = styled.div`
     }
 `
 const PubliContent = styled.div`
- padding: 10px;
- text-decoration: none;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 2vh;
+    
 `
 const StyledLink = styled(Link)`
     text-decoration: none;
+    color: black;
 
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
+        
+    }
+    &:hover{
+        color: white;
     }
 `;
