@@ -9,6 +9,20 @@ import { setPublis} from "../features/publi/publiSlice"
 
 function PubliHome() {
 
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    const ProductData = [
+        { name: ''},
+        { name: 'Alimentos' },
+        { name: 'Refrigerados' },
+        { name: 'Quimicos' },
+        { name: 'Materiales' },
+        { name: 'Telas' }
+              
+    ]; 
+
     const dispatch = useDispatch();
     useEffect(() => {
 
@@ -16,7 +30,6 @@ function PubliHome() {
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
-        console.log(tempPublis)
         dispatch(setPublis(tempPublis));
     })
   },[])
@@ -43,9 +56,17 @@ function PubliHome() {
                     <option>Cali</option>
                     <option>Pasto</option>
             </Destination>
+            <Fecha type="date" id="start" name="trip-start"
+                        min={today} max ="2022-12-30" />
+            <Product>
+                {ProductData.map((e, key) => {
+                    return <option key={key}>{e.name}</option>;
+                })}
+            </Product>  
             <Search>
                 <span> 🔎</span>
             </Search>
+            
         </Navegator>
         <Publi/>
         
@@ -81,6 +102,7 @@ const Background = styled.div`
 const Navegator = styled.div`
     display: flex;
     justify-content: center;
+    margin-bottom: 8vh;
 `
 const Search = styled.button`
     margin-right: 16px;
@@ -111,4 +133,18 @@ const Origin = styled.select`
     border-radius: 4px;
 `
 const Destination = styled(Origin)``
+
+const Fecha = styled.input`
+    font-size: 16px;
+    margin: 5px;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    padding: 0.25em 0.5em;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
+`
+
+const Product = styled(Origin)``
+
 

@@ -3,43 +3,45 @@ import styled from 'styled-components'
 import ImgSliderPubli from './ImgSliderPubli'
 
 
-function Info() {
+function Info (props) {
     
   return (
     <Container>
         <PubliTitle>
-                Bogota Portal Norte - Chia Terminal de Carga
+            {props.origin} -- {props.destination}
         </PubliTitle>
             <RigthInfo>    
                 <Data>
                     <h2>Información del Flete</h2>
                     <PubliInfo>
                         <li>Empresa que hace la oferta</li>
-                        <li>Fecha y hora estimada de salida</li>
+                        <li>Fecha: {props.date}</li>
                         <li>Vehículo disponible</li>
-                        <li>Dirección de Partida</li>
-                        <li>FDirección de llegada </li>
+                        <li>Dirección de Origen: {props.oriAddress} </li>
+                        <li>Dirección de Destino:{props.destAddress}</li>
                     </PubliInfo> 
                 </Data>
                 <Data>
                     <h2>Productos transportados:</h2>
                     <PubliInfo>
-                        <li></li>
-                        <li></li>
+                        <li>{props.products}</li>
+                        <Description>
+                            {props.proDescription}
+                        </Description>
                     </PubliInfo>
                 </Data>
                 <Data>
                     <h2>Detalles del embalaje:</h2>
                     <PubliInfo>
-                        <li></li>
-                        <li></li>
-                        <li>Espacio disponible en el vehículo</li>
+                        <li>Tipo de Embalaje: {props.embalaje}</li>
+                        <li>Dimensiones del Camion: {props.truckDimensions1} x {props.truckDimensions2} x {props.truckDimensions3} {props.truckDimensions4}</li>
+                        <li>ESpacio disponible {props.freeSpaces1} x {props.freeSpaces2} x {props.freeSpaces3} {props.freeSpaces4}</li>
                     </PubliInfo>
                 </Data>
                 <Data>
                     <h2>Restricciones del envío:</h2>
                     <Description>
-                        Esto es un texto que define la empresa con toda la información que requiere.
+                        {props.restrictions}
                     </Description>
                 </Data>
             </RigthInfo>

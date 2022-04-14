@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Detail from './components/PubliDetail';
 import PubliHome from './components/PubliHome';
 import MakePubli from './components/MakePubli';
+import Profile from './components/Profile';
+import MyPubli from './components/MyPubli';
 
 
 function App() {
@@ -27,6 +29,12 @@ function App() {
         </Route>
         <Route path='/publi/make'>
           <MakePubli/>
+        </Route>
+        <Route path='/profile'>
+          <Profile/>
+        </Route>
+        <Route path='/publimy'>
+          <MyPubli/>
         </Route>
         <Route path='/'>
           <Home/>

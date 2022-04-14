@@ -1,16 +1,36 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import db from '../firebase'
+import {storage} from '../firebase'
+import { useHistory } from 'react-router-dom'
+
 
 function MakePubli() {
     var now = new Date();
+    const history = useHistory()
+    now.setDate(now.getDate()+7)
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    
+    const endpoint = 'https://raw.githubusercontent.com/Dap20040812/Traza-Data/main/tipopodructos.json';
+    const cities = [];
+
+    
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => cities.push(...data));
+
+     console.log(cities)   
+
     const countryData = [
             { name: ''},
             { name: 'Medellin' },
-            { name: 'Bogota' }            
+            { name: 'Bogota' },
+            { name: 'Barranquilla' },
+            { name: 'Pasto' },
+            { name: 'Cali' }
+
     ];  
     const ProductData = [
         { name: ''},
@@ -18,10 +38,9 @@ function MakePubli() {
         { name: 'Refrigerados' },
         { name: 'Quimicos' },
         { name: 'Materiales' },
-        { name: 'Telas' },
-        { name: 'Niños Muertos' },   
-        { name: 'Cocaina' }       
+        { name: 'Telas' }              
     ]; 
+    console.log(ProductData)
     const EmbalajeData = [
         { name: ''},
         { name: 'Primario' },
@@ -46,8 +65,6 @@ function MakePubli() {
     const [products, setProducts] = useState('');
     const [prodDescription, setProdDescription] = useState('');
     const [embalaje, setEmbalaje] = useState('');
-    const [dimensions, setDimensions] = useState('');
-    const [freeSpace, setFreeSpace] = useState('');
     const [restrictions, setRestrictions] = useState('');
     const [truckHeight, setTruckHeight] = useState('');
     const [truckWidth, setTruckWidth] = useState('');
@@ -57,61 +74,89 @@ function MakePubli() {
     const [freeSpaceWidth, setFreeSpaceWidth] = useState('');
     const [freeSpaceLength, setFreeSpaceLength] = useState('');
     const [freeSpaceUnidades, setFreeSpaceUnidades] = useState('');
+    const [publiImg, setPubliImg] = useState('');
+
+    
 
     const handleSubmit = e => {
 
-        e.preventDefault();
-        db.collection("publications").add({
+        if(origin=== "" || oriAddress === "" || destination === "" || destAddress === "" || date === "" || price === "" || description === "" || products === "" || prodDescription === "" || embalaje === "" || restrictions === "" || truckHeight === "" || truckWidth === "" || truckLength === "" || truckUnidades === "" || freeSpaceHeight === "" || freeSpaceWidth === "" || freeSpaceLength === "" || freeSpaceUnidades ==="")
+        {
+            window.alert("Completa todos los campos para continuar")
+        } else 
+        {
+            e.preventDefault();
+            db.collection("publications").add({
 
-            originPlace: origin,
-            originAddress: oriAddress,
-            destinationPlace: destination,
-            destinationAddress: destAddress,
-            departureDate: date,
-            price: price,
-            serviceDescription: description,
-            products: products,
-            productsDescription: prodDescription,
-            embalaje: embalaje,
-            truckDimensions: {
+                originPlace: origin,
+                originAddress: oriAddress,
+                destinationPlace: destination,
+                destinationAddress: destAddress,
+                departureDate: date,
+                price: price,
+                serviceDescription: description,
+                products: products,
+                productsDescription: prodDescription,
+                embalaje: embalaje,
+                truckDimensions: {
 
-                truckHeight: truckHeight,
-                truckWidth: truckWidth,
-                truckLength: truckLength,
-                truckUnidades: truckUnidades
-            },
-            truckFreeSpace: {
-                
-                freeSpaceHeight: freeSpaceHeight,
-                freeSpaceWidth: freeSpaceWidth,
-                freeSpaceLength: freeSpaceLength,
-                freeSpaceUnidades: freeSpaceUnidades
-            },
-            restrictions: restrictions
-        });
+                    truckHeight: truckHeight,
+                    truckWidth: truckWidth,
+                    truckLength: truckLength,
+                    truckUnidades: truckUnidades
+                },
+                truckFreeSpace: {
+                    
+                    freeSpaceHeight: freeSpaceHeight,
+                    freeSpaceWidth: freeSpaceWidth,
+                    freeSpaceLength: freeSpaceLength,
+                    freeSpaceUnidades: freeSpaceUnidades
+                },
+                restrictions: restrictions,
+                publiImg: publiImg
+            });
 
-        setOrigin("");
-        setOriAddress("");
-        setDestination("");
-        setDestAddress("");
-        setDate("");
-        setPrice("");
-        setDescription("");
-        setProducts("");
-        setProdDescription("");
-        setEmbalaje("");
-        setRestrictions("");
-        setTruckHeight("");
-        setTruckWidth("");
-        setTruckLength("");
-        setTruckUnidades("");
-        setFreeSpaceHeight("");
-        setFreeSpaceWidth("");
-        setFreeSpaceLength("");
-        setFreeSpaceUnidades("");
+            setOrigin("");
+            setOriAddress("");
+            setDestination("");
+            setDestAddress("");
+            setDate("");
+            setPrice("");
+            setDescription("");
+            setProducts("");
+            setProdDescription("");
+            setEmbalaje("");
+            setRestrictions("");
+            setTruckHeight("");
+            setTruckWidth("");
+            setTruckLength("");
+            setTruckUnidades("");
+            setFreeSpaceHeight("");
+            setFreeSpaceWidth("");
+            setFreeSpaceLength("");
+            setFreeSpaceUnidades("");
+
+            window.alert("Publicación Creada con Exito")
+            history.push("/homepubli") 
+
+
+        }
+
+        
 
     }
-    
+
+    const archivoMandler = async (e)=>{
+
+        setPubliImg("");
+        const archivo = e.target.files[0];
+        const storageRef = storage.ref();
+        const archivoPath = storageRef.child(archivo.name);
+        await archivoPath.put(archivo);
+        console.log(archivo.name)
+        const url =  await archivoPath.getDownloadURL();
+        setPubliImg(url);
+    }
   return (
     <Container>
         <Background>
@@ -155,7 +200,7 @@ function MakePubli() {
             </Inputs>
             <Inputs>
                 <Text>Precio Estimado: </Text>
-                <Input1 value={price} onChange={e => setPrice(e.target.value)}/>
+                <Input6 type='number' min="100" value={price} onChange={e => setPrice(e.target.value)}/>
 
             </Inputs>
             <Inputs1>
@@ -187,9 +232,9 @@ function MakePubli() {
             </Inputs>
             <Inputs>
                 <Text>Dimensiones del Camion: </Text>
-                <Input5 placeholder='Largo' value={truckHeight} onChange={e => setTruckHeight(e.target.value)}/>
-                <Input5 placeholder='Ancho' value={truckWidth} onChange={e => setTruckWidth(e.target.value)}/>
-                <Input5 placeholder='Alto' value={truckLength} onChange={e => setTruckLength(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Largo' value={truckHeight} onChange={e => setTruckHeight(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Ancho' value={truckWidth} onChange={e => setTruckWidth(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Alto' value={truckLength} onChange={e => setTruckLength(e.target.value)}/>
                 <Input2 value={truckUnidades} onChange={e => setTruckUnidades(e.target.value)}>
                          {MedidaData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
@@ -198,9 +243,9 @@ function MakePubli() {
             </Inputs>
             <Inputs>
                 <Text>Espacio Disponible: </Text>
-                <Input5 placeholder='Largo' value={freeSpaceHeight} onChange={e => setFreeSpaceHeight(e.target.value)}/>
-                <Input5 placeholder='Ancho' value={freeSpaceWidth} onChange={e => setFreeSpaceWidth(e.target.value)}/>
-                <Input5 placeholder='Alto' value={freeSpaceLength} onChange={e => setFreeSpaceLength(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Largo' value={freeSpaceHeight} onChange={e => setFreeSpaceHeight(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Ancho' value={freeSpaceWidth} onChange={e => setFreeSpaceWidth(e.target.value)}/>
+                <Input5 type='number' min="1" placeholder='Alto' value={freeSpaceLength} onChange={e => setFreeSpaceLength(e.target.value)}/>
                 <Input2 value={freeSpaceUnidades} onChange={e => setFreeSpaceUnidades(e.target.value)}>
                          {MedidaData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
@@ -212,8 +257,13 @@ function MakePubli() {
                 <Input4 value={restrictions} onChange={e => setRestrictions(e.target.value)}/>
 
             </Inputs1>
+            <Inputs1>
+                <Text>Imagen Publicación :  </Text>
+                <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
+
+            </Inputs1>
             <PlayButton onClick={handleSubmit}>
-                <span>SOLICITAR</span>
+                <span>PUBLICAR</span>
             </PlayButton>
         </Data>
         
@@ -292,6 +342,10 @@ const Input1 = styled.input`
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
 `
+const Input7 = styled.input`
+    margin: 2vh;
+    
+`
 
 const Input2 = styled.select`
     font-size: 2vh;
@@ -339,12 +393,22 @@ const Input5 = styled.input`
     font-size: 2vh;
     type: text;
     margin: 2vh;
-    max-width: 7vh;
+    max-width: 9vh;
     font-family: inherit;
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
 `
+const Input6 = styled.input`
+    font-size: 2vh;
+    margin: 2vh;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 0.5vh;
+`
+
 
 const Text = styled.div`
     color: white;
@@ -355,11 +419,10 @@ const PlayButton = styled.button`
     font-size: 2vh;
     margin-top: 2vh;
     text-align:center;
-    padding: 0 3vh;
     margin-right: 3vh;
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 20%;
     height: 6vh;
     background: rgb(249, 249, 249);
     border: none;

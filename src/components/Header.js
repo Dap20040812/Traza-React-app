@@ -1,25 +1,78 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { auth, provider} from "../firebase"
 import styled from 'styled-components'
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
-import {useSelector} from 'react-redux' ;
+import { useHistory } from 'react-router-dom'
+import {
+    selecUserName,
+    selecUserPhoto,
+    setUserLogin,
+    setSignOut
+} from "../features/user/userSlice"
+import {useDispatch, useSelector} from "react-redux"
 
 
 function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const userName = useSelector(selecUserName);
+    const userPhoto = useSelector(selecUserPhoto);
+
+    useEffect(() => {
+      auth.onAuthStateChanged(async (user) =>{
+          if(user){
+              dispatch(setUserLogin({
+                  name: user.displayName,
+                  email: user.email,
+                  photo: user.photoURL
+              }))
+              history.push("/") 
+          }
+      })
+    },[])
+    const signIn = () => {
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            let user = result.user
+            dispatch(setUserLogin({
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            }))
+            history.push("/")
+  
+        })
+  
+    }
+  
+    const signOut = () => {
+        auth.signOut()
+        .then(()=> {
+            dispatch(setSignOut());
+            history.push("/intro")
+        })
+    }
 
   return (
     <Nav>
         <Logo src="/images/traza.png"/>
-        <NavMenu>
+        { !userName ? (
+          <LoginContainer>
+            <Login onClick={signIn}>Login</Login>
+          </LoginContainer>
+           ):
+         <>
+          <NavMenu>
             <a>
               <StyledLink to={`/`}>
                   <img src='/images/Home.png'></img> 
                   <span>INICIO</span>  
               </StyledLink>                                
             </a>
-              
+                
             <a>
               <StyledLink to={`/homepubli`}>
                 <img src='/images/search.png'></img>    
@@ -27,27 +80,30 @@ function Header() {
               </StyledLink>
             </a>
             <a>
-               <img src='/images/servi.png'></img>    
-               <span>SERVICIOS</span>            
+              <img src='/images/servi.png'></img>    
+              <span>SERVICIOS</span>            
             </a>
             <a>
-               <img src='/images/support.png'></img>    
-               <span>SOPORTE</span>            
+              <img src='/images/support.png'></img>    
+              <span>SOPORTE</span>            
             </a>
-        </NavMenu>
-        <RightMenu>
-            <UserImg src='https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1' onClick={()=> setBurgerStatus(true)}/>
-        </RightMenu>
-        <BurgerNav show={burgerStatus}>
-            <CloseWrapper>
-                <CustomClose onClick={()=> setBurgerStatus(false)}/>
-            </CloseWrapper>
-            <UserImg src='https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1'/>
-            <li><StyledLink1>Mis Publicaciones</StyledLink1></li>
-            <li><StyledLink1 to={`/publi/make`}>Realiza una Publicación</StyledLink1></li>
-            <li><StyledLink1>Perfil</StyledLink1></li>
-            <li><StyledLink1>Cerrar Sesión</StyledLink1></li>
-        </BurgerNav>
+          </NavMenu>
+          <RightMenu>
+              <UserImg src={userPhoto} onClick={()=> setBurgerStatus(true)}/>
+          </RightMenu>
+          <BurgerNav show={burgerStatus}  onClick={()=> setBurgerStatus(false)}>
+              <CloseWrapper>
+                  <CustomClose onClick={()=> setBurgerStatus(false)}/>
+              </CloseWrapper>
+              <UserImg src={userPhoto}/>
+              <StyledLink1 to={`/publimy`}><li>Mis Publicaciones</li></StyledLink1>
+              <StyledLink1  to={`/publi/make`}><li>Realiza una Publicación</li></StyledLink1>
+              <StyledLink1 to={`/profile`}><li>Perfil</li></StyledLink1>
+              <StyledLink1 onClick={signOut} ><li>Cerrar Sesión</li></StyledLink1>
+          </BurgerNav>
+         </> 
+      }  
+        
     </Nav>
   )
 }
@@ -186,8 +242,33 @@ const StyledLink = styled(Link)`
 const StyledLink1 = styled(Link)`
     text-decoration: none;
     color: black;
+    font-weight: bold;
+
 
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }
+
+`
+const Login = styled.div`
+   border: 1px solid #f9f9f9;
+   padding: 8px 16px;
+   border-radius: 4px;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   background-color: rgba(0, 0, 0, 0.6);
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+
+   &:hover {
+       background-color: #f9f9f9;
+       color: #000;
+       border-color: transparent;
+   }
+`
+
+const LoginContainer = styled.div`
+   flex:1;
+   display: flex;
+   justify-content: flex-end;
 `

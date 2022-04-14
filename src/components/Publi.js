@@ -16,7 +16,7 @@ function Publi() {
                 publis.map((publi) => (
                     <Wrap key={publi.id}>
                         <StyledLink to={`/detail/${publi.id}`}>
-                            <img src='https://img.lalr.co/cms/2021/07/02092052/NRR2351-6-Alta-JPG.jpg?size=sm&ratio=sq&f=jpg'/>
+                            <img src={publi.publiImg}/>
                         <PubliContent>
                             <h2>{publi.originPlace} - {publi.destinationPlace}</h2>
                             <h3>$ {publi.price}</h3>
@@ -41,7 +41,7 @@ const Container = styled.div`
 `
 const Content = styled.div`
     display: grid;
-    grid-gap: 25px;
+    grid-gap: 8vh;
     grid-template-columns: repeat(4, minmax(0,1fr));
 `
 const Wrap = styled.div`
@@ -53,6 +53,7 @@ const Wrap = styled.div`
     border: 3px solid rgba(249, 249, 249, 0.1); 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+    background-color: #FFFFFFBA;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 
     img{
