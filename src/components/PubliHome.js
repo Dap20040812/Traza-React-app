@@ -4,6 +4,8 @@ import db from '../firebase'
 import Publi from './Publi'
 import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
+import countryData from '../data/countrydata'
+
 
 
 
@@ -40,21 +42,15 @@ function PubliHome() {
             <img src="https://www.ecestaticos.com/imagestatic/clipping/2a9/b8a/2a9b8ad7e8acf162441cde81351c2f16/el-exito-del-primer-camion-100-autonomo-anuncia-el-fin-de-los-transportistas.jpg?mtime=1640954821"/>
         </Background>
         <Navegator>
-            <Origin >
-                    <option>Bogota</option>
-                    <option>Chia</option>
-                    <option>Medellin</option>
-                    <option>Barranquilla</option>
-                    <option>Cali</option>
-                    <option>Pasto</option>
+            <Origin value={origin} id="origi">
+                         {countryData.map((e, key) => {
+                            return <option key={key}>{e.name}</option>;
+                        })}
             </Origin>
-            <Destination>
-                    <option>Bogota</option>
-                    <option>Chia</option>
-                    <option>Medellin</option>
-                    <option>Barranquilla</option>
-                    <option>Cali</option>
-                    <option>Pasto</option>
+            <Destination value={origin} id="origi">
+                         {countryData.map((e, key) => {
+                            return <option key={key}>{e.name}</option>;
+                        })}
             </Destination>
             <Fecha type="date" id="start" name="trip-start"
                         min={today} max ="2022-12-30" />

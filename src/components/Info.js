@@ -14,7 +14,7 @@ function Info (props) {
                 <Data>
                     <h2>Información del Flete</h2>
                     <PubliInfo>
-                        <li>Empresa que hace la oferta</li>
+                        <li>Empresa: {props.nit}</li>
                         <li>Fecha: {props.date}</li>
                         <li>Vehículo disponible</li>
                         <li>Dirección de Origen: {props.oriAddress} </li>

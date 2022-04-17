@@ -28,12 +28,12 @@ function Detail() {
   const getContent = () => {
     if(page === 'Info'){
       return(
-            <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions}/> 
+            <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} nit={publi.empresaNit}/> 
         )
     }
     else if (page === 'Request'){
       return(
-        <RequestForm/>
+        <RequestForm publi={publi.id} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength}/>
       )
     }
   }
@@ -66,7 +66,7 @@ function Detail() {
                             </TrailerButton>
                         </Controls>
                         <SubTitle>
-                            Nombre de la empresa
+                            {publi.empresaNit}
                         </SubTitle>
                         <Description>
                             {publi.serviceDescription}
@@ -112,12 +112,12 @@ const Background = styled.div`
     }
 `
 const ImageTitle = styled.div`
-    height: (100vh - 65vh);
-    width: (100vh - 65vh);
+    max-height: 35vh;
+    max-width: 35vh;
 
-    img{
-        width: calc(100vh - 65vh);
-        height: calc(100vh - 65vh);
+    img{ 
+        max-width: 35vh;
+        max-height: 35vh;
     }
 
 `
@@ -175,6 +175,8 @@ const Description = styled.div`
 const LeftData = styled.div`
     border-radius: 1vh;
     background-color: #929294BA;
+    display: flex;
+    flex-direction: column;
     margin-top: 5vh;
     padding: 2vh;
     opacity: 0.9;

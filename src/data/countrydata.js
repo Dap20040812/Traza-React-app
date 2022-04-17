@@ -1,0 +1,25 @@
+const countryData = [
+    {name: ""},
+    {name: "Bogotá"},
+    {name: "Medellín"},
+    {name: "Cali"},
+    {name: "Barranquilla"},
+    {name: "Cartagena"},
+    {name: "Soacha"},
+    {name: "Cúcuta"},
+    {name: "Soledad"},
+    {name: "Bucaramanga"},
+    {name: "Bello"},
+    {name: "Villaviciencio"},
+    {name: "Ibagué"},
+    {name: "Santa Marta"},
+    {name: "Valledupar"},
+    {name: "Manizales"},
+    {name: "Pereira"},
+    {name: "Montería"},
+    {name: "Neiva"},
+    {name: "Pasto"},
+    {name: "Armenia"},
+]
+
+export default countryData

@@ -3,8 +3,15 @@ import styled from 'styled-components'
 import db from '../firebase'
 import {storage} from '../firebase'
 import { useHistory } from 'react-router-dom'
-
-
+import countryData from '../data/countrydata'
+import createPublication from '../backend/createPublication'
+import {
+    selecUserName,
+    selecUserPhoto,
+    setUserLogin,
+    setSignOut
+} from "../features/user/userSlice"
+import {useDispatch, useSelector} from "react-redux"
 function MakePubli() {
     var now = new Date();
     const history = useHistory()
@@ -12,26 +19,22 @@ function MakePubli() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    const userName = useSelector(selecUserName);
+
+    
     
     const endpoint = 'https://raw.githubusercontent.com/Dap20040812/Traza-Data/main/tipopodructos.json';
     const cities = [];
-
+    const obtenerDatos = async () => {
+        await fetch(endpoint)
+            .then ((respuesta) => respuesta.json())
+            .then ((data) => {
+                data.forEach((elemento) =>{
+                cities.push(elemento)
+            })
+        })
+    }       
     
-    fetch(endpoint)
-        .then(response => response.json())
-        .then(data => cities.push(...data));
-
-     console.log(cities)   
-
-    const countryData = [
-            { name: ''},
-            { name: 'Medellin' },
-            { name: 'Bogota' },
-            { name: 'Barranquilla' },
-            { name: 'Pasto' },
-            { name: 'Cali' }
-
-    ];  
     const ProductData = [
         { name: ''},
         { name: 'Alimentos' },
@@ -40,7 +43,6 @@ function MakePubli() {
         { name: 'Materiales' },
         { name: 'Telas' }              
     ]; 
-    console.log(ProductData)
     const EmbalajeData = [
         { name: ''},
         { name: 'Primario' },
@@ -79,43 +81,71 @@ function MakePubli() {
     
 
     const handleSubmit = e => {
+        var elem1 = document.getElementById("origen");
+        var elem2 = document.getElementById("origen1");
+        var elem3 = document.getElementById("dest");
+        var elem4 = document.getElementById("dest1");
+        var elem5 = document.getElementById("date");
+        var elem6 = document.getElementById("price");
+        var elem7 = document.getElementById("desc");
+        var elem8 = document.getElementById("prod");
+        var elem9 = document.getElementById("pdesc");
+        var elem10 = document.getElementById("em");
+        var elem11 = document.getElementById("dc");
+        var elem12 = document.getElementById("ed");
+        var elem13 = document.getElementById("rest");
+        var med1 = truckHeight*truckLength*truckWidth
+        var med2 = freeSpaceHeight*freeSpaceLength*freeSpaceWidth
 
-        if(origin=== "" || oriAddress === "" || destination === "" || destAddress === "" || date === "" || price === "" || description === "" || products === "" || prodDescription === "" || embalaje === "" || restrictions === "" || truckHeight === "" || truckWidth === "" || truckLength === "" || truckUnidades === "" || freeSpaceHeight === "" || freeSpaceWidth === "" || freeSpaceLength === "" || freeSpaceUnidades ==="")
+        if(origin=== "")
         {
-            window.alert("Completa todos los campos para continuar")
-        } else 
+            window.alert("Completa la dirección de origen para continuar")
+            elem1.style.color = "red";
+        }else if(oriAddress=== ""){
+            window.alert("Completa la dirección de origen para continuar")
+            elem2.style.color = "red";
+        }else if(destination=== ""){
+            window.alert("Completa la dirección de destino para continuar")
+            elem3.style.color = "red";
+        }else if(destAddress=== ""){
+            window.alert("Completa la dirección de destino para continuar")
+            elem4.style.color = "red";
+        }else if(date=== ""){
+            window.alert("Completa la fecha de salida para continuar")
+            elem5.style.color = "red";
+        }else if(price=== ""){
+            window.alert("Completa el precio para continuar")
+            elem6.style.color = "red";
+        }else if(description=== ""){
+            window.alert("Completa la descripción para continuar")
+            elem7.style.color = "red";
+        }else if(products=== ""){
+            window.alert("Completa el tipo de producto para continuar")
+            elem8.style.color = "red";
+        }else if(prodDescription=== ""){
+            window.alert("Completa la descripción del producto para continuar")
+            elem9.style.color = "red";
+        }else if(embalaje === ""){
+            window.alert("Completa el tipo de embalaje para continuar")
+            elem10.style.color = "red";
+        }else if(restrictions=== ""){
+            window.alert("Completa las restriciones para continuar")
+            elem13.style.color = "red";
+        }else if(truckLength=== "" || truckWidth === "" || truckHeight=== "" || truckUnidades === ""){
+            window.alert("Completa las dimensiones del camion para continuar")
+            elem11.style.color = "red";
+        }else if(freeSpaceLength=== "" || freeSpaceWidth === "" || freeSpaceHeight=== "" || freeSpaceUnidades === "" ){
+            window.alert("Completa  las dimensiones del espacio disponible para continuar")
+            elem12.style.color = "red";
+        }
+        else if(med1 < med2 || truckHeight < freeSpaceHeight || truckLength < freeSpaceLength || truckWidth < freeSpaceWidth){
+            window.alert("Las dimensiones no conciden, revisa las medidas para continuar")
+            elem12.style.color = "red";
+        }
+        else 
         {
             e.preventDefault();
-            db.collection("publications").add({
-
-                originPlace: origin,
-                originAddress: oriAddress,
-                destinationPlace: destination,
-                destinationAddress: destAddress,
-                departureDate: date,
-                price: price,
-                serviceDescription: description,
-                products: products,
-                productsDescription: prodDescription,
-                embalaje: embalaje,
-                truckDimensions: {
-
-                    truckHeight: truckHeight,
-                    truckWidth: truckWidth,
-                    truckLength: truckLength,
-                    truckUnidades: truckUnidades
-                },
-                truckFreeSpace: {
-                    
-                    freeSpaceHeight: freeSpaceHeight,
-                    freeSpaceWidth: freeSpaceWidth,
-                    freeSpaceLength: freeSpaceLength,
-                    freeSpaceUnidades: freeSpaceUnidades
-                },
-                restrictions: restrictions,
-                publiImg: publiImg
-            });
-
+            createPublication(userName,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
             setOrigin("");
             setOriAddress("");
             setDestination("");
@@ -135,7 +165,6 @@ function MakePubli() {
             setFreeSpaceWidth("");
             setFreeSpaceLength("");
             setFreeSpaceUnidades("");
-
             window.alert("Publicación Creada con Exito")
             history.push("/homepubli") 
 
@@ -166,7 +195,7 @@ function MakePubli() {
             <Title>Nueva Publicación</Title>
             <SubTitle> Detalles del Flete: </SubTitle>
             <Inputs>
-                <Text>Punto de Origen : </Text>
+                <Text id='origen'>Punto de Origen : </Text>
                 <Input2 value={origin} id="origi" onChange={e => setOrigin(e.target.value)}>
                          {countryData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
@@ -174,12 +203,12 @@ function MakePubli() {
                 </Input2>
             </Inputs>
             <Inputs>
-                <Text>Dirección Exacta de Destino : </Text>
+                <Text id='origen1'>Dirección Exacta de Destino : </Text>
                 <Input1 value={oriAddress} onChange={e => setOriAddress(e.target.value)}/>
 
             </Inputs>
             <Inputs>
-                <Text>Punto de Destino : </Text>
+                <Text id='dest'>Punto de Destino : </Text>
                 <Input2 value={destination} onChange={e => setDestination(e.target.value)}>
                          {countryData.map((e, key) => {
                             return <option key={key} >{e.name}</option>;
@@ -187,43 +216,45 @@ function MakePubli() {
                 </Input2>
             </Inputs>
             <Inputs>
-                <Text>Dirección Exacta de LLegada : </Text>
+                <Text id='dest1'>Dirección Exacta de LLegada : </Text>
                 <Input1 value={destAddress} onChange={e => setDestAddress(e.target.value)}/>
 
             </Inputs>
             <Inputs>
-                <Text>Fecha de Salida : </Text>
+                <Text id='date'>Fecha de Salida : </Text>
                 <Input3 type="date" id="start" name="trip-start"
                         min={today} max ="2022-12-30" 
                         value={date} onChange={e => setDate(e.target.value)}/>
 
             </Inputs>
             <Inputs>
-                <Text>Precio Estimado: </Text>
+                <Text id='price'>Precio Estimado: </Text>
                 <Input6 type='number' min="100" value={price} onChange={e => setPrice(e.target.value)}/>
 
             </Inputs>
             <Inputs1>
-                <Text>Description del Envío:  </Text>
+                <Text id='desc'>Description del Envío:  </Text>
                 <Input4 value={description} onChange={e => setDescription(e.target.value)}/>
 
             </Inputs1>
             <Inputs>
-                <Text>Productos Tranportados: </Text>
+                <Text id='prod'>Productos Tranportados: </Text>
                 <Input2 value={products} onChange={e => setProducts(e.target.value)}>
-                         {ProductData.map((e, key) => {
-                            return <option key={key}>{e.name}</option>;
-                        })}
+                         {
+                            ProductData.map((e, key) => {
+                                return <option key={key}>{e.name}</option>;
+                            })
+                        }
                 </Input2>
             </Inputs>
             <Inputs1>
-                <Text>Descripción de los Productos: </Text>
+                <Text id='pdesc'>Descripción de los Productos: </Text>
                 <Input4 value={prodDescription} onChange={e => setProdDescription(e.target.value)}/>
 
             </Inputs1>
             <SubTitle> Detalles del embalaje: </SubTitle>
             <Inputs>
-                <Text>Tipo de Embalaje: </Text>
+                <Text id='em'>Tipo de Embalaje: </Text>
                 <Input2 value={embalaje} onChange={e => setEmbalaje(e.target.value)}>
                          {EmbalajeData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
@@ -231,7 +262,7 @@ function MakePubli() {
                 </Input2>
             </Inputs>
             <Inputs>
-                <Text>Dimensiones del Camion: </Text>
+                <Text id='dc'>Dimensiones del Camion: </Text>
                 <Input5 type='number' min="1" placeholder='Largo' value={truckHeight} onChange={e => setTruckHeight(e.target.value)}/>
                 <Input5 type='number' min="1" placeholder='Ancho' value={truckWidth} onChange={e => setTruckWidth(e.target.value)}/>
                 <Input5 type='number' min="1" placeholder='Alto' value={truckLength} onChange={e => setTruckLength(e.target.value)}/>
@@ -242,18 +273,17 @@ function MakePubli() {
                 </Input2>
             </Inputs>
             <Inputs>
-                <Text>Espacio Disponible: </Text>
+                <Text id='ed'>Espacio Disponible: </Text>
                 <Input5 type='number' min="1" placeholder='Largo' value={freeSpaceHeight} onChange={e => setFreeSpaceHeight(e.target.value)}/>
                 <Input5 type='number' min="1" placeholder='Ancho' value={freeSpaceWidth} onChange={e => setFreeSpaceWidth(e.target.value)}/>
                 <Input5 type='number' min="1" placeholder='Alto' value={freeSpaceLength} onChange={e => setFreeSpaceLength(e.target.value)}/>
                 <Input2 value={freeSpaceUnidades} onChange={e => setFreeSpaceUnidades(e.target.value)}>
-                         {MedidaData.map((e, key) => {
-                            return <option key={key}>{e.name}</option>;
-                        })}
-            </Input2>
+                        <option>{""}</option>
+                         <option>{truckUnidades}</option>
+                </Input2>
             </Inputs>
             <Inputs1>
-                <Text>Restricciones del Envío:  </Text>
+                <Text id='rest'>Restricciones del Envío:  </Text>
                 <Input4 value={restrictions} onChange={e => setRestrictions(e.target.value)}/>
 
             </Inputs1>
@@ -341,9 +371,11 @@ const Input1 = styled.input`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
+    
 `
 const Input7 = styled.input`
     margin: 2vh;
+   
     
 `
 
@@ -356,6 +388,7 @@ const Input2 = styled.select`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
+    
 `
 const Input3 = styled.input`
     font-size: 2vh;
@@ -365,11 +398,13 @@ const Input3 = styled.input`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
+    
 `
 const Inputs = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    
 `
 const Inputs1 = styled.div`
     display: flex;
@@ -381,13 +416,14 @@ const Input4 = styled.textarea`
     maxlength="100";
     margin: 1vh;
     font-size: 2.5vh;
-    font-family: inherit;
+    font-family: inherit; 
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
     width: 100%;
     height: 8vh;
     resize: none; 
+  
 `
 const Input5 = styled.input`
     font-size: 2vh;
@@ -398,6 +434,7 @@ const Input5 = styled.input`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
+   
 `
 const Input6 = styled.input`
     font-size: 2vh;
@@ -407,11 +444,14 @@ const Input6 = styled.input`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 0.5vh;
+    
 `
 
 
 const Text = styled.div`
     color: white;
+    font-weight: bold;
+
 `   
 
 const PlayButton = styled.button`

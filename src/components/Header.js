@@ -12,7 +12,7 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
-
+const userName = ""
 
 function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
@@ -33,6 +33,7 @@ function Header() {
           }
       })
     },[])
+    console.log(userPhoto)
     const signIn = () => {
         auth.signInWithPopup(provider)
         .then((result) => {
@@ -55,7 +56,6 @@ function Header() {
             history.push("/intro")
         })
     }
-
   return (
     <Nav>
         <Logo src="/images/traza.png"/>
@@ -107,8 +107,8 @@ function Header() {
     </Nav>
   )
 }
-
 export default Header
+
 
 const Nav = styled.nav`
       height: 70px;
