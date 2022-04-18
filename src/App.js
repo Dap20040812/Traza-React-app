@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
-import Login from './components/login';
+import Login from './components/Login';
 import Intro from './components/Intro';
 import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Detail from './components/PubliDetail';
@@ -13,6 +13,7 @@ import MyPubli from './components/MyPubli';
 
 
 function App() {
+  
   return (
     <div className="App">
       <Router>
@@ -36,9 +37,13 @@ function App() {
         <Route path='/publimy'>
           <MyPubli/>
         </Route>
+        <Route path='/login'>
+          <Login/>
+        </Route>
         <Route path='/'>
           <Home/>
         </Route>
+        
       </Switch>
     </Router>
     </div>

@@ -1,6 +1,6 @@
 import db from '../firebase'
 
-function crearEmpresa(nombre,nit,razonSocial,secotrEconomico,correo,telefono,contraseña)
+function createCompany(nombre,nit,razonSocial,secotrEconomico,correo,telefono,contraseña)
 {
     db.collection('empresas').doc(nit).set({
         nombreEmpresa:nombre,
@@ -14,4 +14,4 @@ function crearEmpresa(nombre,nit,razonSocial,secotrEconomico,correo,telefono,con
     })
 }
 
-export default crearEmpresa
+export default createCompany

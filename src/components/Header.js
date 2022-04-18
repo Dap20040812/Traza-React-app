@@ -12,7 +12,6 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
-const userName = ""
 
 function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
@@ -25,29 +24,16 @@ function Header() {
       auth.onAuthStateChanged(async (user) =>{
           if(user){
               dispatch(setUserLogin({
-                  name: user.displayName,
+                  name: user.uid,
                   email: user.email,
-                  photo: user.photoURL
+                  photo: "https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1"
               }))
               history.push("/") 
+          }else{
+            history.push("/intro") 
           }
       })
-    },[])
-    console.log(userPhoto)
-    const signIn = () => {
-        auth.signInWithPopup(provider)
-        .then((result) => {
-            let user = result.user
-            dispatch(setUserLogin({
-                name: user.displayName,
-                email: user.email,
-                photo: user.photoURL
-            }))
-            history.push("/")
-  
-        })
-  
-    }
+    },[])                                     
   
     const signOut = () => {
         auth.signOut()
@@ -59,9 +45,11 @@ function Header() {
   return (
     <Nav>
         <Logo src="/images/traza.png"/>
-        { !userName ? (
+        {!userName ? (
           <LoginContainer>
-            <Login onClick={signIn}>Login</Login>
+            <StyledLink to={`/login`}>
+              <Login >Login</Login>
+            </StyledLink>
           </LoginContainer>
            ):
          <>
