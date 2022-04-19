@@ -152,7 +152,6 @@ function MakePubli() {
         else 
         {
             e.preventDefault();
-            console.log(userUid)
             createPublication(userUid,userName,userPhoto,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
             setOrigin("");
             setOriAddress("");
