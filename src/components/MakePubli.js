@@ -8,6 +8,7 @@ import createPublication from '../backend/createPublication'
 import {
     selecUserName,
     selecUserPhoto,
+    selecUserUid,
     setUserLogin,
     setSignOut
 } from "../features/user/userSlice"
@@ -19,9 +20,11 @@ function MakePubli() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    const userUid = useSelector(selecUserUid);
     const userName = useSelector(selecUserName);
+    const userPhoto = useSelector(selecUserPhoto);
 
-    
+    console.log(userUid)
     
     const endpoint = 'https://raw.githubusercontent.com/Dap20040812/Traza-Data/main/tipopodructos.json';
     const cities = [];
@@ -94,6 +97,7 @@ function MakePubli() {
         var elem11 = document.getElementById("dc");
         var elem12 = document.getElementById("ed");
         var elem13 = document.getElementById("rest");
+        var elem14 = document.getElementById("img");
         var med1 = truckHeight*truckLength*truckWidth
         var med2 = freeSpaceHeight*freeSpaceLength*freeSpaceWidth
 
@@ -141,11 +145,15 @@ function MakePubli() {
         else if(med1 < med2 || truckHeight < freeSpaceHeight || truckLength < freeSpaceLength || truckWidth < freeSpaceWidth){
             window.alert("Las dimensiones no conciden, revisa las medidas para continuar")
             elem12.style.color = "red";
+        }else if(publiImg === ""){
+            window.alert("Carga una imagen para continuar")
+            elem14.style.color = "red";
         }
         else 
         {
             e.preventDefault();
-            createPublication(userName,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
+            console.log(userUid)
+            createPublication(userUid,userName,userPhoto,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
             setOrigin("");
             setOriAddress("");
             setDestination("");
@@ -288,7 +296,7 @@ function MakePubli() {
 
             </Inputs1>
             <Inputs1>
-                <Text>Imagen Publicación :  </Text>
+                <Text id='img'>Imagen Publicación :  </Text>
                 <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
 
             </Inputs1>

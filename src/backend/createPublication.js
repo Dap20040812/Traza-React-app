@@ -2,13 +2,15 @@ import db from '../firebase'
 import { v4 as uuidv4 } from 'uuid';
 import firebase from 'firebase/compat/app'; 
 
-function createPublication(nit,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImgs){
+function createPublication(uid,name,photo,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImgs){
 
     let uuidP = uuidv4() 
 
     db.collection("publications").doc(uuidP).set({
         id: uuidP,
-        empresaNit:nit,
+        empresaName: name,
+        empresaPhoto: photo,
+        empresaUid:uid,
         originPlace: origin,
         originAddress: oriAddress,
         destinationPlace: destination,

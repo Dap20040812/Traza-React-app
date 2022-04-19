@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom'
 import {
     selecUserName,
     selecUserPhoto,
+    selecUserUid,
     setUserLogin,
     setSignOut
 } from "../features/user/userSlice"
@@ -17,23 +18,27 @@ function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
     const dispatch = useDispatch()
     const history = useHistory()
-    const userName = useSelector(selecUserName);
     const userPhoto = useSelector(selecUserPhoto);
+    
 
     useEffect(() => {
       auth.onAuthStateChanged(async (user) =>{
           if(user){
               dispatch(setUserLogin({
-                  name: user.uid,
+                  name: user.displayName,
                   email: user.email,
-                  photo: "https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1"
+                  uid: user.uid,
+                  photo: user.photoURL
               }))
-              history.push("/") 
+              history.push("/")
           }else{
             history.push("/intro") 
           }
       })
-    },[])                                     
+    },[])     
+    
+    const userName = useSelector(selecUserName);
+
   
     const signOut = () => {
         auth.signOut()

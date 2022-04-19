@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ImgSliderPubli from './ImgSliderPubli'
+import db from '../firebase'
 
 
 function Info (props) {
-    
+
   return (
     <Container>
         <PubliTitle>
@@ -14,7 +15,7 @@ function Info (props) {
                 <Data>
                     <h2>Información del Flete</h2>
                     <PubliInfo>
-                        <li>Empresa: {props.nit}</li>
+                        <li>Empresa: {props.name}</li>
                         <li>Fecha: {props.date}</li>
                         <li>Vehículo disponible</li>
                         <li>Dirección de Origen: {props.oriAddress} </li>

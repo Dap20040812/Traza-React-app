@@ -4,33 +4,41 @@ import createCompany from "../backend/createCompany";
 import EmbalajeData from "../data/EmbalajeData";
 import {auth} from "../firebase"
 import {useDispatch, useSelector} from "react-redux"
+import {storage} from '../firebase'
 import { useHistory } from 'react-router-dom'
-import {
-  selecUserName,
-  selecUserPhoto,
-  setUserLogin,
-  setSignOut
-} from "../features/user/userSlice"
+import {setUserLogin} from "../features/user/userSlice"
 
 
 function Login() {
   const [isRegistrando, setIsRegistrando] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
-  async function registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password) {
+  const [publiImg, setPubliImg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('')
+
+  async function registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2) {
     const infoUsuario = await auth.createUserWithEmailAndPassword(
       email,
-      password
+      password,
 
     ).then((usuarioFirebase) => {
+      usuarioFirebase.user.updateProfile({
+        displayName: name,
+        phoneNumber: phone,
+        photoURL: publiImg
+        
+      })
       return usuarioFirebase;
+    }).catch(FirebaseAuthWeakPasswordException => {
+      setErrorMessage("La contraseña debe tener mínimo 6 caractéres")
+      elem2.style.color = "red";
     });
 
-    console.log(infoUsuario)
-    createCompany(name,nit,razonSocial,secotrEconomico,email,phone,password)
-
-    
+    createCompany(infoUsuario.user.uid,name,publiImg,nit,razonSocial,secotrEconomico,email,phone,password)
+    history.push("/")
   }
+
+  
 
   function sumitHandler (e) {
     e.preventDefault();
@@ -44,6 +52,7 @@ function Login() {
       var elem5 = document.getElementById("sector1");
       var elem6 = document.getElementById("nit1");
       var elem7 = document.getElementById("tel1");
+      var elem8 = document.getElementById("img");
       const email = e.target.elements.email.value;
       const password = e.target.elements.password.value;
       const name = e.target.elements.name.value;
@@ -53,33 +62,59 @@ function Login() {
       const phone = e.target.elements.tel.value;
       if(email=== "")
         {
-            window.alert("Ingresa una dirección de correo valida para continuar")
+            setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
+            elem2.style.color = "white";
+            elem4.style.color = "white";
         }else if(password=== ""){
-            window.alert("Ingresa una contraseña para continuar")
+          setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
+            elem1.style.color = "white";
         }else if(name=== ""){
-          window.alert("Completa el Nombre de la empresa para continuar")
+          setErrorMessage("Completa el Nombre de la empresa para continuar")
           elem3.style.color = "red";
+          elem2.style.color = "white";
+          elem1.style.color = "white";
         }
         else if(razonSocial=== ""){
-          window.alert("Completa la razon social para continuar")
+          setErrorMessage("Completa la razon social para continuar")
           elem4.style.color = "red";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }else if(secotrEconomico=== ""){
-          window.alert("Completa el Sector economico de la empresa para continuar")
+          setErrorMessage("Completa el Sector economico de la empresa para continuar")
           elem5.style.color = "red";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }else if(nit=== ""){
-          window.alert("Completa el NIT de la empresa para continuar")
+          setErrorMessage("Completa el NIT de la empresa para continuar")
           elem6.style.color = "red";
+          elem5.style.color = "white";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }
         else if(phone=== ""){
-          window.alert("Completa el Teléfono de la empresa para continuar")
+          setErrorMessage("Completa el Teléfono de la empresa para continuar")
           elem7.style.color = "red";
-        }
+          elem6.style.color = "white";
+          elem5.style.color = "white";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
+        }else if(publiImg === ""){
+          window.alert("Carga una imagen para continuar")
+          elem8.style.color = "red";
+      }
         else{
-          registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password);
+          registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2);
         }    
-    } else {
+      } else {
 
       var elem1 = document.getElementById("email1");
       var elem2 = document.getElementById("password1");
@@ -87,26 +122,43 @@ function Login() {
       const password = e.target.elements.password.value;
       if(email=== "")
         {
-            window.alert("Ingresa una dirección de correo valida para continuar")
+          setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
         }else if(password=== ""){
-            window.alert("Ingresa una contraseña para continuar")
+          setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
         }else{
-     auth.signInWithEmailAndPassword(email, password)
-     .then((result) => {
-          let user = result.user
-          dispatch(setUserLogin({
-              name: user.uid,
-              email: user.email,
-              photo: "https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1"
-          }))
-          history.push("/")
+          auth.signInWithEmailAndPassword(email, password)
+          .then((result) => {
+                let user = result.user
+                dispatch(setUserLogin({
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    photo: user.photoURL
+                }))
+                history.push("/")
 
-      })
-    }
+            }).catch(FirebaseAuthInvalidCredentialsException => {
+
+              setErrorMessage('Contraseña o Correo incorrectos.')
+              elem2.style.color = "red";
+
+              })
+        }
     }
   }
+  const archivoMandler = async (e)=>{
+
+    setPubliImg("");
+    const archivo = e.target.files[0];
+    const storageRef = storage.ref();
+    const archivoPath = storageRef.child(archivo.name);
+    await archivoPath.put(archivo);
+    console.log(archivo.name)
+    const url =  await archivoPath.getDownloadURL();
+    setPubliImg(url);
+}
   return (
     <Container>
       <Background>
@@ -150,7 +202,10 @@ function Login() {
             <Text id="password1">Contraseña :</Text>
             <Input2 id="password" type="password"/>
           </Inputs>
-          
+          <Inputs1>
+                <Text id='img'>Foto Perfil :  </Text>
+                <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
+          </Inputs1>
           </>
         ): <>
           <Inputs >
@@ -162,11 +217,15 @@ function Login() {
             <Input2 id="password" type="password"/>
           </Inputs>
         </>}
+        {errorMessage && (
+              <Error> {errorMessage} </Error>
+            )}
         <Inputs>
             <Input4 type="submit" value={isRegistrando ? "Regístrate" : "Inicia sesión"} />
           </Inputs>
         </Form>
-        <Button onClick={() => setIsRegistrando(!isRegistrando)}>
+        <Button onClick={() => {setIsRegistrando(!isRegistrando)
+        setErrorMessage("")}}>
           {isRegistrando ? "Ya tengo una cuenta" : "Quiero registrarme"}
         </Button>
       </Data>
@@ -298,6 +357,16 @@ const Inputs = styled.div`
     align-items: center;
     
 `
+const Inputs1 = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+`
+const Input7 = styled.input`
+    margin: 2vh;
+   
+    
+`
 const Button = styled.button`
     border-radius: 1vh;
     font-size: 2vh;
@@ -318,3 +387,6 @@ const Button = styled.button`
         background: rgb(198, 198, 198);
     }
 `
+const Error = styled.div`
+  color: red;
+` 
