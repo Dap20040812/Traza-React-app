@@ -29,13 +29,9 @@ function Login() {
         
       })
       return usuarioFirebase;
-    }).catch(FirebaseAuthWeakPasswordException => {
-      setErrorMessage("La contraseña debe tener mínimo 6 caractéres")
-      elem2.style.color = "red";
-    });
+    })
 
     createCompany(infoUsuario.user.uid,name,publiImg,nit,razonSocial,secotrEconomico,email,phone,password)
-    history.push("/")
   }
 
   

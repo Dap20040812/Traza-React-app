@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 
 
 
-function createRequest(idr,requestDate,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
+function createRequest(uid,idr,requestDate,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
     let uuidr = uuidv4();
     db.collection('request').doc(uuidr).set({
 
@@ -22,7 +22,7 @@ function createRequest(idr,requestDate,embalajeRequest,descriptionRequest,packag
         prodDescription: prodDescription
     })
 
-    db.collection('empresas').doc('Hola3').update( {
+    db.collection('empresas').doc(uid).update( {
         request:firebase.firestore.FieldValue.arrayUnion(uuidr)       
      });
 }

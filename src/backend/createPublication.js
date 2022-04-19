@@ -40,7 +40,7 @@ function createPublication(uid,name,photo,origin,oriAddress,destination,destAddr
         state: "active"
     })
     
-    db.collection('empresas').doc('Hola3').update( {
+    db.collection('empresas').doc(uid).update( {
         publications:firebase.firestore.FieldValue.arrayUnion(uuidP)
 
      });
