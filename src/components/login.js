@@ -31,7 +31,7 @@ function Login() {
       return usuarioFirebase;
     })
 
-    createCompany(infoUsuario.user.uid,name,publiImg,nit,razonSocial,secotrEconomico,email,phone,password)
+    createCompany(infoUsuario.user.uid,name,nit,razonSocial,secotrEconomico,email,phone,password)
   }
 
   

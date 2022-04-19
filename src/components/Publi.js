@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 
 function Publi() {
     const publis = useSelector(selectPublis);  
-    console.log(publis)
 
   return (
     <Container>
