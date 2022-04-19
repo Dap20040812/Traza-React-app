@@ -2,12 +2,15 @@ import React,{useEffect} from 'react'
 import styled from 'styled-components'
 import queryMyPublications from '../backend/queryMyPublication'
 import Publi from './Publi'
+import {selecUserUid} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
 
-useEffect(() => {
-    queryMyPublications();  
-  },[])
 
 function MyPubli() {
+
+    const userUid = useSelector(selecUserUid);
+    queryMyPublications(userUid);  
+    
   return (
     <Container>
         <Background>
