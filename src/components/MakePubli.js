@@ -13,6 +13,8 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
+import recentPublications from '../backend/recentPublications'
+
 function MakePubli() {
     var now = new Date();
     const history = useHistory()
@@ -105,6 +107,7 @@ function MakePubli() {
         {
             window.alert("Completa la dirección de origen para continuar")
             elem1.style.color = "red";
+            recentPublications('XkJRDgXUU4giJQTfetdjlvTA1Fd2','Holas')
         }else if(oriAddress=== ""){
             window.alert("Completa la dirección de origen para continuar")
             elem2.style.color = "red";

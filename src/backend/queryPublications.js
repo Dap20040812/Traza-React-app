@@ -2,7 +2,14 @@ import db from '../firebase'
 import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
 
-
+/**
+ * 
+ * @param {String} dispatch Variable de react que sirve para que se muestren la publicación
+ * @param {String} origin Lugar de origen en el cual se quiere filtrar 
+ * @param {String} destination Lugar de destino en el  cual se quiere filtrar
+ * @param {String} date Fecha de publicación en el cual se quiere filtrar
+ * @param {String} type Tipo de producto por el cual se quiere filtrar
+ */
 
 function queryPublications(dispatch,origin,destination,date,type)
 {
