@@ -11,7 +11,8 @@ function createCompany(uid,nombre,nit,razonSocial,secotrEconomico,correo,telefon
         telefonoEmpresa:telefono,
         contraseñaEmpresa:contraseña,
         publications:{},
-        request:{}
+        request:{},
+        recentPublications:{}
     })
 }
 

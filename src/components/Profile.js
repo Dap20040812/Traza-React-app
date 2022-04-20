@@ -23,6 +23,7 @@ const Container = styled.div`
     justify-content: center;
 
 `
+
 const Background = styled.div`
     position: fixed;
     top: 0;

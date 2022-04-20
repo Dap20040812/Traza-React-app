@@ -4,12 +4,19 @@ import Info from './Info'
 import RequestForm from './RequestForm';
 import db from '../firebase'
 import { useParams } from 'react-router-dom'
-
+import recentPublications from '../backend/recentPublications'
+import {selecUserUid} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
+import { useDispatch } from "react-redux"
+import Publi from './Publi';
+import recommendedPublications from '../backend/recommendedPublication';
 
 function Detail() {
 
     const {id} = useParams();
     const [publi, setPubli] = useState()
+    const userUid = useSelector(selecUserUid);
+    const dispatch = useDispatch()
     useEffect(() =>{
         db.collection("publications")
         .doc(id)
@@ -21,8 +28,11 @@ function Detail() {
     
             }
         })
-        
+        recentPublications(userUid,id);
+        recommendedPublications(dispatch);
       },[])
+
+      
    
   const [page, setPage] = useState('Info')
   
@@ -52,6 +62,7 @@ function Detail() {
                 <Background>
                     <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
                 </Background>
+                <Data>
                 <LeftData>
                     <ImageTitle>
                         <img src={publi.empresaPhoto}/>
@@ -76,10 +87,13 @@ function Detail() {
                 <RigthData>
                     {getContent()}
                 </RigthData> 
+                </Data>
            </> 
         )
 
         }
+        <Title>Publicaciones Recomendadas</Title>
+        <Publi/>
          
     </Container>
   )
@@ -91,11 +105,22 @@ const Container = styled.div`
     min-height: calc(100vh - 70px);
     padding: 0 calc(3.5vw + 5px);
     display: flex;
+    flex-direction: column;
+    position:relative;
+    justify-content: center;
+`
+const Title = styled.div`
+    color: rgb(249, 249, 249);
+    font-size: 8vh;
+    min-height: 3vh;
+    margin: 3vh;
+` 
+const Data = styled.div`
+    display: flex;
     flex-direction: row;
     position:relative;
     justify-content: center;
 `
-
 const Background = styled.div`
     position: fixed;
     top: 0;
