@@ -14,6 +14,7 @@ import {
 
 
 function Login() {
+  const [errorMessage, setErrorMessage] = useState('')
   const [isRegistrando, setIsRegistrando] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
@@ -24,7 +25,12 @@ function Login() {
 
     ).then((usuarioFirebase) => {
       return usuarioFirebase;
-    });
+    })
+    .catch(FirebaseAuthWeakPasswordException => {
+      setErrorMessage("La contraseña debe tener mínimo 6 caractéres")
+      elem2.style.color = "red";
+    })
+    ;
 
     console.log(infoUsuario)
     createCompany(name,nit,razonSocial,secotrEconomico,email,phone,password)
@@ -53,28 +59,51 @@ function Login() {
       const phone = e.target.elements.tel.value;
       if(email=== "")
         {
-            window.alert("Ingresa una dirección de correo valida para continuar")
+            setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
+            elem2.style.color = "white";
+            elem4.style.color = "red";
         }else if(password=== ""){
-            window.alert("Ingresa una contraseña para continuar")
+          setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
+            elem1.style.color = "white";
         }else if(name=== ""){
-          window.alert("Completa el Nombre de la empresa para continuar")
+          setErrorMessage("Completa el Nombre de la empresa para continuar")
           elem3.style.color = "red";
+          elem2.style.color = "white";
+          elem1.style.color = "white";
         }
         else if(razonSocial=== ""){
-          window.alert("Completa la razon social para continuar")
+          setErrorMessage("Completa la razon social para continuar")
           elem4.style.color = "red";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }else if(secotrEconomico=== ""){
-          window.alert("Completa el Sector economico de la empresa para continuar")
+          setErrorMessage("Completa el Sector economico de la empresa para continuar")
           elem5.style.color = "red";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }else if(nit=== ""){
-          window.alert("Completa el NIT de la empresa para continuar")
+          setErrorMessage("Completa el NIT de la empresa para continuar")
           elem6.style.color = "red";
+          elem5.style.color = "white";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }
         else if(phone=== ""){
-          window.alert("Completa el Teléfono de la empresa para continuar")
+          setErrorMessage("Completa el Teléfono de la empresa para continuar")
           elem7.style.color = "red";
+          elem6.style.color = "white";
+          elem5.style.color = "white";
+          elem4.style.color = "white";
+          elem2.style.color = "white";
+          elem3.style.color = "white";
+          elem1.style.color = "white";
         }
         else{
           registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password);
@@ -87,10 +116,10 @@ function Login() {
       const password = e.target.elements.password.value;
       if(email=== "")
         {
-            window.alert("Ingresa una dirección de correo valida para continuar")
+          setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
         }else if(password=== ""){
-            window.alert("Ingresa una contraseña para continuar")
+          setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
         }else{
      auth.signInWithEmailAndPassword(email, password)
@@ -103,6 +132,12 @@ function Login() {
           }))
           history.push("/")
 
+      })
+      .catch(FirebaseAuthInvalidCredentialsException => {    
+        
+          setErrorMessage('Contraseña incorrecta.')
+          elem2.style.color = "red";
+        
       })
     }
     }
@@ -161,8 +196,11 @@ function Login() {
             <Text id="password1">Contraseña :</Text>
             <Input2 id="password" type="password"/>
           </Inputs>
+          {errorMessage && (
+              <Error> {errorMessage} </Error>
+            )}
         </>}
-        <Inputs>
+          <Inputs>
             <Input4 type="submit" value={isRegistrando ? "Regístrate" : "Inicia sesión"} />
           </Inputs>
         </Form>
@@ -317,4 +355,8 @@ const Button = styled.button`
     &:hover {
         background: rgb(198, 198, 198);
     }
+`
+
+const Error = styled.div `
+    color: red;
 `
