@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import firebase from 'firebase/compat/app'; 
 
 /**
- * 
+ * Esta función dirve para crear una publicación
  * @param {String} uid El uid de la empresa asignada a esta publicaión
  * @param {String} name Nombre de la empresa
  * @param {String} photo Foto de la empresa

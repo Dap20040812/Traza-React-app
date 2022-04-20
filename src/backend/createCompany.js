@@ -1,6 +1,6 @@
 import db from '../firebase'
 /**
- * 
+ * Esta función sirve para crear una empresa
  * @param {String} uid Uid de la empresa
  * @param {String} nombre Nombre de la empresa
  * @param {String} nit Nit de la empresa
