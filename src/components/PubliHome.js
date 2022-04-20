@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
 import countryData from '../data/countrydata'
 import queryPublications from '../backend/queryPublications'
-
+import { showRecentPublication } from '../backend/recentPublications'
 
 
 function PubliHome() {
@@ -32,6 +32,7 @@ function PubliHome() {
     const [products, setProducts] = useState('');
     
     useEffect(() => {
+        
         queryPublications(dispatch,'','','','')  
       },[])
 

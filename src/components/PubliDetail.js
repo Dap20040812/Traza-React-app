@@ -4,7 +4,7 @@ import Info from './Info'
 import RequestForm from './RequestForm';
 import db from '../firebase'
 import { useParams } from 'react-router-dom'
-import recentPublications from '../backend/recentPublications'
+//import recentPublications from '../backend/recentPublications'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
@@ -28,7 +28,7 @@ function Detail() {
     
             }
         })
-        recentPublications(userUid,id);
+        //recentPublications(userUid,id); Diego esta función ya no se llama así :)
         recommendedPublications(dispatch);
       },[])
 
