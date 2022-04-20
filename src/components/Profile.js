@@ -1,13 +1,43 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
+import {selecUserUid, selecUserPhoto} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
+import db from '../firebase'
+
 
 function Profile() {
+    const userUid = useSelector(selecUserUid);
+    const photo = useSelector(selecUserPhoto);
+    const [company, setCompany] = useState()
+
+    useEffect(() =>{
+        db.collection("empresas")
+        .doc(userUid)
+        .get()
+        .then((doc) => {
+            if(doc.exists){
+                setCompany(doc.data());
+            }else {
+    
+            }
+        })
+      },[])
+
   return (
     <Container>
-        <Background>
+        { company && (
+           <>
+            <Background>
             <img src="https://www.semana.com/resizer/pxkdm8iOSLbj0Y3QWYUMj5p5L_U=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NJC5QSBBZZEQPABT3MEMZPZVOM.jpg" />
-        </Background>
-        <Data>hola</Data>
+            </Background>
+            <Data>
+                <Title>Perfil Empresa</Title>
+                <ImageTitle>
+                    <img src={photo}/>
+                </ImageTitle>
+            </Data>
+           </>
+        )} 
     </Container>
   )
 }
@@ -23,7 +53,17 @@ const Container = styled.div`
     justify-content: center;
 
 `
+const ImageTitle = styled.div`
+    max-height: 35vh;
+    max-width: 35vh;
 
+    img{ 
+        max-width: 35vh;
+        max-height: 35vh;
+        border-radius: 50%
+    }
+
+`
 const Background = styled.div`
     position: fixed;
     top: 0;
@@ -39,12 +79,20 @@ const Background = styled.div`
         object-fit:cover;
     }
 `
+const Title = styled.div`
+    color: rgb(249, 249, 249);
+    font-size: 6vh;
+    min-height: 3vh;
+    margin: 3vh;
+` 
 const Data = styled.div`
     border-radius: 1vh;
     background-color: #929294BA;
     margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 2vh;
-    opacity: 0.9;
     max-height: 200vh;
     width: 70vh;
     overflow: hidden;

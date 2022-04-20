@@ -105,9 +105,23 @@ function MakePubli() {
         {
             window.alert("Completa la dirección de origen para continuar")
             elem1.style.color = "red";
+            elem2.style.color = "white";
+            elem3.style.color = "white";
+            elem4.style.color = "white";
+            elem5.style.color = "white";
+            elem6.style.color = "white";
+            elem7.style.color = "white";
+            elem8.style.color = "white";
+            elem9.style.color = "white";
+            elem10.style.color = "white";
+            elem11.style.color = "white";
+            elem12.style.color = "white";
+            elem13.style.color = "white";
+            elem14.style.color = "white";
         }else if(oriAddress=== ""){
             window.alert("Completa la dirección de origen para continuar")
             elem2.style.color = "red";
+            elem1.style.color = "white";
         }else if(destination=== ""){
             window.alert("Completa la dirección de destino para continuar")
             elem3.style.color = "red";

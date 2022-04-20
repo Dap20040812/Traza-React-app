@@ -29,7 +29,13 @@ function Login() {
         
       })
       return usuarioFirebase;
-    })
+      
+    }).catch(FirebaseAuthUserCollisionException => {
+      setErrorMessage('Este correo ya existe') 
+  })
+  .catch(FirebaseAuthWeakPasswordException => {
+      setErrorMessage('La contraseña debe tener mas de 6 caracteres')
+  })
 
     createCompany(infoUsuario.user.uid,name,nit,razonSocial,secotrEconomico,email,phone,password)
   }
