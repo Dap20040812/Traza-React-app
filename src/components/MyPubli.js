@@ -11,6 +11,10 @@ function MyPubli() {
     
     const dispatch = useDispatch()
     const userUid = useSelector(selecUserUid);
+
+    /**
+     * Muestra las publicaciones actuales de la empresa
+     */
     useEffect(() => {
         queryMyPublications(userUid,dispatch);  
     },[]) 

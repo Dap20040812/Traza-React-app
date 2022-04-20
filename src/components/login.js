@@ -16,7 +16,18 @@ function Login() {
   const [publiImg, setPubliImg] = useState('');
   const [errorMessage, setErrorMessage] = useState('')
 
-  async function registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2) {
+  /**
+   * Registra una empresa en la base de datos
+   * @param {*} name 
+   * @param {*} nit 
+   * @param {*} razonSocial 
+   * @param {*} sectorEconomico 
+   * @param {*} email 
+   * @param {*} phone 
+   * @param {*} password 
+   * @param {*} elem2 
+   */
+  async function registrarUsuario(name,nit,razonSocial,sectorEconomico,email,phone,password,elem2) {
     const infoUsuario = await auth.createUserWithEmailAndPassword(
       email,
       password,
@@ -29,19 +40,23 @@ function Login() {
         
       })
       return usuarioFirebase;
+      
     }).catch(FirebaseAuthUserCollisionException => {
-        setErrorMessage('Este correo ya existe') 
-    })
-    .catch(FirebaseAuthWeakPasswordException => {
-        setErrorMessage('La contraseña debe tener mas de 6 caracteres')
-    })
+      setErrorMessage('Este correo ya existe') 
+  })
+  .catch(FirebaseAuthWeakPasswordException => {
+      setErrorMessage('La contraseña debe tener mas de 6 caracteres')
+  })
 
     createCompany(infoUsuario.user.uid,name,nit,razonSocial,secotrEconomico,email,phone,password)
   }
 
-  
+  /**
+   * Verifica los datos ingresados por la empresa en el registro y login
+   * @param {*} e 
+   */
 
-  function sumitHandler (e) {
+  function submitHandler (e) {
     e.preventDefault();
     
 
@@ -58,7 +73,7 @@ function Login() {
       const password = e.target.elements.password.value;
       const name = e.target.elements.name.value;
       const razonSocial = e.target.elements.social.value;
-      const secotrEconomico = e.target.elements.sector.value;
+      const sectorEconomico = e.target.elements.sector.value;
       const nit = e.target.elements.nit.value;
       const phone = e.target.elements.tel.value;
       if(email=== "")
@@ -83,7 +98,7 @@ function Login() {
           elem2.style.color = "white";
           elem3.style.color = "white";
           elem1.style.color = "white";
-        }else if(secotrEconomico=== ""){
+        }else if(sectorEconomico=== ""){
           setErrorMessage("Completa el Sector economico de la empresa para continuar")
           elem5.style.color = "red";
           elem4.style.color = "white";
@@ -113,7 +128,7 @@ function Login() {
           elem8.style.color = "red";
       }
         else{
-          registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2);
+          registrarUsuario(name,nit,razonSocial,sectorEconomico,email,phone,password,elem2);
         }    
       } else {
 
@@ -149,6 +164,11 @@ function Login() {
         }
     }
   }
+
+  /**
+   * Guarda la imagen registrada por el usuario en el storage y genera un URL con la que se mostrará en la plataforma
+   * @param {*} e 
+   */
   const archivoMandler = async (e)=>{
 
     setPubliImg("");
@@ -165,7 +185,7 @@ function Login() {
       <Background>
       </Background>
       <Data>
-        <Form onSubmit={sumitHandler}> 
+        <Form onSubmit={submitHandler}> 
         <Title>{isRegistrando ? "Regístrate" : "Inicia sesión"}</Title>
         {isRegistrando ? (
           <>

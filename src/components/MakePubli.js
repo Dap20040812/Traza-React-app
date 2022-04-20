@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react' 
 import styled from 'styled-components'
 import db from '../firebase'
 import {storage} from '../firebase'
@@ -20,23 +20,9 @@ function MakePubli() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    const userUid = useSelector(selecUserUid);
-    const userName = useSelector(selecUserName);
-    const userPhoto = useSelector(selecUserPhoto);
-
-    console.log(userUid)
-    
-    const endpoint = 'https://raw.githubusercontent.com/Dap20040812/Traza-Data/main/tipopodructos.json';
-    const cities = [];
-    const obtenerDatos = async () => {
-        await fetch(endpoint)
-            .then ((respuesta) => respuesta.json())
-            .then ((data) => {
-                data.forEach((elemento) =>{
-                cities.push(elemento)
-            })
-        })
-    }       
+    const userUid = useSelector(selecUserUid); //Obtiene el UUID del usuario actual
+    const userName = useSelector(selecUserName); //Obtiene el nombre del usuario actual
+    const userPhoto = useSelector(selecUserPhoto); //Obtiene la foto del usuario actual   
     
     const ProductData = [
         { name: ''},
@@ -81,7 +67,10 @@ function MakePubli() {
     const [freeSpaceUnidades, setFreeSpaceUnidades] = useState('');
     const [publiImg, setPubliImg] = useState('');
 
-    
+    /**
+     * Verifica los datos registrados en el formulario de la publicacion
+     * @param {*} e  
+     */
 
     const handleSubmit = e => {
         var elem1 = document.getElementById("origen");
@@ -105,9 +94,23 @@ function MakePubli() {
         {
             window.alert("Completa la dirección de origen para continuar")
             elem1.style.color = "red";
+            elem2.style.color = "white";
+            elem3.style.color = "white";
+            elem4.style.color = "white";
+            elem5.style.color = "white";
+            elem6.style.color = "white";
+            elem7.style.color = "white";
+            elem8.style.color = "white";
+            elem9.style.color = "white";
+            elem10.style.color = "white";
+            elem11.style.color = "white";
+            elem12.style.color = "white";
+            elem13.style.color = "white";
+            elem14.style.color = "white";
         }else if(oriAddress=== ""){
             window.alert("Completa la dirección de origen para continuar")
             elem2.style.color = "red";
+            elem1.style.color = "white";
         }else if(destination=== ""){
             window.alert("Completa la dirección de destino para continuar")
             elem3.style.color = "red";
@@ -181,6 +184,11 @@ function MakePubli() {
         
 
     }
+
+    /**
+     * Guarda la imagen de la publicacion en el storage y devuelve un URL con que se mostrará la imagen en la página
+     * @param {*} e 
+     */
 
     const archivoMandler = async (e)=>{
 

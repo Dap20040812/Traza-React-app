@@ -31,11 +31,17 @@ function PubliHome() {
     const [date, setDate] = useState('');
     const [products, setProducts] = useState('');
     
+    /**
+     * Busca publicaciones actuales disponibles
+     */
     useEffect(() => {
         queryPublications(dispatch,'','','','')  
       },[])
 
-
+    /**
+     * Realiza un query con los datos ingresados por el usuario
+     * @param {*} e 
+     */
     const handleSubmit = e => {
         e.preventDefault();
         queryPublications(dispatch,origin,destination,date,products) 
