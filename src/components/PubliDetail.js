@@ -10,7 +10,6 @@ function Detail() {
 
     const {id} = useParams();
     const [publi, setPubli] = useState()
-
     useEffect(() =>{
         db.collection("publications")
         .doc(id)
@@ -22,13 +21,17 @@ function Detail() {
     
             }
         })
+        
       },[])
-  
+   
   const [page, setPage] = useState('Info')
+  
   const getContent = () => {
+    
     if(page === 'Info'){
-      return(
-            <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} nit={publi.empresaNit}/> 
+       return(
+            <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} uid={publi.empresaUid} name={publi.empresaName}/> 
+            
         )
     }
     else if (page === 'Request'){
@@ -37,12 +40,11 @@ function Detail() {
       )
     }
   }
-
   const toPage = page => event =>{
     event.preventDefault()
     setPage(page) 
   }
- 
+  
   return (
     <Container>
         { publi && (
@@ -52,7 +54,7 @@ function Detail() {
                 </Background>
                 <LeftData>
                     <ImageTitle>
-                        <img src="https://us.123rf.com/450wm/putracetol/putracetol1805/putracetol180502430/101057512-dise%C3%B1o-del-icono-del-logotipo-de-entrega.jpg?ver=6"/>
+                        <img src={publi.empresaPhoto}/>
                     </ImageTitle>
                     <Price>
                         $ {publi.price}
@@ -65,9 +67,7 @@ function Detail() {
                                 <span>+ INFO</span>
                             </TrailerButton>
                         </Controls>
-                        <SubTitle>
-                            {publi.empresaNit}
-                        </SubTitle>
+                        <SubTitle>{publi.empresaName}</SubTitle>
                         <Description>
                             {publi.serviceDescription}
                         </Description>

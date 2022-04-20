@@ -1,13 +1,27 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import styled from 'styled-components'
+import queryMyPublications from '../backend/queryMyPublication'
+import Publi from './Publi'
+import {selecUserUid} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
+import { useDispatch } from "react-redux"
+
 
 function MyPubli() {
+    
+    const dispatch = useDispatch()
+    const userUid = useSelector(selecUserUid);
+    useEffect(() => {
+        queryMyPublications(userUid,dispatch);  
+    },[]) 
+    
   return (
     <Container>
         <Background>
             <img src="https://www.semana.com/resizer/pxkdm8iOSLbj0Y3QWYUMj5p5L_U=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NJC5QSBBZZEQPABT3MEMZPZVOM.jpg" />
         </Background>
-        <Data>hola</Data>
+        <Title>Mis Publicaciones</Title>
+        <Publi/>
     </Container>
   )
 }
@@ -18,7 +32,7 @@ const Container = styled.div`
     min-height: calc(100vh - 70px);
     padding: 0 calc(3.5vw + 5px);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position:relative;
     justify-content: center;
 
@@ -37,8 +51,15 @@ const Background = styled.div`
         height: 100%;
         object-fit:cover;
     }
+
 `
-    const Data = styled.div`
+const Title = styled.div`
+    color: rgb(249, 249, 249);
+    font-size: 8vh;
+    min-height: 3vh;
+    margin: 3vh;
+`    
+const Data = styled.div`
         border-radius: 1vh;
         background-color: #929294BA;
         margin-top: 5vh;

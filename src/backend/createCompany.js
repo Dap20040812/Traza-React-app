@@ -1,11 +1,12 @@
 import db from '../firebase'
 
-function createCompany(nombre,nit,razonSocial,secotrEconomico,correo,telefono,contraseña)
+function createCompany(uid,nombre,nit,razonSocial,secotrEconomico,correo,telefono,contraseña)
 {
-    db.collection('empresas').doc(nit).set({
+    db.collection('empresas').doc(uid).set({
         nombreEmpresa:nombre,
         razon:razonSocial,
         sectorEco:secotrEconomico,
+        nit: nit,
         correoEmpresa:correo,
         telefonoEmpresa:telefono,
         contraseñaEmpresa:contraseña,

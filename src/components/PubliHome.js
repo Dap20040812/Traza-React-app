@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import db from '../firebase'
 import Publi from './Publi'
 import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
 import countryData from '../data/countrydata'
-
+import queryPublications from '../backend/queryPublications'
 
 
 
@@ -15,6 +15,8 @@ function PubliHome() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    const dispatch = useDispatch()
+   
     const ProductData = [
         { name: ''},
         { name: 'Alimentos' },
@@ -24,17 +26,24 @@ function PubliHome() {
         { name: 'Telas' }
               
     ]; 
-
-    const dispatch = useDispatch();
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [date, setDate] = useState('');
+    const [products, setProducts] = useState('');
+    
     useEffect(() => {
+        queryPublications(dispatch,'','','','')  
+      },[])
 
-    db.collection("publications").onSnapshot((snapshot)=>{
-        let tempPublis = snapshot.docs.map((doc)=>{
-            return {id: doc.id, ...doc.data()}
-        }) 
-        dispatch(setPublis(tempPublis));
-    })
-  },[])
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        queryPublications(dispatch,origin,destination,date,products) 
+    }
+     
+    
+
+
 
   return (
     <Container>
@@ -42,27 +51,26 @@ function PubliHome() {
             <img src="https://www.ecestaticos.com/imagestatic/clipping/2a9/b8a/2a9b8ad7e8acf162441cde81351c2f16/el-exito-del-primer-camion-100-autonomo-anuncia-el-fin-de-los-transportistas.jpg?mtime=1640954821"/>
         </Background>
         <Navegator>
-            <Origin value={origin} id="origi">
+            <Origin  id="origi" onChange={e => setOrigin(e.target.value)}>
                          {countryData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
                         })}
             </Origin>
-            <Destination value={origin} id="origi">
+            <Destination id="dest" onChange={e => setDestination(e.target.value)}>
                          {countryData.map((e, key) => {
                             return <option key={key}>{e.name}</option>;
                         })}
             </Destination>
-            <Fecha type="date" id="start" name="trip-start"
+            <Fecha type="date" id="date" name="trip-start"
                         min={today} max ="2022-12-30" />
-            <Product>
+            <Product id="prod">
                 {ProductData.map((e, key) => {
                     return <option key={key}>{e.name}</option>;
                 })}
             </Product>  
-            <Search>
-                <span> 🔎</span>
+            <Search onClick={handleSubmit}>
+                <span>🔎</span>
             </Search>
-            
         </Navegator>
         <Publi/>
         
@@ -144,3 +152,4 @@ const Fecha = styled.input`
 const Product = styled(Origin)``
 
 
+const Form = styled.form``

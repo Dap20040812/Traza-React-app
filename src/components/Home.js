@@ -7,7 +7,6 @@ import Publi from './Publi'
 
 
 function Home() {
-
   
   return (
     <Container>

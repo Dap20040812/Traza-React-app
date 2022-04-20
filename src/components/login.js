@@ -4,13 +4,9 @@ import createCompany from "../backend/createCompany";
 import EmbalajeData from "../data/EmbalajeData";
 import {auth} from "../firebase"
 import {useDispatch, useSelector} from "react-redux"
+import {storage} from '../firebase'
 import { useHistory } from 'react-router-dom'
-import {
-  selecUserName,
-  selecUserPhoto,
-  setUserLogin,
-  setSignOut
-} from "../features/user/userSlice"
+import {setUserLogin} from "../features/user/userSlice"
 
 
 function Login() {
@@ -18,14 +14,24 @@ function Login() {
   const [isRegistrando, setIsRegistrando] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
-  async function registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password) {
+  const [publiImg, setPubliImg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('')
+
+  async function registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2) {
     const infoUsuario = await auth.createUserWithEmailAndPassword(
       email,
-      password
+      password,
 
     ).then((usuarioFirebase) => {
+      usuarioFirebase.user.updateProfile({
+        displayName: name,
+        phoneNumber: phone,
+        photoURL: publiImg
+        
+      })
       return usuarioFirebase;
     })
+<<<<<<< HEAD
     .catch(FirebaseAuthWeakPasswordException => {
       setErrorMessage("La contraseña debe tener mínimo 6 caractéres")
       elem2.style.color = "red";
@@ -34,9 +40,13 @@ function Login() {
 
     console.log(infoUsuario)
     createCompany(name,nit,razonSocial,secotrEconomico,email,phone,password)
+=======
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
 
-    
+    createCompany(infoUsuario.user.uid,name,nit,razonSocial,secotrEconomico,email,phone,password)
   }
+
+  
 
   function sumitHandler (e) {
     e.preventDefault();
@@ -50,6 +60,7 @@ function Login() {
       var elem5 = document.getElementById("sector1");
       var elem6 = document.getElementById("nit1");
       var elem7 = document.getElementById("tel1");
+      var elem8 = document.getElementById("img");
       const email = e.target.elements.email.value;
       const password = e.target.elements.password.value;
       const name = e.target.elements.name.value;
@@ -62,7 +73,11 @@ function Login() {
             setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
             elem2.style.color = "white";
+<<<<<<< HEAD
             elem4.style.color = "red";
+=======
+            elem4.style.color = "white";
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
         }else if(password=== ""){
           setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
@@ -104,11 +119,18 @@ function Login() {
           elem2.style.color = "white";
           elem3.style.color = "white";
           elem1.style.color = "white";
+<<<<<<< HEAD
         }
+=======
+        }else if(publiImg === ""){
+          window.alert("Carga una imagen para continuar")
+          elem8.style.color = "red";
+      }
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
         else{
-          registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password);
+          registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2);
         }    
-    } else {
+      } else {
 
       var elem1 = document.getElementById("email1");
       var elem2 = document.getElementById("password1");
@@ -122,16 +144,18 @@ function Login() {
           setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
         }else{
-     auth.signInWithEmailAndPassword(email, password)
-     .then((result) => {
-          let user = result.user
-          dispatch(setUserLogin({
-              name: user.uid,
-              email: user.email,
-              photo: "https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1"
-          }))
-          history.push("/")
+          auth.signInWithEmailAndPassword(email, password)
+          .then((result) => {
+                let user = result.user
+                dispatch(setUserLogin({
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    photo: user.photoURL
+                }))
+                history.push("/")
 
+<<<<<<< HEAD
       })
       .catch(FirebaseAuthInvalidCredentialsException => {    
         
@@ -140,8 +164,28 @@ function Login() {
         
       })
     }
+=======
+            }).catch(FirebaseAuthInvalidCredentialsException => {
+
+              setErrorMessage('Contraseña o Correo incorrectos.')
+              elem2.style.color = "red";
+
+              })
+        }
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
     }
   }
+  const archivoMandler = async (e)=>{
+
+    setPubliImg("");
+    const archivo = e.target.files[0];
+    const storageRef = storage.ref();
+    const archivoPath = storageRef.child(archivo.name);
+    await archivoPath.put(archivo);
+    console.log(archivo.name)
+    const url =  await archivoPath.getDownloadURL();
+    setPubliImg(url);
+}
   return (
     <Container>
       <Background>
@@ -185,7 +229,10 @@ function Login() {
             <Text id="password1">Contraseña :</Text>
             <Input2 id="password" type="password"/>
           </Inputs>
-          
+          <Inputs1>
+                <Text id='img'>Foto Perfil :  </Text>
+                <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
+          </Inputs1>
           </>
         ): <>
           <Inputs >
@@ -200,11 +247,19 @@ function Login() {
               <Error> {errorMessage} </Error>
             )}
         </>}
+<<<<<<< HEAD
           <Inputs>
+=======
+        {errorMessage && (
+              <Error> {errorMessage} </Error>
+            )}
+        <Inputs>
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
             <Input4 type="submit" value={isRegistrando ? "Regístrate" : "Inicia sesión"} />
           </Inputs>
         </Form>
-        <Button onClick={() => setIsRegistrando(!isRegistrando)}>
+        <Button onClick={() => {setIsRegistrando(!isRegistrando)
+        setErrorMessage("")}}>
           {isRegistrando ? "Ya tengo una cuenta" : "Quiero registrarme"}
         </Button>
       </Data>
@@ -336,6 +391,16 @@ const Inputs = styled.div`
     align-items: center;
     
 `
+const Inputs1 = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+`
+const Input7 = styled.input`
+    margin: 2vh;
+   
+    
+`
 const Button = styled.button`
     border-radius: 1vh;
     font-size: 2vh;
@@ -356,7 +421,13 @@ const Button = styled.button`
         background: rgb(198, 198, 198);
     }
 `
+<<<<<<< HEAD
 
 const Error = styled.div `
     color: red;
 `
+=======
+const Error = styled.div`
+  color: red;
+` 
+>>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d

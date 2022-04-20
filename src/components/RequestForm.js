@@ -4,6 +4,8 @@ import EmbalajeData from '../data/EmbalajeData';
 import createRequest from '../backend/createRequest';
 import { useHistory } from 'react-router-dom'
 import ProductData from '../data/ProductData';
+import {selecUserUid} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
 
 
 function RequestForm(props) {
@@ -12,6 +14,8 @@ function RequestForm(props) {
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     const history = useHistory()
+    const userUid = useSelector(selecUserUid);
+
 
 
     const [description, setDescription] = useState('');
@@ -52,7 +56,7 @@ function RequestForm(props) {
         {
             console.log(prodDescription)
             e.preventDefault();
-            createRequest(props.publi,today,embalaje,description,reHeight,reWidth,reLength,reUnidades,products,prodDescription);
+            createRequest(userUid,props.publi,today,embalaje,description,reHeight,reWidth,reLength,reUnidades,products,prodDescription);
             setDescription("");
             setProducts("");
             setProdDescription("");
