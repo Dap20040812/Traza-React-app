@@ -10,7 +10,6 @@ import {setUserLogin} from "../features/user/userSlice"
 
 
 function Login() {
-  const [errorMessage, setErrorMessage] = useState('')
   const [isRegistrando, setIsRegistrando] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
@@ -30,18 +29,12 @@ function Login() {
         
       })
       return usuarioFirebase;
+    }).catch(FirebaseAuthUserCollisionException => {
+        setErrorMessage('Este correo ya existe') 
     })
-<<<<<<< HEAD
     .catch(FirebaseAuthWeakPasswordException => {
-      setErrorMessage("La contraseña debe tener mínimo 6 caractéres")
-      elem2.style.color = "red";
+        setErrorMessage('La contraseña debe tener mas de 6 caracteres')
     })
-    ;
-
-    console.log(infoUsuario)
-    createCompany(name,nit,razonSocial,secotrEconomico,email,phone,password)
-=======
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
 
     createCompany(infoUsuario.user.uid,name,nit,razonSocial,secotrEconomico,email,phone,password)
   }
@@ -73,11 +66,7 @@ function Login() {
             setErrorMessage("Ingresa una dirección de correo valida para continuar")
             elem1.style.color = "red";
             elem2.style.color = "white";
-<<<<<<< HEAD
-            elem4.style.color = "red";
-=======
             elem4.style.color = "white";
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
         }else if(password=== ""){
           setErrorMessage("Ingresa una contraseña para continuar")
             elem2.style.color = "red";
@@ -119,14 +108,10 @@ function Login() {
           elem2.style.color = "white";
           elem3.style.color = "white";
           elem1.style.color = "white";
-<<<<<<< HEAD
-        }
-=======
         }else if(publiImg === ""){
           window.alert("Carga una imagen para continuar")
           elem8.style.color = "red";
       }
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
         else{
           registrarUsuario(name,nit,razonSocial,secotrEconomico,email,phone,password,elem2);
         }    
@@ -155,16 +140,6 @@ function Login() {
                 }))
                 history.push("/")
 
-<<<<<<< HEAD
-      })
-      .catch(FirebaseAuthInvalidCredentialsException => {    
-        
-          setErrorMessage('Contraseña incorrecta.')
-          elem2.style.color = "red";
-        
-      })
-    }
-=======
             }).catch(FirebaseAuthInvalidCredentialsException => {
 
               setErrorMessage('Contraseña o Correo incorrectos.')
@@ -172,7 +147,6 @@ function Login() {
 
               })
         }
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
     }
   }
   const archivoMandler = async (e)=>{
@@ -243,18 +217,11 @@ function Login() {
             <Text id="password1">Contraseña :</Text>
             <Input2 id="password" type="password"/>
           </Inputs>
-          {errorMessage && (
-              <Error> {errorMessage} </Error>
-            )}
         </>}
-<<<<<<< HEAD
-          <Inputs>
-=======
         {errorMessage && (
               <Error> {errorMessage} </Error>
             )}
         <Inputs>
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
             <Input4 type="submit" value={isRegistrando ? "Regístrate" : "Inicia sesión"} />
           </Inputs>
         </Form>
@@ -421,13 +388,6 @@ const Button = styled.button`
         background: rgb(198, 198, 198);
     }
 `
-<<<<<<< HEAD
-
-const Error = styled.div `
-    color: red;
-`
-=======
 const Error = styled.div`
   color: red;
 ` 
->>>>>>> 89492f87aa790571417938d5a56cbedd68982c2d
