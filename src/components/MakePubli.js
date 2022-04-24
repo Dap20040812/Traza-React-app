@@ -26,20 +26,6 @@ function MakePubli() {
     const userName = useSelector(selecUserName);
     const userPhoto = useSelector(selecUserPhoto);
 
-    console.log(userUid)
-    
-    const endpoint = 'https://raw.githubusercontent.com/Dap20040812/Traza-Data/main/tipopodructos.json';
-    const cities = [];
-    const obtenerDatos = async () => {
-        await fetch(endpoint)
-            .then ((respuesta) => respuesta.json())
-            .then ((data) => {
-                data.forEach((elemento) =>{
-                cities.push(elemento)
-            })
-        })
-    }       
-    
     const ProductData = [
         { name: ''},
         { name: 'Alimentos' },

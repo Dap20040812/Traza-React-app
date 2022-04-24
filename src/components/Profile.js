@@ -32,9 +32,22 @@ function Profile() {
             </Background>
             <Data>
                 <Title>Perfil Empresa</Title>
-                <ImageTitle>
-                    <img src={photo}/>
+                <ImageTitle className='imgage'>
+                    <img className='img1' src={photo}/>
+                    <img className='img2' src='images/ci.jpg'/>
                 </ImageTitle>
+                <Texts>
+                    <SubTitle>Nombre : </SubTitle>
+                    <Text>{company.nombreEmpresa}</Text>
+                </Texts>
+                <Texts>
+                    <SubTitle>Nit : </SubTitle>
+                    <Text>{company.nit}</Text>
+                </Texts>
+                <Texts>
+                    <SubTitle>Email : </SubTitle>
+                    <Text>{company.correoEmpresa}</Text>
+                </Texts>
             </Data>
            </>
         )} 
@@ -56,12 +69,34 @@ const Container = styled.div`
 const ImageTitle = styled.div`
     max-height: 35vh;
     max-width: 35vh;
+    position: relative;
 
-    img{ 
-        max-width: 35vh;
-        max-height: 35vh;
-        border-radius: 50%
+    .img1{ 
+        width: 30vh;
+        height: 30vh;
+        border-radius: 50%;
     }
+    .img2 {
+        position: absolute;  
+        top: 0;  
+        left: 0;
+        opacity: 0;
+        transition: .5s;
+        width: 30vh;
+        height: 30vh;
+        border-radius: 50%;
+    }
+    &:hover .img2{
+        transform: scale(1.05);
+        box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
+        rgb(0 0 0 / 72%) 0px 30px 22px -10px;
+        border-color: rgba(249, 249, 249 , 0.8);
+        color: white;
+        opacity: 0.9;
+    }
+
+
+
 
 `
 const Background = styled.div`
@@ -94,10 +129,27 @@ const Data = styled.div`
     align-items: center;
     padding: 2vh;
     max-height: 200vh;
-    width: 70vh;
+    max width: 100vh;
     overflow: hidden;
     border: 3px solid rgba(249, 249, 249, 0.7); 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 `
+const Texts = styled.div`
+
+    display: flex;
+    flex-direction: row;
+
+`
+const SubTitle = styled.div`
+    color: white;
+    font-weight: bold;
+    font-size: 4vh;
+    padding:2vh;
+`
+const Text = styled.div`
+    color: white;
+    font-size: 4vh;
+    padding:2vh;    
+`  
