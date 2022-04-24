@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
 
 /**
- * 
+ * Esta función sirve para hacer consultas entre todas las publicaciones
  * @param {String} dispatch Variable de react que sirve para que se muestren la publicación
  * @param {String} origin Lugar de origen en el cual se quiere filtrar 
  * @param {String} destination Lugar de destino en el  cual se quiere filtrar

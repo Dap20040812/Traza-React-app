@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react' 
 import styled from 'styled-components'
 import db from '../firebase'
 import {storage} from '../firebase'
@@ -22,10 +22,11 @@ function MakePubli() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    const userUid = useSelector(selecUserUid);
-    const userName = useSelector(selecUserName);
-    const userPhoto = useSelector(selecUserPhoto);
 
+    const userUid = useSelector(selecUserUid); //Obtiene el UUID del usuario actual
+    const userName = useSelector(selecUserName); //Obtiene el nombre del usuario actual
+    const userPhoto = useSelector(selecUserPhoto); //Obtiene la foto del usuario actual   
+    
     const ProductData = [
         { name: ''},
         { name: 'Alimentos' },
@@ -69,7 +70,10 @@ function MakePubli() {
     const [freeSpaceUnidades, setFreeSpaceUnidades] = useState('');
     const [publiImg, setPubliImg] = useState('');
 
-    
+    /**
+     * Verifica los datos registrados en el formulario de la publicacion
+     * @param {*} e  
+     */
 
     const handleSubmit = e => {
         var elem1 = document.getElementById("origen");
@@ -183,6 +187,11 @@ function MakePubli() {
         
 
     }
+
+    /**
+     * Guarda la imagen de la publicacion en el storage y devuelve un URL con que se mostrará la imagen en la página
+     * @param {*} e 
+     */
 
     const archivoMandler = async (e)=>{
 

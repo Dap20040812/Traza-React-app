@@ -36,6 +36,10 @@ function Detail() {
    
   const [page, setPage] = useState('Info')
   
+  /**
+   * Llama a otros componentes
+   * @returns Información de la publicación o el formulario de solicitud
+   */
   const getContent = () => {
     
     if(page === 'Info'){

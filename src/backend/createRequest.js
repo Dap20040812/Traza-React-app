@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import firebase from 'firebase/compat/app'; 
 
 /**
- * 
+ * Esta función sirve para crear una solicitud
  * @param {String} uid uid de la empresa relacionada con la petición correspondiente
  * @param {String} idr iid de la peteición
  * @param {String} requestDate Fecha de la petición

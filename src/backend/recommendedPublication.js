@@ -1,6 +1,10 @@
 import db from '../firebase'
 import { setPublis } from '../features/publi/publiSlice'
 
+/**
+ * Esta función sirve para mostrar las publicación recomendadas
+ * @param {String} dispatch Variable de react que funciona para que las publicaciones se vean
+ */
 
 function recommendedPublications(dispatch)
 {

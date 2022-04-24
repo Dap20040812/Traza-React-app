@@ -20,6 +20,9 @@ function Header() {
     const history = useHistory()
     const userPhoto = useSelector(selecUserPhoto);
     
+    /**
+     * Verifica que un usuario esté activo y cambia el header si detecta un usuario
+     */
 
     useEffect(() => {
       auth.onAuthStateChanged(async (user) =>{
@@ -39,7 +42,10 @@ function Header() {
     
     const userName = useSelector(selecUserName);
 
-  
+  /**
+   * Detecta cuando un usuario cierra sesión y lo envia a la página de intro
+   */
+
     const signOut = () => {
         auth.signOut()
         .then(()=> {

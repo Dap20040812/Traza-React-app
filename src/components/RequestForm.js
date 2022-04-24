@@ -22,19 +22,19 @@ function RequestForm(props) {
     const [products, setProducts] = useState('');
     const [prodDescription, setProdDescription] = useState('');
     const [embalaje, setEmbalaje] = useState('');
-    const [reHeight, setReHeight] = useState('');
-    const [reWidth, setReWidth] = useState('');
-    const [reLength, setReLength] = useState('');
-    const [reUnidades, setReUnidades] = useState('');
+    const [requestHeight, setrequestHeight] = useState(''); 
+    const [requestWidth, setrequestWidth] = useState(''); 
+    const [requestLength, setrequestLength] = useState('');
+    const [requestUnidades, setrequestUnidades] = useState('');
 
     console.log(props.publi)
 
     const handleSubmit = e => {
-        var elem7 = document.getElementById("desc");
-        var elem8 = document.getElementById("prod");
-        var elem9 = document.getElementById("pdesc");
-        var elem10 = document.getElementById("em");
-        var elem11 = document.getElementById("dc");
+        var elem7 = document.getElementById("desc"); //descripción del envío
+        var elem8 = document.getElementById("prod"); //productos
+        var elem9 = document.getElementById("pdesc"); //descripción de los productos
+        var elem10 = document.getElementById("em"); //embalaje
+        var elem11 = document.getElementById("dc"); //dimensiones del camión
 
         if(description=== ""){
             window.alert("Completa la descripción para continuar")
@@ -48,7 +48,7 @@ function RequestForm(props) {
         }else if(embalaje === ""){
             window.alert("Completa el tipo de embalaje para continuar")
             elem10.style.color = "red";
-        }else if(reLength=== "" || reWidth === "" || reHeight=== "" || reUnidades === ""){
+        }else if(requestLength=== "" || requestWidth === "" || requestHeight=== "" || requestUnidades === ""){
             window.alert("Completa las dimensiones del camion para continuar")
             elem11.style.color = "red";
         }
@@ -56,15 +56,15 @@ function RequestForm(props) {
         {
             console.log(prodDescription)
             e.preventDefault();
-            createRequest(userUid,props.publi,today,embalaje,description,reHeight,reWidth,reLength,reUnidades,products,prodDescription);
+            createRequest(userUid,props.publi,today,embalaje,description,requestHeight,requestWidth,requestLength,requestUnidades,products,prodDescription);
             setDescription("");
             setProducts("");
             setProdDescription("");
             setEmbalaje("");
-            setReHeight("");
-            setReWidth("");
-            setReLength("");
-            setReUnidades("");
+            setrequestHeight("");
+            setrequestWidth("");
+            setrequestLength("");
+            setrequestUnidades("");
             window.alert("Solicitud Creada con Exito")
             history.push("/homepubli") 
         }
@@ -88,10 +88,10 @@ function RequestForm(props) {
         </Inputs1>
         <Inputs>
           <Text id='dc'>Dimensiones del Paquete: </Text>
-          <Input5 type='number' min="1" max={props.freeSpaces1} placeholder='Largo' value={reHeight} onChange={e => setReHeight(e.target.value)}/>
-          <Input5 type='number' min="1" max={props.freeSpaces2} placeholder='Ancho' value={reWidth} onChange={e => setReWidth(e.target.value)}/>
-          <Input5 type='number' min="1" max={props.freeSpaces3} placeholder='Alto' value={reLength} onChange={e => setReLength(e.target.value)}/>
-          <Input2 value={reUnidades} onChange={e => setReUnidades(e.target.value)}>
+          <Input5 type='number' min="1" max={props.freeSpaces1} placeholder='Largo' value={requestHeight} onChange={e => setrequestHeight(e.target.value)}/>
+          <Input5 type='number' min="1" max={props.freeSpaces2} placeholder='Ancho' value={requestWidth} onChange={e => setrequestWidth(e.target.value)}/>
+          <Input5 type='number' min="1" max={props.freeSpaces3} placeholder='Alto' value={requestLength} onChange={e => setrequestLength(e.target.value)}/>
+          <Input2 value={requestUnidades} onChange={e => setrequestUnidades(e.target.value)}>
               <option>{""}</option>
               <option>{props.truckDimensions4}</option>
           </Input2>
