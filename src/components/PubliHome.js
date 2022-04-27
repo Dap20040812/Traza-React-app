@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import { setPublis} from "../features/publi/publiSlice"
 import countryData from '../data/countrydata'
 import queryPublications from '../backend/queryPublications'
-
+import showRequest from '../backend/showRequest'
 
 
 function PubliHome() {
@@ -44,7 +44,7 @@ function PubliHome() {
      */
     const handleSubmit = e => {
         e.preventDefault();
-        queryPublications(dispatch,origin,destination,date,products) 
+        queryPublications(dispatch,origin,destination,date,products)
     }
      
     

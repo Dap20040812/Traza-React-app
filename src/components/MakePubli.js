@@ -13,7 +13,6 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
-import recentPublications from '../backend/recentPublications'
 
 function MakePubli() {
     var now = new Date();

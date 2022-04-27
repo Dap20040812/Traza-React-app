@@ -17,12 +17,10 @@ import firebase from 'firebase/compat/app';
  * @param {String} prodDescription Descripción de los productos
  */
 
-function createRequest(uid,idr,requestDate,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
-    let uuidr = uuidv4();
+function createRequest(uuidr,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
+    
     db.collection('request').doc(uuidr).set({
 
-        publication:idr,
-        requestDate:requestDate,
         embalaje:embalajeRequest,
         description:descriptionRequest,
         packageDimensions:{
@@ -32,13 +30,8 @@ function createRequest(uid,idr,requestDate,embalajeRequest,descriptionRequest,pa
             packageUnidades:packageUnidades
         },
         products:products,
-        prodDescription: prodDescription,
-        state:'Unaccepted'
-    })
-
-    db.collection('empresas').doc(uid).collection('myRequests').doc(uuidr).set({
-        id: uuidr
+        prodDescription: prodDescription
     })
 }
 
-export default createRequest
+export default updateRequest
