@@ -8,11 +8,13 @@ import {showRecentPublication} from '../backend/recentPublications'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
+import { useHistory } from 'react-router-dom'
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
 import Request from './Request';
 import showRequest from '../backend/showRequest';
 import showMyRequest from '../backend/showMyRequest';
+import deletePublication from '../backend/deletePublication';
 
 
 function MyDetail() {
@@ -21,10 +23,11 @@ function MyDetail() {
     const [publi, setPubli] = useState()
     const userUid = useSelector(selecUserUid);
     const dispatch = useDispatch()
+    const history = useHistory()
     useEffect(() =>{
         db.collection("publications")
         .doc(id)
-        .get()
+        .get()  
         .then((doc) => {
             if(doc.exists){
                 setPubli(doc.data());
@@ -34,10 +37,16 @@ function MyDetail() {
         })
         showMyRequest(id,dispatch)
       },[])
-
+      console.log(id)
       
    
   const [page, setPage] = useState('Info')
+  const deletepubli = () => {
+        deletePublication(id);
+        window.alert("Publicación Elmiminada con Exito")
+        history.push("/publimy")
+        
+  }
   
   /**
    * Llama a otros componentes
@@ -53,7 +62,7 @@ function MyDetail() {
     }
     else if (page === 'Request'){
         return(
-            <Request/>
+            <Request myrequest={false}/>
           ) 
     }
   }
@@ -84,6 +93,9 @@ function MyDetail() {
                             <TrailerButton  onClick={toPage('Info')}>
                                 <span>+ INFO</span>
                             </TrailerButton>
+                            <CancelButton onClick={deletepubli}>
+                                <span>Eliminar</span>
+                            </CancelButton>
                         </Controls>
                         <SubTitle>{publi.empresaName}</SubTitle>
                         <Description>
@@ -177,6 +189,28 @@ const PlayButton = styled.button`
 
     &:hover {
         background: rgb(198, 198, 198);
+    }
+`
+const CancelButton = styled.button`
+border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 6vh;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 0.15vh;
+    cursor: pointer;
+    text-align: center; 
+    
+
+    &:hover {
+        background: #E80D0DED;
     }
 `
 

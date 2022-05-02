@@ -17,10 +17,11 @@ import firebase from 'firebase/compat/app';
  * @param {String} prodDescription Descripción de los productos
  */
 
-function createRequest(uid,idr,requestDate,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
+function createRequest(name,uid,idr,requestDate,embalajeRequest,descriptionRequest,packageHeight,packageWidth,packageLength,packageUnidades,products,prodDescription){
     let uuidr = uuidv4();
     db.collection('request').doc(uuidr).set({
 
+        NombreEmpresa: name, 
         publication:idr,
         requestDate:requestDate,
         embalaje:embalajeRequest,

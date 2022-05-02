@@ -1,16 +1,24 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components' 
 import ImgSlider from './ImgSlider' 
 import Publi from './Publi'
-
-
-
+import {selecUserUid} from "../features/user/userSlice"
+import {useSelector} from "react-redux"
+import { useDispatch } from "react-redux"
+import { showRecentPublication } from '../backend/recentPublications'
 
 function Home() {
+  const userUid = useSelector(selecUserUid);
+  const dispatch = useDispatch()
+  useEffect(() =>{
+    showRecentPublication(userUid,dispatch)
+  },[])
+
   
   return (
     <Container>
         <ImgSlider/>
+        <Title>Recomendaciones : </Title>
         <Publi mypubli={false}/>
     </Container>
   )
@@ -37,3 +45,9 @@ const Container = styled.main`
        z-index: -1;
    }
 `
+const Title = styled.div`
+    color: black;
+    font-size: 8vh;
+    min-height: 3vh;
+    margin: 3vh;
+` 

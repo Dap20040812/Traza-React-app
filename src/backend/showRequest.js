@@ -7,7 +7,6 @@ function showRequest(uid,dispatch)
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
-        console.log(tempPublis)
         dispatch(setRequests(tempPublis));
     })
 }

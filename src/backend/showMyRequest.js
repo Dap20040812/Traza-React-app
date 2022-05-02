@@ -1,5 +1,5 @@
 import db from '../firebase'
-import { setPublis } from '../features/publi/publiSlice'
+import { setRequests} from '../features/request/requestSlice'
 
 function showMyRequest (idp,dispatch){
 
@@ -7,7 +7,7 @@ function showMyRequest (idp,dispatch){
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
-        dispatch(setPublis(tempPublis));
+        dispatch(setRequests(tempPublis));
     })
     
 }

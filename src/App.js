@@ -13,6 +13,7 @@ import MyPubli from './components/MyPubli';
 import App1 from './components/pruba';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import MyDetail from './components/MyPubliDetail';
+import MyRequest from './components/MyRequest';
 
 
 function App() {
@@ -42,6 +43,9 @@ function App() {
         </Route>
         <Route path='/publimy'>
           <MyPubli/>
+        </Route>
+        <Route path='/myrequest'>
+          <MyRequest/>
         </Route>
         <Route path='/login'>
           <Login/>
