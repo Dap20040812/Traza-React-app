@@ -78,7 +78,7 @@ function PubliHome() {
                 <span>🔎</span>
             </Search>
         </Navegator>
-        <Publi/>
+        <Publi mypubli={false}/>
         
     </Container>
   )

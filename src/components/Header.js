@@ -143,7 +143,7 @@ const NavMenu = styled.div`
             position: relative;
             text-decoration: none; 
 
-            &: after{
+            &:after{
                 content:"";
                 height: 2px;
                 background: white;

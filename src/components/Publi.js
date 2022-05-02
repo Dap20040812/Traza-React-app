@@ -5,7 +5,7 @@ import {selectPublis} from '../features/publi/publiSlice'
 import { useSelector } from 'react-redux'
 
 
-function Publi() {
+function Publi(props) {
     const publis = useSelector(selectPublis);  
 
   return (
@@ -14,7 +14,7 @@ function Publi() {
              { publis && 
                 publis.map((publi) => (
                     <Wrap key={publi.id}>
-                        <StyledLink to={`/detail/${publi.id}`}>
+                        <StyledLink to={props.mypubli === false ? `/detail/${publi.id}` : `/mydetail/${publi.id}`}>
                             <img src={publi.publiImg}/>
                         <PubliContent>
                             <h2>{publi.originPlace} - {publi.destinationPlace}</h2>
@@ -48,7 +48,8 @@ const Wrap = styled.div`
     cursor: pointer;
     overflow: hidden;
     color: black;
-    max-width: calc(100vh - 50vh);
+    max-height: calc(100vw - 25vh);
+    max-width: calc(100vh - 10vw);
     border: 3px solid rgba(249, 249, 249, 0.1); 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
@@ -56,8 +57,8 @@ const Wrap = styled.div`
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 
     img{
-        width: calc(100vh - 50vh);
-        height: calc(100vh - 50vh);
+        height: 45vh;
+        width: 20vw;
         object-fit: cover;
     }
 
@@ -72,9 +73,12 @@ const Wrap = styled.div`
     }
 `
 const PubliContent = styled.div`
-    padding: 10px;
+    padding: calc(0.5vw + 0.5vh);
     text-decoration: none;
-    font-size: 2vh;
+    font-size: calc(0.8vh + 0.8vw);
+    h2{
+        font-size: calc(2vw3vh);
+    }
     
 `
 const StyledLink = styled(Link)`

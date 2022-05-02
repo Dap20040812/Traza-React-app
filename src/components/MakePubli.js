@@ -431,7 +431,6 @@ const Inputs1 = styled.div`
 `
 const Input4 = styled.textarea`
     font-size: 2vh;
-    maxlength="100";
     margin: 1vh;
     font-size: 2.5vh;
     font-family: inherit; 
@@ -445,7 +444,6 @@ const Input4 = styled.textarea`
 `
 const Input5 = styled.input`
     font-size: 2vh;
-    type: text;
     margin: 2vh;
     max-width: 9vh;
     font-family: inherit;

@@ -25,7 +25,7 @@ function MyPubli() {
             <img src="https://www.semana.com/resizer/pxkdm8iOSLbj0Y3QWYUMj5p5L_U=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NJC5QSBBZZEQPABT3MEMZPZVOM.jpg" />
         </Background>
         <Title>Mis Publicaciones</Title>
-        <Publi/>
+        <Publi mypubli={true}/>
     </Container>
   )
 }

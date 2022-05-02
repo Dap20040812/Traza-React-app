@@ -10,6 +10,9 @@ import PubliHome from './components/PubliHome';
 import MakePubli from './components/MakePubli';
 import Profile from './components/Profile';
 import MyPubli from './components/MyPubli';
+import App1 from './components/pruba';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import MyDetail from './components/MyPubliDetail';
 
 
 function App() {
@@ -25,6 +28,9 @@ function App() {
         <Route path='/detail/:id'>
           <Detail/>
         </Route>
+        <Route path='/mydetail/:id'>
+          <MyDetail/>
+        </Route>
         <Route path='/homepubli'>
           <PubliHome/>
         </Route>
@@ -39,6 +45,9 @@ function App() {
         </Route>
         <Route path='/login'>
           <Login/>
+        </Route>
+        <Route path='/prueba'>
+          <App1/>
         </Route>
         <Route path='/'>
           <Home/>

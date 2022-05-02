@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
 
-function Detail() {
+function MyDetail() {
 
     const {id} = useParams();
     const [publi, setPubli] = useState()
@@ -85,7 +85,7 @@ function Detail() {
                     </Price>
                         <Controls>
                             <PlayButton  onClick={toPage('Request')}>
-                                <span>SOLICITAR</span>
+                                <span>Ver solicitudes</span>
                             </PlayButton>
                             <TrailerButton  onClick={toPage('Info')}>
                                 <span>+ INFO</span>
@@ -112,7 +112,7 @@ function Detail() {
   )
 }
 
-export default Detail
+export default MyDetail
 
 const Container = styled.div`
     min-height: calc(100vh - 70px);

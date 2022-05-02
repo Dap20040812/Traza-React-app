@@ -129,7 +129,7 @@ const Data = styled.div`
     align-items: center;
     padding: 2vh;
     max-height: 200vh;
-    max width: 100vh;
+    max-width: 100vh;
     overflow: hidden;
     border: 3px solid rgba(249, 249, 249, 0.7); 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
