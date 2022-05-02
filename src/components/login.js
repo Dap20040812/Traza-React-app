@@ -21,11 +21,7 @@ function Login() {
   const [ errors, setErrors ] = useState({})
   const [loading, setLoading] = useState(false);
 
-  const loadinfss = () => {
-    return <Spinner></Spinner>
-  } 
-  
-  
+
   const setField = (field, value) => {
     setForm({
       ...form,

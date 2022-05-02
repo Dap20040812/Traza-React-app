@@ -4,12 +4,16 @@ import Info from './Info'
 import RequestForm from './RequestForm';
 import db from '../firebase'
 import { useParams } from 'react-router-dom'
-import recentPublications from '../backend/recentPublications'
+import {showRecentPublication} from '../backend/recentPublications'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
+import Request from './Request';
+import showRequest from '../backend/showRequest';
+import showMyRequest from '../backend/showMyRequest';
+
 
 function MyDetail() {
 
@@ -28,8 +32,7 @@ function MyDetail() {
     
             }
         })
-        recentPublications(userUid,id);
-        recommendedPublications(dispatch);
+        showMyRequest(id,dispatch)
       },[])
 
       
@@ -49,18 +52,9 @@ function MyDetail() {
         )
     }
     else if (page === 'Request'){
-      if(publi.empresaUid === userUid)
-      {
-        window.alert("No puedes realizar un solicitud a tu publicación")
         return(
-            <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} uid={publi.empresaUid} name={publi.empresaName}/>   
-        )
-      } else{
-        return(
-            <RequestForm publi={publi.id} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength}/>
-          )
-      } 
-      
+            <Request/>
+          ) 
     }
   }
   const toPage = page => event =>{
@@ -104,10 +98,7 @@ function MyDetail() {
            </> 
         )
 
-        }
-        <Title>Publicaciones Recomendadas</Title>
-        <Publi mypubli={false}/>
-         
+        }         
     </Container>
   )
 }

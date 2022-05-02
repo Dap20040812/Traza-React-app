@@ -7,11 +7,16 @@ import { setPublis } from '../features/publi/publiSlice'
  * @param {String} idReciente id de la publicaciones que se van a mostrar como publicaciones recientes 
  */
 
-function saveRecentPublications(uuidEmpresa,idReciente,date,hour)
+function saveRecentPublications(uuidEmpresa,idReciente)
 {
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day);
+
     db.collection('publications').doc(idReciente).update({
-        fechaDeVisualizacion:date,
-        horaDeVisualizacion:hour
+        fechaDeVisualizacion:today,
+        horaDeVisualizacion:now.getHours
     })
     db.collection('publications').where('id','==',idReciente).get().then((snapshot)=>{
         snapshot.forEach((doc) =>{

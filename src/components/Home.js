@@ -11,6 +11,7 @@ function Home() {
   return (
     <Container>
         <ImgSlider/>
+        <Publi mypubli={false}/>
     </Container>
   )
 }

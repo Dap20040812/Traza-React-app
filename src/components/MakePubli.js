@@ -381,7 +381,6 @@ const SubTitle = styled.div`
 
 const Input1 = styled.input`
     font-size: 2vh;
-    type: text;
     margin: 2vh;
     font-size: max(16px, 1em);
     font-family: inherit;

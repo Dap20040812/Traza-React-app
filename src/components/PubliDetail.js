@@ -28,7 +28,6 @@ function Detail() {
     
             }
         })
-        //recentPublications(userUid,id);
         recommendedPublications(dispatch);
       },[])
 
