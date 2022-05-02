@@ -32,7 +32,9 @@ function Header() {
                   email: user.email,
                   uid: user.uid,
                   photo: user.photoURL
+                  
               }))
+              console.log(userPhoto)
               history.push("/")
           }else{
             history.push("/intro") 

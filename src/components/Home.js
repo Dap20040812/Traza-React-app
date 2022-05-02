@@ -6,12 +6,12 @@ import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import { showRecentPublication } from '../backend/recentPublications'
-
+import recommendedPublications from '../backend/recommendedPublication'
 function Home() {
   const userUid = useSelector(selecUserUid);
   const dispatch = useDispatch()
   useEffect(() =>{
-    showRecentPublication(userUid,dispatch)
+    recommendedPublications(dispatch);
   },[])
 
   

@@ -3,12 +3,21 @@ import styled from 'styled-components'
 import {selecUserUid, selecUserPhoto} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import db from '../firebase'
+import {auth} from "../firebase"
+import {storage} from '../firebase'
+import { useDispatch } from "react-redux"
+import {Spinner} from "reactstrap"
+import {setUserLogin} from "../features/user/userSlice"
+
+
 
 
 function Profile() {
     const userUid = useSelector(selecUserUid);
     const photo = useSelector(selecUserPhoto);
-    const [company, setCompany] = useState()
+    const [company, setCompany] = useState();
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch()
 
     useEffect(() =>{
         db.collection("empresas")
@@ -22,6 +31,33 @@ function Profile() {
             }
         })
       },[])
+    
+
+      const archivoMandler = async (e)=>{
+
+        setLoading(true)
+        const archivo = e.target.files[0];
+        const storageRef = storage.ref();
+        const archivoPath = storageRef.child(archivo.name);
+        await archivoPath.put(archivo);
+        console.log(archivo.name);
+        const url =  await archivoPath.getDownloadURL();
+        auth.currentUser.updateProfile({
+            photoURL: url
+        }).then(function(){
+            setLoading(false);
+            dispatch(setUserLogin({
+                name: auth.currentUser.displayName,
+                email: auth.currentUser.email,
+                uid: auth.currentUser.uid,
+                photo: auth.currentUser.photoURL
+                
+            }))
+        },function(error) {
+            window.alert("No se puedo cargar la imagen")
+         });
+        
+    }
 
   return (
     <Container>
@@ -33,8 +69,12 @@ function Profile() {
             <Data>
                 <Title>Perfil Empresa</Title>
                 <ImageTitle className='imgage'>
-                    <img className='img1' src={photo}/>
-                    <img className='img2' src='images/ci.jpg'/>
+                    <label for="file-input">
+                        <img className='img1' src={photo}/>
+                        <img className='img2' src='images/ci.jpg'/>
+                    </label>
+                    <input id="file-input" type="File" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler}/>
+                    {loading ? <Spinner/> : ""}
                 </ImageTitle>
                 <Texts>
                     <SubTitle>Nombre : </SubTitle>
@@ -70,7 +110,9 @@ const ImageTitle = styled.div`
     max-height: 35vh;
     max-width: 35vh;
     position: relative;
-
+    >input{
+        display: none;
+    }   
     .img1{ 
         width: 30vh;
         height: 30vh;
@@ -86,6 +128,13 @@ const ImageTitle = styled.div`
         height: 30vh;
         border-radius: 50%;
     }
+    .Spinner{
+        position: absolute;  
+        top: 0;  
+        left: 0;
+        opacity: 0;
+    }
+
     &:hover .img2{
         transform: scale(1.05);
         box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
