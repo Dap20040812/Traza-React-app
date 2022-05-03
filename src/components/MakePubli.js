@@ -13,6 +13,7 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
+import Form from "react-bootstrap/Form"
 
 function MakePubli() {
     var now = new Date();
@@ -21,6 +22,9 @@ function MakePubli() {
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    const [ errors, setErrors ] = useState({})
+    const [ form, setForm ] = useState({})
 
     const userUid = useSelector(selecUserUid); //Obtiene el UUID del usuario actual
     const userName = useSelector(selecUserName); //Obtiene el nombre del usuario actual
@@ -48,26 +52,47 @@ function MakePubli() {
         { name: 'pies'}      
     ];
 
-    const [origin, setOrigin] = useState('');
-    const [oriAddress, setOriAddress] = useState('');
-    const [destination, setDestination] = useState('');
-    const [destAddress, setDestAddress] = useState('');
-    const [date, setDate] = useState('');
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
-    const [products, setProducts] = useState('');
-    const [prodDescription, setProdDescription] = useState('');
-    const [embalaje, setEmbalaje] = useState('');
-    const [restrictions, setRestrictions] = useState('');
-    const [truckHeight, setTruckHeight] = useState('');
-    const [truckWidth, setTruckWidth] = useState('');
-    const [truckLength, setTruckLength] = useState('');
-    const [truckUnidades, setTruckUnidades] = useState('');
-    const [freeSpaceHeight, setFreeSpaceHeight] = useState('');
-    const [freeSpaceWidth, setFreeSpaceWidth] = useState('');
-    const [freeSpaceLength, setFreeSpaceLength] = useState('');
-    const [freeSpaceUnidades, setFreeSpaceUnidades] = useState('');
-    const [publiImg, setPubliImg] = useState('');
+    const setField = (field, value) => {
+        setForm({
+          ...form,
+          [field]: value
+        })
+        // Check and see if errors exist, and remove them from the error object:
+        if ( !!errors[field] ) setErrors({
+          ...errors,
+          [field]: null
+        })
+      }
+
+    const findFormErrors = () => {
+        const {origin, oriAddress, destination, destAddress, date, price, description, products, prodDescription, embalaje, restrictions, med1, med2, truckHeight, freeSpaceHeight, truckLength, truckUnidades, freeSpaceLength, truckWidth, freeSpaceWidth, freeSpaceUnidades} = form 
+        const newErrors = {}
+
+        if ( !origin || origin === '' ) newErrors.origin = 'Escoge un punto de origen para continuar'
+        if ( !oriAddress || oriAddress === '' ) newErrors.oriAddress = 'Ingresa la direccion de origen para continuar'
+        if ( !destination || destination === '' ) newErrors.destination = 'Escoge un punto de destino para continuar'
+        if ( !destAddress || destAddress === '' ) newErrors.destAddress = 'Ingresa la direccion de destino para continuar'
+        if ( !date || date === '' ) newErrors.date = 'Escoge una fecha de salida para continuar'
+        if ( !price || price === '' ) newErrors.price = 'Ingresa el precio estimado para continuar'
+        if ( !description || description === '' ) newErrors.description = 'Ingresa la descripcion del envio para continuar'
+        if ( !products || products === '' ) newErrors.products = 'Escoge el tipo de producto transportado para continuar'
+        if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa la descripcion de los productos para continuar'
+        if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Escoge el tipo de embalaje para continuar'
+        if ( !truckHeight || truckHeight === '' ) newErrors.truckHeight = 'Ingresa la altura para continuar'
+        if ( !truckLength || truckLength === '' ) newErrors.truckLength = 'Ingresa el largo para continuar'
+        if ( !truckWidth || truckWidth === '' )newErrors.truckWidth = 'Ingresa el ancho para continuar'
+        if ( !freeSpaceHeight || freeSpaceHeight === '' ) newErrors.freeSpaceHeight = 'Ingresa la altura para continuar'
+        if ( !freeSpaceLength || freeSpaceLength === '' ) newErrors.freeSpaceLength = 'Ingresa el largo para continuar'
+        if ( !freeSpaceWidth || freeSpaceWidth === ''  )newErrors.freeSpaceWidth = 'Ingresa el ancho para continuar'
+        if (med1 < med2 || truckHeight < freeSpaceHeight || truckLength < freeSpaceLength || truckWidth < freeSpaceWidth) {
+             newErrors.freeSpaceDimensions = 'Las dimensiones no conciden, revisa las medidas para continuar'
+         }
+        if( !truckUnidades || truckUnidades === '' ) newErrors.truckUnidades = 'Escoge las unidades para continuar'
+        if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
+        if ( !restrictions || restrictions === '' ) newErrors.restrictions = 'Ingresa las restricciones del envio para continuar'
+        
+        return newErrors
+    }
 
     /**
      * Verifica los datos registrados en el formulario de la publicacion
@@ -75,116 +100,44 @@ function MakePubli() {
      */
 
     const handleSubmit = e => {
-        var elem1 = document.getElementById("origen");
-        var elem2 = document.getElementById("origen1");
-        var elem3 = document.getElementById("dest");
-        var elem4 = document.getElementById("dest1");
-        var elem5 = document.getElementById("date");
-        var elem6 = document.getElementById("price");
-        var elem7 = document.getElementById("desc");
-        var elem8 = document.getElementById("prod");
-        var elem9 = document.getElementById("pdesc");
-        var elem10 = document.getElementById("em");
-        var elem11 = document.getElementById("dc");
-        var elem12 = document.getElementById("ed");
-        var elem13 = document.getElementById("rest");
-        var elem14 = document.getElementById("img");
+
+        e.preventDefault();
+
+        const origin = e.target.elements.origin.value;
+        const oriAddress = e.target.elements.oriAddress.value
+        const destination = e.target.elements.destination.value;
+        const destAddress = e.target.elements.destAddress.value;
+        const date = e.target.elements.date.value;
+        const price = e.target.elements.price.value;
+        const description = e.target.elements.description.value;
+        const prodDescription = e.target.elements.prodDescription.value;
+        const embalaje = e.target.elements.embalaje.value;
+        const restrictions = e.target.elements.restrictions.value;
+        const truckHeight = e.target.elements.truckHeight.value;
+        const truckLength = e.target.elements.truckLength.value;
+        const truckWidth = e.target.elements.truckWidth.value;
+        const truckUnidades = e.target.elements.truckUnidades.value;
+        const freeSpaceHeight = e.target.elements.freeSpaceHeight.value;
+        const freeSpaceLength = e.target.elements.freeSpaceLength.value;
+        const freeSpaceWidth = e.target.elements.freeSpaceWidth.value;
+        const freeSpaceUnidades = e.target.elements.freeSpaceUnidades.value;
+        const publiImg = e.target.elements.publiImg.value;
+
         var med1 = truckHeight*truckLength*truckWidth
         var med2 = freeSpaceHeight*freeSpaceLength*freeSpaceWidth
 
-        if(origin=== "")
-        {
-            window.alert("Completa la dirección de origen para continuar")
-            elem1.style.color = "red";
-            elem2.style.color = "white";
-            elem3.style.color = "white";
-            elem4.style.color = "white";
-            elem5.style.color = "white";
-            elem6.style.color = "white";
-            elem7.style.color = "white";
-            elem8.style.color = "white";
-            elem9.style.color = "white";
-            elem10.style.color = "white";
-            elem11.style.color = "white";
-            elem12.style.color = "white";
-            elem13.style.color = "white";
-            elem14.style.color = "white";
-        }else if(oriAddress=== ""){
-            window.alert("Completa la dirección de origen para continuar")
-            elem2.style.color = "red";
-            elem1.style.color = "white";
-        }else if(destination=== ""){
-            window.alert("Completa la dirección de destino para continuar")
-            elem3.style.color = "red";
-        }else if(destAddress=== ""){
-            window.alert("Completa la dirección de destino para continuar")
-            elem4.style.color = "red";
-        }else if(date=== ""){
-            window.alert("Completa la fecha de salida para continuar")
-            elem5.style.color = "red";
-        }else if(price=== ""){
-            window.alert("Completa el precio para continuar")
-            elem6.style.color = "red";
-        }else if(description=== ""){
-            window.alert("Completa la descripción para continuar")
-            elem7.style.color = "red";
-        }else if(products=== ""){
-            window.alert("Completa el tipo de producto para continuar")
-            elem8.style.color = "red";
-        }else if(prodDescription=== ""){
-            window.alert("Completa la descripción del producto para continuar")
-            elem9.style.color = "red";
-        }else if(embalaje === ""){
-            window.alert("Completa el tipo de embalaje para continuar")
-            elem10.style.color = "red";
-        }else if(restrictions=== ""){
-            window.alert("Completa las restriciones para continuar")
-            elem13.style.color = "red";
-        }else if(truckLength=== "" || truckWidth === "" || truckHeight=== "" || truckUnidades === ""){
-            window.alert("Completa las dimensiones del camion para continuar")
-            elem11.style.color = "red";
-        }else if(freeSpaceLength=== "" || freeSpaceWidth === "" || freeSpaceHeight=== "" || freeSpaceUnidades === "" ){
-            window.alert("Completa  las dimensiones del espacio disponible para continuar")
-            elem12.style.color = "red";
+        const newErrors = findFormErrors()
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
         }
-        else if(med1 < med2 || truckHeight < freeSpaceHeight || truckLength < freeSpaceLength || truckWidth < freeSpaceWidth){
-            window.alert("Las dimensiones no conciden, revisa las medidas para continuar")
-            elem12.style.color = "red";
-        }else if(publiImg === ""){
-            window.alert("Carga una imagen para continuar")
-            elem14.style.color = "red";
-        }
+
         else 
         {
-            e.preventDefault();
             createPublication(userUid,userName,userPhoto,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
-            setOrigin("");
-            setOriAddress("");
-            setDestination("");
-            setDestAddress("");
-            setDate("");
-            setPrice("");
-            setDescription("");
-            setProducts("");
-            setProdDescription("");
-            setEmbalaje("");
-            setRestrictions("");
-            setTruckHeight("");
-            setTruckWidth("");
-            setTruckLength("");
-            setTruckUnidades("");
-            setFreeSpaceHeight("");
-            setFreeSpaceWidth("");
-            setFreeSpaceLength("");
-            setFreeSpaceUnidades("");
             window.alert("Publicación Creada con Exito")
             history.push("/homepubli") 
-
-
         }
-
-        
-
     }
 
     /**
@@ -209,109 +162,192 @@ function MakePubli() {
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Optimusprimealtmoviemode.jpg/1200px-Optimusprimealtmoviemode.jpg"/>
         </Background>
         <Data>
-            <Title>Nueva Publicación</Title>
-            <SubTitle> Detalles del Flete: </SubTitle>
-            <Inputs>
-                <Text id='origen'>Punto de Origen : </Text>
-                <Input2 value={origin} id="origi" onChange={e => setOrigin(e.target.value)}>
-                         {countryData.map((e, key) => {
-                            return <option key={key}>{e.name}</option>;
-                        })}
-                </Input2>
-            </Inputs>
-            <Inputs>
-                <Text id='origen1'>Dirección Exacta de Destino : </Text>
-                <Input1 value={oriAddress} onChange={e => setOriAddress(e.target.value)}/>
-
-            </Inputs>
-            <Inputs>
-                <Text id='dest'>Punto de Destino : </Text>
-                <Input2 value={destination} onChange={e => setDestination(e.target.value)}>
-                         {countryData.map((e, key) => {
-                            return <option key={key} >{e.name}</option>;
-                        })}
-                </Input2>
-            </Inputs>
-            <Inputs>
-                <Text id='dest1'>Dirección Exacta de LLegada : </Text>
-                <Input1 value={destAddress} onChange={e => setDestAddress(e.target.value)}/>
-
-            </Inputs>
-            <Inputs>
-                <Text id='date'>Fecha de Salida : </Text>
-                <Input3 type="date" id="start" name="trip-start"
-                        min={today} max ="2022-12-30" 
-                        value={date} onChange={e => setDate(e.target.value)}/>
-
-            </Inputs>
-            <Inputs>
-                <Text id='price'>Precio Estimado: </Text>
-                <Input6 type='number' min="100" value={price} onChange={e => setPrice(e.target.value)}/>
-
-            </Inputs>
-            <Inputs1>
-                <Text id='desc'>Description del Envío:  </Text>
-                <Input4 value={description} onChange={e => setDescription(e.target.value)}/>
-
-            </Inputs1>
-            <Inputs>
-                <Text id='prod'>Productos Tranportados: </Text>
-                <Input2 value={products} onChange={e => setProducts(e.target.value)}>
-                         {
-                            ProductData.map((e, key) => {
-                                return <option key={key}>{e.name}</option>;
-                            })
-                        }
-                </Input2>
-            </Inputs>
-            <Inputs1>
-                <Text id='pdesc'>Descripción de los Productos: </Text>
-                <Input4 value={prodDescription} onChange={e => setProdDescription(e.target.value)}/>
-
-            </Inputs1>
-            <SubTitle> Detalles del embalaje: </SubTitle>
-            <Inputs>
-                <Text id='em'>Tipo de Embalaje: </Text>
-                <Input2 value={embalaje} onChange={e => setEmbalaje(e.target.value)}>
-                         {EmbalajeData.map((e, key) => {
-                            return <option key={key}>{e.name}</option>;
-                        })}
-                </Input2>
-            </Inputs>
-            <Inputs>
-                <Text id='dc'>Dimensiones del Camion: </Text>
-                <Input5 type='number' min="1" placeholder='Largo' value={truckHeight} onChange={e => setTruckHeight(e.target.value)}/>
-                <Input5 type='number' min="1" placeholder='Ancho' value={truckWidth} onChange={e => setTruckWidth(e.target.value)}/>
-                <Input5 type='number' min="1" placeholder='Alto' value={truckLength} onChange={e => setTruckLength(e.target.value)}/>
-                <Input2 value={truckUnidades} onChange={e => setTruckUnidades(e.target.value)}>
-                         {MedidaData.map((e, key) => {
-                            return <option key={key}>{e.name}</option>;
-                        })}
-                </Input2>
-            </Inputs>
-            <Inputs>
-                <Text id='ed'>Espacio Disponible: </Text>
-                <Input5 type='number' min="1" placeholder='Largo' value={freeSpaceHeight} onChange={e => setFreeSpaceHeight(e.target.value)}/>
-                <Input5 type='number' min="1" placeholder='Ancho' value={freeSpaceWidth} onChange={e => setFreeSpaceWidth(e.target.value)}/>
-                <Input5 type='number' min="1" placeholder='Alto' value={freeSpaceLength} onChange={e => setFreeSpaceLength(e.target.value)}/>
-                <Input2 value={freeSpaceUnidades} onChange={e => setFreeSpaceUnidades(e.target.value)}>
-                        <option>{""}</option>
-                         <option>{truckUnidades}</option>
-                </Input2>
-            </Inputs>
-            <Inputs1>
-                <Text id='rest'>Restricciones del Envío:  </Text>
-                <Input4 value={restrictions} onChange={e => setRestrictions(e.target.value)}/>
-
-            </Inputs1>
-            <Inputs1>
-                <Text id='img'>Imagen Publicación :  </Text>
-                <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
-
-            </Inputs1>
-            <PlayButton onClick={handleSubmit}>
-                <span>PUBLICAR</span>
-            </PlayButton>
+                <Title>Nueva Publicación</Title>
+                <SubTitle> Detalles del Flete: </SubTitle>
+                <Form1 onSubmit={handleSubmit} className='row'>
+                    <div className='row w-100'>
+                    <Form.Group className='col-md-4 w-50'>
+                        <Form.Label className='form-label' > Punto de Origen </Form.Label>
+                            <Form.Select id='origin' className='form-control' onChange={e => setField('origin', e.target.value)} isInvalid={!!errors.origin} >
+                                {countryData.map((e, key) => {
+                                    return <option key={key}>{e.name}</option>;
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.origin}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                        <Form.Label className='form-label' > Dirección Exacta de Origen </Form.Label>
+                            <Form.Control id='oriAddress' type='text' className='form-control' onChange={e => setField('oriAddress', e.target.value)} isInvalid={!!errors.oriAddress} />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.oriAddress}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    </div>
+                    <div className='row w-100' >
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Punto de Destino </Form.Label>
+                            <Form.Select id='destination' className='form-control' onChange={e => setField('destination', e.target.value)} isInvalid={!!errors.destination} >
+                                {countryData.map((e, key) => {
+                                    return <option key={key}>{e.name}</option>;
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.destination}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Dirección Exacta de Destino </Form.Label>
+                            <Form.Control id='destAddress' type='text' className='form-control' onChange={e => setField('destAddress', e.target.value)} isInvalid={!!errors.destAddress} />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.destAddress}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    </div>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Fecha de Salida </Form.Label>
+                            <Form.Control id='date' type='date' className='form-control' min={today} max ="2022-12-30" onChange={e => setField('date', e.target.value)} isInvalid={!!errors.date} />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.date}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Precio Estimado </Form.Label>
+                            <Form.Control id='price' type='number' min='100' className='form-control' onChange={e => setField('price', e.target.value)} isInvalid={!!errors.price} />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.price}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-100'>
+                    <br/>
+                        <Form.Label className='form-label' > Descripción del Envío </Form.Label>
+                            <textarea id='description' row='3' className='form-control' onChange={e => setField('description', e.target.value)} isInvalid={!!errors.description} required />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.description}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Productos Transportados </Form.Label>
+                            <Form.Select id='products' className='form-control' onChange={e => setField('products', e.target.value)} isInvalid={!!errors.products} >
+                                {ProductData.map((e, key) => {
+                                    return <option key={key}>{e.name}</option>;
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.products}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Tipo de Embalaje </Form.Label>
+                            <Form.Select id='embalaje' className='form-control' onChange={e => setField('embalaje', e.target.value)} isInvalid={!!errors.embalaje} >
+                                {EmbalajeData.map((e, key) => {
+                                    return <option key={key}>{e.name}</option>;
+                                })}
+                            </Form.Select>
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.embalaje}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-100'>
+                    <br/>
+                        <Form.Label className='form-label' > Descripción de los Productos </Form.Label>
+                            <textarea id='prodDescription' row='3' className='form-control' onChange={e => setField('prodDescription', e.target.value)} isInvalid={!!errors.prodDescription} required />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.prodDescription}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Dimensiones del Camión </Form.Label>
+                            <div>
+                                <Form.Control id='truckLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('truckLength', e.target.value)} isInvalid={!!errors.truckLength} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.truckLength}
+                                </Form.Control.Feedback>
+                            </div>
+                            <br/>
+                            <div>
+                                <Form.Control id='truckWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('truckWidth', e.target.value)} isInvalid={!!errors.truckWidth} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.truckWidth}
+                                </Form.Control.Feedback>
+                            </div>
+                            <br/>
+                            <div>
+                                <Form.Control id='truckHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('truckHeight', e.target.value)} isInvalid={!!errors.truckHeight} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.truckHeight}
+                                </Form.Control.Feedback>
+                            </div>
+                            <div>
+                                <Form.Select id='truckUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('truckUnidades', e.target.value)} isInvalid={!!errors.truckUnidades} >
+                                    {MedidaData.map((e, key) => {
+                                        return <option key={key}>{e.name}</option>;
+                                    })}
+                                </Form.Select>
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.truckUnidades}
+                                </Form.Control.Feedback>
+                            </div>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-50'>
+                    <br/>
+                        <Form.Label className='form-label' > Dimensiones del Espacio Disponible </Form.Label>
+                            <div>
+                                <Form.Control id='freeSpaceLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceLength', e.target.value)} isInvalid={!!errors.freeSpaceLength} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.freeSpaceLength}
+                                </Form.Control.Feedback>
+                            </div>
+                            <br/>
+                            <div>
+                                <Form.Control id='freeSpaceWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceWidth', e.target.value)} isInvalid={!!errors.freeSpaceWidth} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.freeSpaceWidth}
+                                </Form.Control.Feedback>
+                            </div>
+                            <br/>
+                            <div>
+                                <Form.Control id='freeSpaceHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceHeight', e.target.value)} isInvalid={!!errors.freeSpaceHeight} />
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.freeSpaceHeight}
+                                </Form.Control.Feedback>
+                            </div>
+                            <div>
+                                <Form.Select id='freeSpaceUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('freeSpaceUnidades', e.target.value)} isInvalid={!!errors.freeSpaceUnidades} >
+                                    {MedidaData.map((e, key) => {
+                                        return <option key={key}>{e.name}</option>;
+                                    })}
+                                </Form.Select>
+                                <Form.Control.Feedback type='invalid' >
+                                    {errors.freeSpaceUnidades}
+                                </Form.Control.Feedback>
+                            </div>
+                    </Form.Group>
+                    <Form.Group className='col-md-4 w-100'>
+                    <br/>
+                        <Form.Label className='form-label' > Restricciones del Envío </Form.Label>
+                            <textarea id='restrictions' row='3' className='form-control' onChange={e => setField('restrictions', e.target.value)} isInvalid={!!errors.restrictions} required />
+                            <Form.Control.Feedback type='invalid' >
+                                {errors.restrictions}
+                            </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='col-md-4' >
+                    <br/>
+                        <Form.Label id='publiImg' className='form-label' > Imagen Publicación </Form.Label>
+                        <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Input type='submit' value='PUBLICAR' ></Input>
+                    </Form.Group> 
+            </Form1>
         </Data>
         
     </Container>
@@ -379,113 +415,29 @@ const SubTitle = styled.div`
 
 `
 
-const Input1 = styled.input`
-    font-size: 2vh;
-    margin: 2vh;
-    font-size: max(16px, 1em);
-    font-family: inherit;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-    
-`
 const Input7 = styled.input`
     margin: 2vh;
    
     
 `
 
-const Input2 = styled.select`
-    font-size: 2vh;
-    type: text;
-    margin: 2vh;
-    font-size: max(16px, 1em);
-    font-family: inherit;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-    
-`
-const Input3 = styled.input`
-    font-size: 2vh;
-    margin: 2vh;
-    font-size: max(16px, 1em);
-    font-family: inherit;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-    
-`
-const Inputs = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    
-`
-const Inputs1 = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-`
-const Input4 = styled.textarea`
-    font-size: 2vh;
-    margin: 1vh;
-    font-size: 2.5vh;
-    font-family: inherit; 
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-    width: 100%;
-    height: 8vh;
-    resize: none; 
-  
-`
-const Input5 = styled.input`
-    font-size: 2vh;
-    margin: 2vh;
-    max-width: 9vh;
-    font-family: inherit;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-   
-`
-const Input6 = styled.input`
-    font-size: 2vh;
-    margin: 2vh;
-    font-size: max(16px, 1em);
-    font-family: inherit;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 0.5vh;
-    
+const Form1 = styled(Form)`
+    max-width: 70vw;  
 `
 
-
-const Text = styled.div`
-    color: white;
-    font-weight: bold;
-
-`   
-
-const PlayButton = styled.button`
-    border-radius: 1vh;
-    font-size: 2vh;
-    margin-top: 2vh;
-    text-align:center;
-    margin-right: 3vh;
-    display: flex;
-    align-items: center;
-    width: 20%;
-    height: 6vh;
-    background: rgb(249, 249, 249);
-    border: none;
-    letter-spacing: 0.15vh;
-    cursor: pointer;
-    text-align: center; 
-    
-
-    &:hover {
-        background: rgb(198, 198, 198);
-    }
+const Input = styled.input`
+   background: rgb(249, 249, 249);
+   border: 1px solid #f9f9f9;
+   padding: 8px 16px;
+   margin: 1vw 1vh;
+   border-radius: 4px;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+   &:hover {
+       background: rgb(198, 198, 198);
+       color: #000;
+       border-color: transparent;
+   }
 `

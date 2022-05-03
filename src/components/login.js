@@ -35,16 +35,32 @@ function Login() {
   }
 
   const findFormErrors = () => {
-    const {email,password,name,razonSocial,nit,sector,tel} = form
+    const {email,password,name,razonSocial,nit,nit2,sector,tel} = form
     const newErrors = {}
     // name errors
     if ( !email || email === '' ) newErrors.email = 'Ingresa un correo para continuar'
     if ( !password || password === '' ) newErrors.password = 'Ingresa una contraseña para continuar'
     if ( !name || name === '' ) newErrors.name = 'Ingresa el nombre de la empresa para continuar'
     if ( !razonSocial || razonSocial === '' ) newErrors.razonSocial = 'Ingresa la razón social de la empresa para continuar'
-    if ( !nit || nit === '' ) newErrors.nit = 'Ingresa el NIT del empresa para continuar'
+    if ( !nit || nit === '' ) {
+      newErrors.nit = 'Ingresa el NIT del empresa para continuar'
+    }
+    else if (nit.length != 9) {
+      newErrors.nit = 'Este NIT no es válido'
+    }
+    if ( !nit2 || nit2 === '' ) {
+      newErrors.nit2 = 'Ingresa el número de verificación del NIT del empresa para continuar'
+    }
+    else if (nit2.length != 1) {
+      newErrors.nit2 = 'Este número de verificación del NIT no es válido'
+    }
     if ( !sector || sector === '' ) newErrors.sector = 'Ingresa el sector de la empresa para continuar'
-    if ( !tel || tel === '' ) newErrors.tel = 'Ingresa un telefono valido para continuar'
+    if ( !tel || tel === '' ) { 
+      newErrors.tel = 'Ingresa un telefono valido para continuar'
+    }
+    else if (tel.length != 10) {
+      newErrors.tel = 'Télefono no válido'
+    }
 
     return newErrors
 }
@@ -104,7 +120,7 @@ function Login() {
       const name = e.target.elements.name.value;
       const razonSocial = e.target.elements.social.value;
       const sectorEconomico = e.target.elements.sector.value;
-      const nit = e.target.elements.nit.value;
+      const nit = (e.target.elements.nit.value + "-" + e.target.elements.nit2.value);
       const phone = e.target.elements.tel.value;
       const newErrors = findFormErrors()
       if ( Object.keys(newErrors).length > 0 ) {
@@ -167,27 +183,37 @@ function Login() {
         <Title>{isRegistrando ? "Regístrate" : "Inicia sesión"}</Title>
         {isRegistrando ? (
           <>
-          <Form.Group className='col-md-4'>
+          <Form.Group className='col-md-4 w-25'>
             <Form.Label id="name1" className="form-label">Nombre de la Empresa :</Form.Label>
             <Form.Control id="name" type="text"  placeholder="Nombre de la Empresa" className="form-control" onChange={ e => setField('name', e.target.value) } isInvalid={ !!errors.name }/>
             <Form.Control.Feedback type='invalid'>
               { errors.name }
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className='col-md-4'>
+          <Form.Group className='col-md-4 w-25'>
             <Form.Label id="social1" className="form-label">Razon Social :</Form.Label>
             <Form.Control id="social" type="text"  placeholder="Razon Social" className="form-control" onChange={ e => setField('razonSocial', e.target.value) } isInvalid={ !!errors.razonSocial }/>
             <Form.Control.Feedback type='invalid'>
               { errors.razonSocial }
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className='col-md-4'>
+          <div className="col-md-4 w-50">
+          <Form.Group className='row'>
             <Form.Label id="nit1" className="form-label">Nit :</Form.Label>
+            <div className="col-md-4 w-75">
             <Form.Control id="nit" type="num" min="1"  placeholder="Nit" className="form-control" onChange={ e => setField('nit', e.target.value) } isInvalid={ !!errors.nit }/>
             <Form.Control.Feedback type='invalid'>
               { errors.nit }
             </Form.Control.Feedback>
+            </div>
+            <div className="col-md-4 w-25">
+            <Form.Control id="nit2" type="num" min="1"  placeholder="#" className="form-control" onChange={ e => setField('nit2', e.target.value) } isInvalid={ !!errors.nit2 }/>
+            <Form.Control.Feedback type='invalid'>
+              { errors.nit2 }
+            </Form.Control.Feedback>
+            </div>
           </Form.Group>
+          </div>
           <Form.Group className='col-md-6'>
             <Form.Label id="sector1" className="form-label">Sector :</Form.Label>
             <Form.Select id="sector" placeholder="Sector" className="form-control" onChange={ e => setField('sector', e.target.value) } isInvalid={ !!errors.sector }> 
