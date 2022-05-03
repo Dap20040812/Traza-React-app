@@ -13,6 +13,7 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
+import cancelledPublicationsRefresh from '../backend/endedPublications';
 
 function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
@@ -25,6 +26,7 @@ function Header() {
      */
 
     useEffect(() => {
+      cancelledPublicationsRefresh()
       auth.onAuthStateChanged(async (user) =>{
           if(user){
               dispatch(setUserLogin({
