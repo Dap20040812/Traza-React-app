@@ -11,7 +11,7 @@ function Home() {
   const userUid = useSelector(selecUserUid);
   const dispatch = useDispatch()
   useEffect(() =>{
-    recommendedPublications(dispatch);
+    showRecentPublication(userUid,dispatch)
   },[])
 
   

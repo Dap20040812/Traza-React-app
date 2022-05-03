@@ -29,32 +29,27 @@ function Request(props) {
             <h4>La Solicitud se eliminara permanentemente</h4>
             <p>¿Desear continuar?</p>
             <ButtonContent1>
-                <Button1 onClick={() => deleteRe}>Continuar</Button1>
+                <Button1 onClick={deleteRe}>Continuar</Button1>
                 <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
             </ButtonContent1>
         </Alert>
         <Content>
              { requests && 
                 requests.map((request) => (
-                    <Wrap key={request.uid}>
+                    <Wrap key={request.id}>
                         <h3>Id: {request.id}</h3>
                         <Data>
                             <PubliContent>
-                            {props.myrequest === true ? "" :
-
-                            <>
                                 <p>Empresa que realiza la solicitud : {request.NombreEmpresa}</p>
                                 <p>Descripción : {request.description}</p>
                                 <p>Producto : {request.products}</p>
                                 <p>Descripción del Producto : {request.prodDescription}</p>
                                 <p>Dimensiones : {request.packageDimensions.packagHeight} x {request.packageDimensions.packageWidth} x {request.packageDimensions.packageLength} {request.packageDimensions.packageUnidades}</p>
                                 <p>Fecha de creación de la solicitud: {request.requestDate}</p>
-                            </>
-                            }                                
                             </PubliContent>
                             <ButtonContent>
                                 {props.myrequest === true ? 
-                                    <Button2 onClick={cancel}>Cancelar</Button2>
+                                    <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
                                  :
                                 <>
                                     <Button1>Aceptar</Button1>

@@ -42,6 +42,7 @@ function MyDetail() {
    
   const [page, setPage] = useState('Info')
   const[cancelStatus, setCancelStatus] = useState(false);
+  
 
   const cancel = () => {
      setCancelStatus(true); 
