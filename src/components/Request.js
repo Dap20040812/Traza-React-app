@@ -23,7 +23,7 @@ function Request(props) {
       }
 
   return (
-    <Container>
+    <Container> 
         <Alert show={cancelStatus}>
             <h2>Advertencia!!!!!!</h2>
             <h4>La Solicitud se eliminara permanentemente</h4>

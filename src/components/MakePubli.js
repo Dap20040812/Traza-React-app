@@ -13,6 +13,7 @@ import {
     setSignOut
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
+import cancelledPublicationsRefresh from '../backend/endedPublications'
 
 function MakePubli() {
     var now = new Date();
@@ -109,6 +110,7 @@ function MakePubli() {
             elem12.style.color = "white";
             elem13.style.color = "white";
             elem14.style.color = "white";
+            console.log("TEST")
         }else if(oriAddress=== ""){
             window.alert("Completa la dirección de origen para continuar")
             elem2.style.color = "red";
