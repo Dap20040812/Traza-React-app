@@ -8,8 +8,7 @@ function showMyRequest (idp,dispatch){
             return {id: doc.id, ...doc.data()}
         }) 
         dispatch(setRequests(tempPublis));
-    })
-    
+    })    
 }
 
 export default showMyRequest

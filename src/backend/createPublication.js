@@ -33,6 +33,13 @@ function createPublication(uid,name,photo,origin,oriAddress,destination,destAddr
 
     let uuidP = uuidv4() 
 
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day);
+
+    var present = now.getHours().toString()
+
     db.collection("publications").doc(uuidP).set({
         id: uuidP,
         empresaName: name,
@@ -64,7 +71,9 @@ function createPublication(uid,name,photo,origin,oriAddress,destination,destAddr
         },
         restrictions: restrictions,
         publiImg: publiImgs,
-        state: "active"
+        state: "active",
+        fechaDeVisualizacion:today,
+        horaDeVisualizacion:present
     })
     
     db.collection('empresas').doc(uid).update( {

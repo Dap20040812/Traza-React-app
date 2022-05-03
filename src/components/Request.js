@@ -1,39 +1,55 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import {selectRequests} from '../features/request/requestSlice'
 import { useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
-
+import deleteRequest from '../backend/deleteRequest'
 
 function Request(props) {
     const requests = useSelector(selectRequests);  
-    console.log(requests)
+    const[cancelStatus, setCancelStatus] = useState(false);
+    const[idRe, setidRe] = useState();
+    
+
+    const cancel = () =>  {
+        setCancelStatus(true); 
+    }
+    const deleteRe =() => {
+        console.log(idRe);
+        deleteRequest(idRe);
+        setCancelStatus(false);
+        window.alert("Solicitud Elmiminada con Exito")
+      }
 
   return (
-    <Container>
+    <Container> 
+        <Alert show={cancelStatus}>
+            <h2>Advertencia!!!!!!</h2>
+            <h4>La Solicitud se eliminara permanentemente</h4>
+            <p>¿Desear continuar?</p>
+            <ButtonContent1>
+                <Button1 onClick={deleteRe}>Continuar</Button1>
+                <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
+            </ButtonContent1>
+        </Alert>
         <Content>
              { requests && 
                 requests.map((request) => (
-                    <Wrap key={request.uid}>
+                    <Wrap key={request.id}>
                         <h3>Id: {request.id}</h3>
                         <Data>
                             <PubliContent>
-                            {props.myrequest === false ? "" :
-
-                            <>
                                 <p>Empresa que realiza la solicitud : {request.NombreEmpresa}</p>
                                 <p>Descripción : {request.description}</p>
                                 <p>Producto : {request.products}</p>
                                 <p>Descripción del Producto : {request.prodDescription}</p>
                                 <p>Dimensiones : {request.packageDimensions.packagHeight} x {request.packageDimensions.packageWidth} x {request.packageDimensions.packageLength} {request.packageDimensions.packageUnidades}</p>
                                 <p>Fecha de creación de la solicitud: {request.requestDate}</p>
-                            </>
-                            }                                
                             </PubliContent>
                             <ButtonContent>
-                                {props.myrequest === false ? 
-                                    <Button2>Cancelar</Button2>
+                                {props.myrequest === true ? 
+                                    <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
                                  :
                                 <>
                                     <Button1>Aceptar</Button1>
@@ -125,13 +141,6 @@ const Title = styled.div`
     margin: 3vh;
     font-weight: bold;
 ` 
-const ButtonContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-
-`
 const Data = styled.div`
     display: flex;
     flex-direction: row;
@@ -140,6 +149,42 @@ const Data = styled.div`
     justify-content: space-between;
 `
 
+
+const Alert = styled.div`
+  position: fixed;
+  top: 0;
+  right: 30vw;
+  background: white;
+  border: 3px solid rgba(136, 148, 122, 0.7); 
+  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+  rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  max-width: 100vh;
+  z-index: 16;
+  list-style: none;
+  padding: 2vw 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: ${props => props.show ===false ? 'translatey(-200%)': 'translatey(0%)'};
+  transition: transform 0.2s;
+  li{
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+
+    a{
+      font-weight: 600; 
+    }
+    &:hover {
+        border-radius: 0.6vh;
+        border-color: rgba(249, 249, 249 , 0.8);
+        color: white;
+        background-color: #0000003D;
+        opacity: 0.9;
+    }
+  }
+`
 const Button1 = styled.button`
    border: 1px solid #f9f9f9;
    padding: 8px 16px;
@@ -175,4 +220,14 @@ const Button2 = styled.button`
        border-color: transparent;
    }
 
+`
+const ButtonContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+const ButtonContent1 = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `

@@ -41,13 +41,18 @@ function MyDetail() {
       
    
   const [page, setPage] = useState('Info')
-  const deletepubli = () => {
-        deletePublication(id);
-        window.alert("Publicación Elmiminada con Exito")
-        history.push("/publimy")
-        
-  }
+  const[cancelStatus, setCancelStatus] = useState(false);
   
+
+  const cancel = () => {
+     setCancelStatus(true); 
+  }
+  const deletepubli =() => {
+    deletePublication(id);
+    setCancelStatus(false);
+    window.alert("Publicación Elmiminada con Exito")
+    history.push("/publimy")
+  }
   /**
    * Llama a otros componentes
    * @returns Información de la publicación o el formulario de solicitud
@@ -78,6 +83,16 @@ function MyDetail() {
                 <Background>
                     <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
                 </Background>
+                <Alert show={cancelStatus}>
+                    <h2>Advertencia!!!!!!</h2>
+                    <h4>La publicación se eliminara permanentemente</h4>
+                    <p>¿Desear continuar?</p>
+                    <ButtonContent>
+                        <Button1 onClick={() => deletepubli}>Continuar</Button1>
+                        <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
+                    </ButtonContent>
+
+                </Alert>
                 <Data>
                 <LeftData>
                     <ImageTitle>
@@ -93,7 +108,7 @@ function MyDetail() {
                             <TrailerButton  onClick={toPage('Info')}>
                                 <span>+ INFO</span>
                             </TrailerButton>
-                            <CancelButton onClick={deletepubli}>
+                            <CancelButton onClick={cancel}>
                                 <span>Eliminar</span>
                             </CancelButton>
                         </Controls>
@@ -217,8 +232,43 @@ border-radius: 1vh;
 const TrailerButton = styled(PlayButton)`
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgb(249, 249, 249);
-    color: rgb(249, 249,249)
+    color: rgb(249, 249,249);
   
+`
+const Alert = styled.div`
+  position: fixed;
+  top: 0;
+  right: 30vw;
+  background: white;
+  border: 3px solid rgba(136, 148, 122, 0.7); 
+  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+  rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  max-width: 100vh;
+  z-index: 16;
+  list-style: none;
+  padding: 2vw 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: ${props => props.show ===false ? 'translatey(-200%)': 'translatey(0%)'};
+  transition: transform 0.2s;
+  li{
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+
+    a{
+      font-weight: 600; 
+    }
+    &:hover {
+        border-radius: 0.6vh;
+        border-color: rgba(249, 249, 249 , 0.8);
+        color: white;
+        background-color: #0000003D;
+        opacity: 0.9;
+    }
+  }
 `
 const SubTitle = styled.div`
     color: rgb(249, 249, 249);
@@ -270,5 +320,46 @@ const Price = styled.div`
     margin-top: 3vh;
     margin-bottom: 3vh;
     font-size: 4vh;
+`
+const Button1 = styled.button`
+   border: 1px solid #f9f9f9;
+   padding: 8px 16px;
+   margin: 1vw 1vh;
+   border-radius: 4px;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   background-color: #A8A8A8;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+
+   &:hover {
+       background-color: #22B14CED;
+       color: #000;
+       border-color: transparent;
+   }
+
+`
+const Button2 = styled.button`
+   border: 1px solid #f9f9f9;
+   padding: 8px 16px;
+   border-radius: 4px;
+   margin: 1vw 1vh;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   background-color: #A8A8A8;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+
+   &:hover {
+       background-color: #E80D0DED;
+       color: #000;
+       border-color: transparent;
+   }
+
+`
+const ButtonContent = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `
 

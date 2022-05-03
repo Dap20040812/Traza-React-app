@@ -14,6 +14,7 @@ import {
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
 import Form from "react-bootstrap/Form"
+import cancelledPublicationsRefresh from '../backend/endedPublications'
 
 function MakePubli() {
     var now = new Date();
@@ -131,7 +132,6 @@ function MakePubli() {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors)
         }
-
         else 
         {
             createPublication(userUid,userName,userPhoto,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);

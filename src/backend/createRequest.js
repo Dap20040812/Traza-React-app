@@ -21,7 +21,8 @@ function createRequest(name,uid,idr,requestDate,embalajeRequest,descriptionReque
     let uuidr = uuidv4();
     db.collection('request').doc(uuidr).set({
 
-        NombreEmpresa: name, 
+        NombreEmpresa: name,
+        EmpresaUid:uid,
         publication:idr,
         requestDate:requestDate,
         embalaje:embalajeRequest,
@@ -34,11 +35,15 @@ function createRequest(name,uid,idr,requestDate,embalajeRequest,descriptionReque
         },
         products:products,
         prodDescription: prodDescription,
-        state:'Unaccepted'
+        state:'Unaccepted',
+        id:uuidr
     })
 
-    db.collection('empresas').doc(uid).collection('myRequests').doc(uuidr).set({
-        id: uuidr
+
+    db.collection('request').where('id','==',uuidr).get().then(snapshot=>{
+        snapshot.forEach(doc=>{
+            db.collection('empresas').doc(uid).collection('myRequests').doc(uuidr).set(doc.data())
+        })
     })
 }
 

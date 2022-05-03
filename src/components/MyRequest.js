@@ -7,23 +7,20 @@ import { useDispatch } from "react-redux"
 import Request from './Request'
 import showRequest from '../backend/showRequest'
 
-
 function MyRequest() {
     
     const dispatch = useDispatch()
     const userUid = useSelector(selecUserUid);
 
-    /**
-     * Muestra las publicaciones actuales de la empresa
-     */
     useEffect(() => {
         showRequest(userUid,dispatch);  
     },[]) 
     
+    
   return (
     <Container>
         <Background>
-            <img src="https://www.semana.com/resizer/pxkdm8iOSLbj0Y3QWYUMj5p5L_U=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NJC5QSBBZZEQPABT3MEMZPZVOM.jpg" />
+            <img src="https://www.tradelog.com.ar/blog/wp-content/uploads/2017/10/camiones-de-carga-pesada.jpg" />
         </Background>
         <Title>Mis Solicitudes</Title>
        <Request myrequest={true}/>
@@ -50,11 +47,13 @@ const Background = styled.div`
     right: 0;
     z-index: -1;
     opacity: 0.8;
+    
 
     img{
         width: 100%;
         height: 100%;
         object-fit:cover;
+        filter: brightness(50%);
     }
 
 `
