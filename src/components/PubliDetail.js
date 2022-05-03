@@ -29,7 +29,7 @@ function Detail() {
             }
         })
         recommendedPublications(dispatch);
-        //saveRecentPublications(userUid,id)
+        saveRecentPublications(userUid,id)
       },[])
 
       

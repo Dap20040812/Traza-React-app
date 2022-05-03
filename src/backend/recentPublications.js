@@ -9,15 +9,6 @@ import { setPublis } from '../features/publi/publiSlice'
 
 function saveRecentPublications(uuidEmpresa,idReciente)
 {
-    var now = new Date();
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = now.getFullYear()+"-"+(month)+"-"+(day);
-
-    db.collection('publications').doc(idReciente).update({
-        fechaDeVisualizacion:today,
-        horaDeVisualizacion:now.getHours
-    })
     db.collection('publications').where('id','==',idReciente).get().then((snapshot)=>{
         snapshot.forEach((doc) =>{
             db.collection('empresas').doc(uuidEmpresa).collection('publicacionesRecientes').doc(idReciente).set(doc.data())
