@@ -201,13 +201,13 @@ function Login() {
           <Form.Group className='row'>
             <Form.Label id="nit1" className="form-label">Nit :</Form.Label>
             <div className="col-md-4 w-75">
-            <Form.Control id="nit" type="num" min="1"  placeholder="Nit" className="form-control" onChange={ e => setField('nit', e.target.value) } isInvalid={ !!errors.nit }/>
+            <Form.Control type="number" min="0" id="nit" placeholder="Nit" className="form-control" onChange={ e => setField('nit', e.target.value) } isInvalid={ !!errors.nit }/>
             <Form.Control.Feedback type='invalid'>
               { errors.nit }
             </Form.Control.Feedback>
             </div>
             <div className="col-md-4 w-25">
-            <Form.Control id="nit2" type="num" min="1"  placeholder="#" className="form-control" onChange={ e => setField('nit2', e.target.value) } isInvalid={ !!errors.nit2 }/>
+            <Form.Control type="number" min="0" id="nit2" placeholder="#" className="form-control" onChange={ e => setField('nit2', e.target.value) } isInvalid={ !!errors.nit2 }/>
             <Form.Control.Feedback type='invalid'>
               { errors.nit2 }
             </Form.Control.Feedback>
@@ -359,7 +359,6 @@ const Input1 = styled.input`
 `
 const Input2 = styled.input`
     font-size: 2vh;
-    type: password;
     margin: 2vh;
     font-size: max(16px, 1em);
     font-family: inherit;

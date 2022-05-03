@@ -20,14 +20,6 @@ function RequestForm(props) {
     const userUid = useSelector(selecUserUid);
     const name = useSelector(selecUserName);
     const [ errors, setErrors ] = useState({})
-    const [description, setDescription] = useState('');
-    const [products, setProducts] = useState('');
-    const [prodDescription, setProdDescription] = useState('');
-    const [embalaje, setEmbalaje] = useState('');
-    const [requestHeight, setrequestHeight] = useState(''); 
-    const [requestWidth, setrequestWidth] = useState(''); 
-    const [requestLength, setrequestLength] = useState('');
-    const [requestUnidades, setrequestUnidades] = useState('');
     const [ form, setForm ] = useState({})
 
 
@@ -47,14 +39,13 @@ function RequestForm(props) {
         const {description,products, prodDescription,embalaje,requestHeight,requestWidth,requestLength,requestUnidades} = form
         const newErrors = {}
         // name errors
-        if ( !description || description === '' ) newErrors.description = 'Ingresa una descripción para continuar'
+        if ( !description || description === '') newErrors.description = 'Ingresa una descripción para continuar'
         if ( !products || products === '' ) newErrors.products = 'Ingresa un tipo de producto para continuar'
         if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa ls descripción del producto para continuar'
         if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Ingresa la razón social de la empresa para continuar'
         if ( !requestHeight || requestHeight === '' ) {
           newErrors.requestHeight = 'Ingresa la altura para continuar'
-        }
-        else if (requestHeight > props.freeSpaces1) {
+        }else if (requestHeight > props.freeSpaces1) {
           newErrors.requestHeight = 'La altura ingresada supera el espacio disponible'
         }
         if ( !requestWidth|| requestWidth === '' ) {
@@ -74,33 +65,37 @@ function RequestForm(props) {
         return newErrors
     }
 
-    const handleSubmit = e => {
-        var elem7 = document.getElementById("desc"); //descripción del envío
-        var elem8 = document.getElementById("prod"); //productos
-        var elem9 = document.getElementById("pdesc"); //descripción de los productos
-        var elem10 = document.getElementById("em"); //embalaje
-        var elem11 = document.getElementById("dc");
-        const newErrors = findFormErrors()
+    function handleSubmit (e) {
 
+        e.preventDefault();
+
+        const embalaje = e.target.elements.embalaje.value;
+        const description = e.target.elements.desc.value;
+        const products = e.target.elements.prod.value;
+        const prodDescription = e.target.elements.proDesc.value;
+        const requestHeight = e.target.elements.d1.value;
+        const requestWidth = e.target.elements.d2.value;
+        const requestLength = e.target.elements.d3.value;
+        const requestUnidades = e.target.elements.unity.value;
+
+        const newErrors = findFormErrors()
         if ( Object.keys(newErrors).length > 0 ) {
             // We got errors!
             setErrors(newErrors)
-        }
-        else 
+        }else 
         {
-            e.preventDefault();
             createRequest(name,userUid,props.publi,today,embalaje,description,requestHeight,requestWidth,requestLength,requestUnidades,products,prodDescription);
             window.alert("Solicitud Creada con Exito")
-            history.push("/homepubli") 
+            history.push("/myrequest") 
         }
     }
   return (
     <Container>
-      <Form1 className="row g-3 "> 
+      <Form1 onSubmit={handleSubmit} className="row g-3 "> 
         <Title>Solicitud de Pedido</Title>
         <Form.Group className='col-md-4 w-100'>
             <Form.Label id="desc1" className="form-label">Descripción del Envío :</Form.Label>
-            <textarea id="desc" rows="3" placeholder="Descripción de la solicitud" className="form-control" onChange={ e => setField('description', e.target.value) } isInvalid={ !!errors.description }/>
+            <textarea id="desc" rows="3" placeholder="Descripción de la solicitud" className="form-control" onChange={ e => setField('description', e.target.value) } isInvalid={ !!errors.description } required/>
             <Form.Control.Feedback type='invalid'>
               { errors.description } 
             </Form.Control.Feedback>
@@ -133,51 +128,43 @@ function RequestForm(props) {
           </Form.Group>
           <Form.Group className='col-md-4 w-100'>
             <Form.Label id="proDesc1" className="form-label">Descripción del Producto :</Form.Label>
-            <textarea id="proDesc" rows="3" placeholder="Descripción del producto" className="form-control" onChange={ e => setField('prodDescription', e.target.value) } isInvalid={ !!errors.prodDescription }/>
+            <textarea id="proDesc" rows="3" placeholder="Descripción del producto" className="form-control" onChange={ e => setField('prodDescription', e.target.value) } isInvalid={ !!errors.prodDescription } required/>        </Form.Group>
+        <Text>Dimensiones del Paquete : </Text>
+        <Form.Group className='col-md-2'>
+            <Form.Label id="d11" className="form-label">Altura :</Form.Label>
+            <Form.Control type="number" min="0" id="d1" placeholder="Altura" className="form-control" onChange={ e => setField('requestHeight', e.target.value) } isInvalid={ !!errors.requestHeight }/>
             <Form.Control.Feedback type='invalid'>
-              { errors.prodDescription } 
+              { errors.requestHeight } 
             </Form.Control.Feedback>
         </Form.Group>
+        <Form.Group className='col-md-2'>
+            <Form.Label id="d21" className="form-label">Ancho :</Form.Label>
+            <Form.Control type="number" min="0" id="d2" placeholder="Ancho" className="form-control" onChange={ e => setField('requestWidth', e.target.value) } isInvalid={ !!errors.requestWidth }/>
+            <Form.Control.Feedback type='invalid'>
+              { errors.requestWidth } 
+            </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className='col-md-2'>
+            <Form.Label id="d31" className="form-label">Largo :</Form.Label>
+            <Form.Control type="number" min="0" id="d3" placeholder="Largo" className="form-control" onChange={ e => setField('requestLength', e.target.value) } isInvalid={ !!errors.requestLength }/>
+            <Form.Control.Feedback type='invalid'>
+              { errors.requestLength } 
+            </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className='col-md-2'>
+            <Form.Label id="unity1" className="form-label">Unidades :</Form.Label>
+            <Form.Select id="unity" placeholder="Unidades" className="form-control" onChange={ e => setField('requestUnidades', e.target.value) } isInvalid={ !!errors.requestUnidades }> 
+                <option>{""}</option>
+                <option>{props.truckDimensions4}</option>
+            </Form.Select>
+            <Form.Control.Feedback type='invalid'>
+              { errors.requestUnidades }
+            </Form.Control.Feedback>  
+          </Form.Group>
+          <Form.Group>
+              <Input type="submit" value="SOLICITAR"></Input>
+          </Form.Group>
       </Form1>
-        <Inputs>
-          <Text id='em'>Tipo de Embalaje: </Text>
-            <Input2 value={embalaje} onChange={e => setEmbalaje(e.target.value)}>
-                {EmbalajeData.map((e, key) => {
-                  return <option key={key}>{e.name}</option>;
-                })}
-            </Input2>
-        </Inputs>
-        <Inputs1>
-          <Text id='desc'>Description del Envío:  </Text>
-          <Input4 value={description} onChange={e => setDescription(e.target.value)}/>
-        </Inputs1>
-        <Inputs>
-          <Text id='dc'>Dimensiones del Paquete: </Text>
-          <Input5 type='number' min="1" max={props.freeSpaces1} placeholder='Largo' value={requestHeight} onChange={e => setrequestHeight(e.target.value)}/>
-          <Input5 type='number' min="1" max={props.freeSpaces2} placeholder='Ancho' value={requestWidth} onChange={e => setrequestWidth(e.target.value)}/>
-          <Input5 type='number' min="1" max={props.freeSpaces3} placeholder='Alto' value={requestLength} onChange={e => setrequestLength(e.target.value)}/>
-          <Input2 value={requestUnidades} onChange={e => setrequestUnidades(e.target.value)}>
-              <option>{""}</option>
-              <option>{props.truckDimensions4}</option>
-          </Input2>
-        </Inputs>
-        <Inputs>
-          <Text id='prod'>Productos Tranportados: </Text>
-          <Input2 value={products} onChange={e => setProducts(e.target.value)}>
-            {
-              ProductData.map((e, key) => {
-                return <option key={key}>{e.name}</option>;
-                })
-              }
-          </Input2>
-        </Inputs>
-        <Inputs1>
-          <Text id='pdesc'>Descripción de los Productos: </Text>
-          <Input4 value={prodDescription} onChange={e => setProdDescription(e.target.value)}/>
-        </Inputs1>
-        <PlayButton onClick={handleSubmit}>
-          <span>SOLICITAR</span>
-        </PlayButton>
     </Container>
   )
 }
@@ -193,6 +180,24 @@ const Title = styled.div`
     margin-top: 4vh;
     color: white;
     font-weight: bold;
+
+`
+const Input = styled.input`
+   border: 1px solid #f9f9f9;
+   padding: 8px 16px;
+   margin: 1vw 1vh;
+   border-radius: 4px;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   background-color: #2A3EABED;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+
+   &:hover {
+       background-color: #22B14CED;
+       color: #000;
+       border-color: transparent;
+   }
 
 `
 const SubTitle = styled.div`
