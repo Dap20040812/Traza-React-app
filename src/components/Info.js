@@ -8,7 +8,7 @@ function Info (props) {
 
   return (
     <Container>
-        <PubliTitle>
+        <PubliTitle> 
             {props.origin} -- {props.destination}
         </PubliTitle>
             <RigthInfo>    
