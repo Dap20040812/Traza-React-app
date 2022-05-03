@@ -14,6 +14,7 @@ import {
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
 import cancelledPublicationsRefresh from '../backend/endedPublications';
+import requestEndedRefresh from '../backend/requestEndedRefresh';
 
 function Header() {
     const[burgerStatus, setBurgerStatus] = useState(false);
@@ -27,6 +28,7 @@ function Header() {
 
     useEffect(() => {
       cancelledPublicationsRefresh()
+      requestEndedRefresh()
       auth.onAuthStateChanged(async (user) =>{
           if(user){
               dispatch(setUserLogin({
@@ -39,7 +41,7 @@ function Header() {
               console.log(userPhoto)
               history.push("/")
           }else{
-            history.push("/intro") 
+            history.push("/intro")  
           }
       })
     },[])     
