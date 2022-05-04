@@ -15,6 +15,8 @@ import {
 import {useDispatch, useSelector} from "react-redux"
 import Form from "react-bootstrap/Form"
 import cancelledPublicationsRefresh from '../backend/endedPublications'
+import {Spinner} from "reactstrap"
+
 
 function MakePubli() {
     var now = new Date();
@@ -26,7 +28,8 @@ function MakePubli() {
 
     const [ errors, setErrors ] = useState({})
     const [ form, setForm ] = useState({})
-
+    const [publiImg, setPubliImg] = useState('');
+    const [loading, setLoading] = useState(false);
     const userUid = useSelector(selecUserUid); //Obtiene el UUID del usuario actual
     const userName = useSelector(selecUserName); //Obtiene el nombre del usuario actual
     const userPhoto = useSelector(selecUserPhoto); //Obtiene la foto del usuario actual   
@@ -110,6 +113,7 @@ function MakePubli() {
         const destAddress = e.target.elements.destAddress.value;
         const date = e.target.elements.date.value;
         const price = e.target.elements.price.value;
+        const products = e.target.elements.products.value;
         const description = e.target.elements.description.value;
         const prodDescription = e.target.elements.prodDescription.value;
         const embalaje = e.target.elements.embalaje.value;
@@ -122,10 +126,6 @@ function MakePubli() {
         const freeSpaceLength = e.target.elements.freeSpaceLength.value;
         const freeSpaceWidth = e.target.elements.freeSpaceWidth.value;
         const freeSpaceUnidades = e.target.elements.freeSpaceUnidades.value;
-        const publiImg = e.target.elements.publiImg.value;
-
-        var med1 = truckHeight*truckLength*truckWidth
-        var med2 = freeSpaceHeight*freeSpaceLength*freeSpaceWidth
 
         const newErrors = findFormErrors()
 
@@ -147,6 +147,7 @@ function MakePubli() {
 
     const archivoMandler = async (e)=>{
 
+        setLoading(true)
         setPubliImg("");
         const archivo = e.target.files[0];
         const storageRef = storage.ref();
@@ -155,6 +156,7 @@ function MakePubli() {
         console.log(archivo.name)
         const url =  await archivoPath.getDownloadURL();
         setPubliImg(url);
+        setLoading(false)
     }
   return (
     <Container>
@@ -164,8 +166,7 @@ function MakePubli() {
         <Data>
                 <Title>Nueva Publicación</Title>
                 <SubTitle> Detalles del Flete: </SubTitle>
-                <Form1 onSubmit={handleSubmit} className='row'>
-                    <div className='row w-100'>
+                <Form1 onSubmit={handleSubmit} className="row g-3">
                     <Form.Group className='col-md-4 w-50'>
                         <Form.Label className='form-label' > Punto de Origen </Form.Label>
                             <Form.Select id='origin' className='form-control' onChange={e => setField('origin', e.target.value)} isInvalid={!!errors.origin} >
@@ -184,10 +185,7 @@ function MakePubli() {
                                 {errors.oriAddress}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    </div>
-                    <div className='row w-100' >
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-6 w-50'>
                         <Form.Label className='form-label' > Punto de Destino </Form.Label>
                             <Form.Select id='destination' className='form-control' onChange={e => setField('destination', e.target.value)} isInvalid={!!errors.destination} >
                                 {countryData.map((e, key) => {
@@ -198,41 +196,35 @@ function MakePubli() {
                                 {errors.destination}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-6 w-50'>
                         <Form.Label className='form-label' > Dirección Exacta de Destino </Form.Label>
                             <Form.Control id='destAddress' type='text' className='form-control' onChange={e => setField('destAddress', e.target.value)} isInvalid={!!errors.destAddress} />
                             <Form.Control.Feedback type='invalid' >
                                 {errors.destAddress}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    </div>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-8 w-50'>
                         <Form.Label className='form-label' > Fecha de Salida </Form.Label>
                             <Form.Control id='date' type='date' className='form-control' min={today} max ="2022-12-30" onChange={e => setField('date', e.target.value)} isInvalid={!!errors.date} />
                             <Form.Control.Feedback type='invalid' >
                                 {errors.date}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-8 w-50'>
                         <Form.Label className='form-label' > Precio Estimado </Form.Label>
                             <Form.Control id='price' type='number' min='100' className='form-control' onChange={e => setField('price', e.target.value)} isInvalid={!!errors.price} />
                             <Form.Control.Feedback type='invalid' >
                                 {errors.price}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-100'>
-                    <br/>
+                    <Form.Group className='col-md-10 w-100'>
                         <Form.Label className='form-label' > Descripción del Envío </Form.Label>
                             <textarea id='description' row='3' className='form-control' onChange={e => setField('description', e.target.value)} isInvalid={!!errors.description} required />
                             <Form.Control.Feedback type='invalid' >
                                 {errors.description}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-12 w-50'>
                         <Form.Label className='form-label' > Productos Transportados </Form.Label>
                             <Form.Select id='products' className='form-control' onChange={e => setField('products', e.target.value)} isInvalid={!!errors.products} >
                                 {ProductData.map((e, key) => {
@@ -243,8 +235,7 @@ function MakePubli() {
                                 {errors.products}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
+                    <Form.Group className='col-md-12 w-50'>
                         <Form.Label className='form-label' > Tipo de Embalaje </Form.Label>
                             <Form.Select id='embalaje' className='form-control' onChange={e => setField('embalaje', e.target.value)} isInvalid={!!errors.embalaje} >
                                 {EmbalajeData.map((e, key) => {
@@ -255,84 +246,80 @@ function MakePubli() {
                                 {errors.embalaje}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-100'>
-                    <br/>
+                    <Form.Group className='col-md-14 w-100'>
                         <Form.Label className='form-label' > Descripción de los Productos </Form.Label>
                             <textarea id='prodDescription' row='3' className='form-control' onChange={e => setField('prodDescription', e.target.value)} isInvalid={!!errors.prodDescription} required />
                             <Form.Control.Feedback type='invalid' >
                                 {errors.prodDescription}
                             </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
-                        <Form.Label className='form-label' > Dimensiones del Camión </Form.Label>
-                            <div>
-                                <Form.Control id='truckLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('truckLength', e.target.value)} isInvalid={!!errors.truckLength} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.truckLength}
-                                </Form.Control.Feedback>
-                            </div>
-                            <br/>
-                            <div>
-                                <Form.Control id='truckWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('truckWidth', e.target.value)} isInvalid={!!errors.truckWidth} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.truckWidth}
-                                </Form.Control.Feedback>
-                            </div>
-                            <br/>
-                            <div>
-                                <Form.Control id='truckHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('truckHeight', e.target.value)} isInvalid={!!errors.truckHeight} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.truckHeight}
-                                </Form.Control.Feedback>
-                            </div>
-                            <div>
-                                <Form.Select id='truckUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('truckUnidades', e.target.value)} isInvalid={!!errors.truckUnidades} >
-                                    {MedidaData.map((e, key) => {
-                                        return <option key={key}>{e.name}</option>;
-                                    })}
-                                </Form.Select>
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.truckUnidades}
-                                </Form.Control.Feedback>
-                            </div>
+                    <SubTitle>Dimensiones del Camion</SubTitle>  
+                    <Form.Group className='col-md-2'>
+                        <Form.Label className='form-label' >Largo : </Form.Label>
+                        <Form.Control id='truckLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('truckLength', e.target.value)} isInvalid={!!errors.truckLength} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.truckLength}
+                        </Form.Control.Feedback>
+                     </Form.Group>  
+                     <Form.Group className='col-md-2'>  
+                        <Form.Label className='form-label' >Ancho : </Form.Label>
+                        <Form.Control id='truckWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('truckWidth', e.target.value)} isInvalid={!!errors.truckWidth} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.truckWidth}
+                        </Form.Control.Feedback>
+                    </Form.Group>  
+                    <Form.Group className='col-md-2'>  
+                        <Form.Label className='form-label' >Alto : </Form.Label>    
+                        <Form.Control id='truckHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('truckHeight', e.target.value)} isInvalid={!!errors.truckHeight} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.truckHeight}
+                        </Form.Control.Feedback>
+                    </Form.Group>    
+                    <Form.Group className='col-md-2'>
+                        <Form.Label className='form-label' >Unidades : </Form.Label>  
+                        <Form.Select id='truckUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('truckUnidades', e.target.value)} isInvalid={!!errors.truckUnidades} >
+                            {MedidaData.map((e, key) => {
+                                return <option key={key}>{e.name}</option>;
+                            })}
+                        </Form.Select>
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.truckUnidades}
+                        </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='col-md-4 w-50'>
-                    <br/>
-                        <Form.Label className='form-label' > Dimensiones del Espacio Disponible </Form.Label>
-                            <div>
-                                <Form.Control id='freeSpaceLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceLength', e.target.value)} isInvalid={!!errors.freeSpaceLength} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.freeSpaceLength}
-                                </Form.Control.Feedback>
-                            </div>
-                            <br/>
-                            <div>
-                                <Form.Control id='freeSpaceWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceWidth', e.target.value)} isInvalid={!!errors.freeSpaceWidth} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.freeSpaceWidth}
-                                </Form.Control.Feedback>
-                            </div>
-                            <br/>
-                            <div>
-                                <Form.Control id='freeSpaceHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceHeight', e.target.value)} isInvalid={!!errors.freeSpaceHeight} />
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.freeSpaceHeight}
-                                </Form.Control.Feedback>
-                            </div>
-                            <div>
-                                <Form.Select id='freeSpaceUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('freeSpaceUnidades', e.target.value)} isInvalid={!!errors.freeSpaceUnidades} >
-                                    {MedidaData.map((e, key) => {
-                                        return <option key={key}>{e.name}</option>;
-                                    })}
-                                </Form.Select>
-                                <Form.Control.Feedback type='invalid' >
-                                    {errors.freeSpaceUnidades}
-                                </Form.Control.Feedback>
-                            </div>
+                    <SubTitle>Espacio Disponible</SubTitle>
+                    <Form.Group className='col-md-2'>
+                        <Form.Label className='form-label' >Largo : </Form.Label>
+                        <Form.Control id='freeSpaceLength' placeholder='Largo' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceLength', e.target.value)} isInvalid={!!errors.freeSpaceLength} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.freeSpaceLength}
+                        </Form.Control.Feedback>
+                    </Form.Group>  
+                    <Form.Group className='col-md-2'>  
+                        <Form.Label className='form-label' >Ancho : </Form.Label>
+                        <Form.Control id='freeSpaceWidth' placeholder='Ancho' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceWidth', e.target.value)} isInvalid={!!errors.freeSpaceWidth} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.freeSpaceWidth}
+                        </Form.Control.Feedback>
+                    </Form.Group> 
+                    <Form.Group className='col-md-2'>    
+                        <Form.Label className='form-label'>Alto : </Form.Label>
+                        <Form.Control id='freeSpaceHeight' placeholder='Alto' type='number' min='1' className='form-control' onChange={e => setField('freeSpaceHeight', e.target.value)} isInvalid={!!errors.freeSpaceHeight} />
+                        <Form.Control.Feedback type='invalid' >
+                            {errors.freeSpaceHeight}
+                        </Form.Control.Feedback>
+                    </Form.Group> 
+                    <Form.Group className='col-md-2'>   
+                        <Form.Label className='form-label' >Unidades : </Form.Label>
+                        <Form.Select id='freeSpaceUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('freeSpaceUnidades', e.target.value)} isInvalid={!!errors.freeSpaceUnidades} >
+                            {MedidaData.map((e, key) => {
+                                return <option key={key}>{e.name}</option>;
+                            })}
+                        </Form.Select>
+                        <Form.Control.Feedback type='invalid' > 
+                            {errors.freeSpaceUnidades}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className='col-md-4 w-100'>
-                    <br/>
                         <Form.Label className='form-label' > Restricciones del Envío </Form.Label>
                             <textarea id='restrictions' row='3' className='form-control' onChange={e => setField('restrictions', e.target.value)} isInvalid={!!errors.restrictions} required />
                             <Form.Control.Feedback type='invalid' >
@@ -340,9 +327,9 @@ function MakePubli() {
                             </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className='col-md-4' >
-                    <br/>
                         <Form.Label id='publiImg' className='form-label' > Imagen Publicación </Form.Label>
                         <Input7 type="file" accept="image/png, image/jpeg, image/jpg"  onChange={archivoMandler} />
+                        {loading ? <Spinner/> : ""}
                     </Form.Group>
                     <Form.Group>
                         <Input type='submit' value='PUBLICAR' ></Input>

@@ -88,7 +88,7 @@ function MyDetail() {
                     <h4>La publicación se eliminara permanentemente</h4>
                     <p>¿Desear continuar?</p>
                     <ButtonContent>
-                        <Button1 onClick={() => deletepubli}>Continuar</Button1>
+                        <Button1 onClick={deletepubli}>Continuar</Button1>
                         <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
                     </ButtonContent>
 
