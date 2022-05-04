@@ -10,7 +10,7 @@ import {
     selecUserPhoto,
     selecUserUid,
     setUserLogin,
-    setSignOut
+    setSignOut 
 } from "../features/user/userSlice"
 import {useDispatch, useSelector} from "react-redux"
 import cancelledPublicationsRefresh from '../backend/endedPublications';

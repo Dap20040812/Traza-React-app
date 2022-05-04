@@ -18,7 +18,7 @@ function Home() {
   return (
     <Container>
         <ImgSlider/>
-        <Title>Recomendaciones : </Title>
+        <Title>Publicaciones vistas recientemente : </Title>
         <Publi mypubli={false}/>
     </Container>
   )
