@@ -48,7 +48,7 @@ function MyDetail() {
      setCancelStatus(true); 
   }
   const deletepubli =() => {
-    deletePublication(id);
+    deletePublication(id,publi.empresaUid);
     setCancelStatus(false);
     window.alert("Publicación Elmiminada con Exito")
     history.push("/publimy")
