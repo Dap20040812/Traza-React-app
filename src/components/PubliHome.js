@@ -8,7 +8,7 @@ import countryData from '../data/countrydata'
 import queryPublications from '../backend/queryPublications'
 import showRequest from '../backend/showRequest'
 import { addFavoritePublication } from '../backend/favoritePublications'
-
+import createRandomPublication from '../test/createRandomPublication'
 
 function PubliHome() {
 
@@ -45,6 +45,7 @@ function PubliHome() {
      */
     const handleSubmit = e => {
         e.preventDefault();
+        createRandomPublication()
         queryPublications(dispatch,origin,destination,date,products)
     }
      
