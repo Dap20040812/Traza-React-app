@@ -72,6 +72,7 @@ function createPublication(uid,name,photo,origin,oriAddress,destination,destAddr
         restrictions: restrictions,
         publiImg: publiImgs,
         state: "active",
+        favorite: false,
         fechaDeCreacion:firebase.firestore.Timestamp.fromDate(new Date())
     })
     

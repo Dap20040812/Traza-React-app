@@ -7,6 +7,7 @@ import { setPublis} from "../features/publi/publiSlice"
 import countryData from '../data/countrydata'
 import queryPublications from '../backend/queryPublications'
 import showRequest from '../backend/showRequest'
+import { addFavoritePublication } from '../backend/favoritePublications'
 
 
 function PubliHome() {
