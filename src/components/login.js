@@ -243,7 +243,7 @@ function Login() {
           </Form.Group>
           <Form.Group className='col-md-6'> 
             <Form.Label id="password1" className="form-label">Contraseña :</Form.Label>
-            <Form.Control id="password" type="password" placeholder="Password" autoComplete="current-password" className="form-control" onChange={ e => setField('password', e.target.value) } isInvalid={ !!errors.password } required/>
+            <Form.Control id="password" type="password" placeholder="Password" autoComplete="current-password" className="form-control" onChange={ e => setField('password', e.target.value) } isInvalid={ !!errors.password }/>
             <Form.Control.Feedback type='invalid'>
               { errors.password }
             </Form.Control.Feedback>

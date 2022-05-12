@@ -29,6 +29,7 @@ function MakePubli() {
     const [ errors, setErrors ] = useState({})
     const [ form, setForm ] = useState({})
     const [publiImg, setPubliImg] = useState('');
+    const [unity, setUnity] = useState('');
     const [loading, setLoading] = useState(false);
     const userUid = useSelector(selecUserUid); //Obtiene el UUID del usuario actual
     const userName = useSelector(selecUserName); //Obtiene el nombre del usuario actual
@@ -126,6 +127,7 @@ function MakePubli() {
         const freeSpaceLength = e.target.elements.freeSpaceLength.value;
         const freeSpaceWidth = e.target.elements.freeSpaceWidth.value;
         const freeSpaceUnidades = e.target.elements.freeSpaceUnidades.value;
+        setUnity(freeSpaceUnidades)
 
         const newErrors = findFormErrors()
 
@@ -311,9 +313,8 @@ function MakePubli() {
                     <Form.Group className='col-md-2'>   
                         <Form.Label className='form-label' >Unidades : </Form.Label>
                         <Form.Select id='freeSpaceUnidades' placeholder='Unidades' className='form-control' onChange={e => setField('freeSpaceUnidades', e.target.value)} isInvalid={!!errors.freeSpaceUnidades} >
-                            {MedidaData.map((e, key) => {
-                                return <option key={key}>{e.name}</option>;
-                            })}
+                            <option>{""}</option>
+                            <option>{unity}</option>   
                         </Form.Select>
                         <Form.Control.Feedback type='invalid' > 
                             {errors.freeSpaceUnidades}
