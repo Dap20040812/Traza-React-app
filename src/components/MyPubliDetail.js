@@ -48,7 +48,7 @@ function MyDetail() {
      setCancelStatus(true); 
   }
   const deletepubli =() => {
-    deletePublication(id);
+    deletePublication(id,'nmWTt5OChHRGbjIZNgQw4aNaksC3');
     setCancelStatus(false);
     window.alert("Publicación Elmiminada con Exito")
     history.push("/publimy")
