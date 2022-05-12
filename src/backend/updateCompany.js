@@ -1,27 +1,24 @@
 import db from '../firebase'
 /**
- * Esta función sirve para crear una empresa
- * @param {String} nombre Nombre de la empresa
- * @param {String} nit Nit de la empresa
- * @param {String} razonSocial Razon solcial de la empresa
- * @param {String} secotrEconomico Sector económico de la empresa
- * @param {String} correo correo de la empresa
- * @param {String} telefono teléfono de la empresa
- * @param {String} contraseña contraseña de la empresa
+ * Esta funcion sirve para cambiar el email de una empresa
+ * @param {String} uid ID de la empresa
+ * @param {String} newEmail Email por el que se quiere cambiar 
  */
-function createCompany(uid,nombre,nit,razonSocial,secotrEconomico,correo,telefono,contraseña)
+function changeEmailCompany(uid,newEmail)
 {
-    db.collection('empresas').doc(uid).set({
-        nombreEmpresa:nombre,
-        razon:razonSocial,
-        sectorEco:secotrEconomico,
-        nit: nit,
-        correoEmpresa:correo,
-        telefonoEmpresa:telefono,
-        contraseñaEmpresa:contraseña,
-        publications:{},
-        request:{},
-        recentPublications:{}
+    db.collection('empresas').doc(uid).update({
+        correoEmpresa:newEmail
+    })
+}
+/**
+ * Esta función sirve para cambiar el número de telefono de una empresa
+ * @param {String} uid ID de la empreas
+ * @param {String} newPhone Número de teléfono por el cual se quiere cambiar
+ */
+function changePhoneCompanu(uid,newPhone)
+{
+    db.collection('empresas').doc(uid).update({
+        telefonoEmpresa:newPhone
     })
 }
 

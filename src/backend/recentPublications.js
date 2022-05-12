@@ -1,5 +1,6 @@
 import db from '../firebase'
 import { setPublis } from '../features/publi/publiSlice'
+import firebase from 'firebase/compat/app';
 
 /**
  * Esta función sirve para mostrar las publicaciones recientes por cada empresa
@@ -9,11 +10,23 @@ import { setPublis } from '../features/publi/publiSlice'
 
 function saveRecentPublications(uuidEmpresa,idReciente)
 {
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day);
+
+    var hour = now.getHours().toString();
+
+
     db.collection('publications').where('id','==',idReciente).get().then((snapshot)=>{
         snapshot.forEach((doc) =>{
             db.collection('empresas').doc(uuidEmpresa).collection('publicacionesRecientes').doc(idReciente).set(doc.data())
+            db.collection('empresas').doc(uuidEmpresa).collection('publicacionesRecientes').doc(idReciente).update({
+                fechaDeVisualizacion: firebase.firestore.Timestamp.fromDate(new Date)
+            })
         })
     })
+
 }
 /**
  * Esta función para mostrar las publicaciones recientes cliqueadas por el usuario
@@ -22,7 +35,8 @@ function saveRecentPublications(uuidEmpresa,idReciente)
  */
 function showRecentPublication(uuidEmpresa,dispatch)
 {
-    db.collection("empresas").doc(uuidEmpresa).collection('publicacionesRecientes').where('state','==','active').limit(4).onSnapshot((snapshot)=>{
+
+    db.collection("empresas").doc(uuidEmpresa).collection('publicacionesRecientes').orderBy('fechaDeVisualizacion','desc').limit(4).where('state','==','active').onSnapshot((snapshot)=>{
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 

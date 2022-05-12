@@ -2,14 +2,24 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ImgSliderPubli from './ImgSliderPubli'
 import db from '../firebase'
+import { Favorite, FavoriteBorder, FavoriteBorderOutlined} from '@material-ui/icons'
 
 
 function Info (props) {
 
+ const [isHovered, setIsHovered] = useState(false)
+
   return (
     <Container>
         <PubliTitle> 
-            {props.origin} -- {props.destination}
+            <TitleLeft>
+                {props.origin} -- {props.destination}
+            </TitleLeft>
+            <TitleRight>
+                <Icon onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                    {isHovered ? <Favorite /> : <FavoriteBorder/>}
+                </Icon>
+            </TitleRight>
         </PubliTitle>
             <RigthInfo>    
                 <Data>
@@ -83,8 +93,20 @@ const PubliTitle = styled.div`
     font-size: 4vh;
     color: white;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 `
+
+const TitleLeft = styled.div `
+    padding-left: 30px;
+`
+
+const TitleRight = styled.div `
+    padding-right: 30px;
+`
+
 const PubliInfo = styled.ul`
     margin: 1vh;
     font-size: 2vh;
@@ -98,7 +120,21 @@ const Description = styled.div`
     margin-left: 3vh;
     font-size: 2vh;
     color: white;
+`
 
+const Icon = styled.div `
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    transition: all 0.5s ease;
+    font-size: large;
 
-
+    &:hover{
+        transform: scale(1.3);
+    }
 `

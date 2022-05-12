@@ -10,6 +10,8 @@ import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
+import { HashLink } from 'react-router-hash-link';
+
 
 function Detail() {
 
@@ -75,7 +77,7 @@ function Detail() {
                 <Background>
                     <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
                 </Background>
-                <Data>
+                <Data >
                 <LeftData>
                     <ImageTitle>
                         <img src={publi.empresaPhoto}/>
@@ -105,9 +107,6 @@ function Detail() {
         )
 
         }
-        <Title>Publicaciones Recomendadas</Title>
-        <Publi mypubli={false}/>
-         
     </Container>
   )
 }
@@ -122,6 +121,11 @@ const Container = styled.div`
     position:relative;
     justify-content: center;
 `
+const HashLink1 = styled(HashLink)`
+    top: 0;
+    left: 0;
+    text-decoration: none;
+`
 const Title = styled.div`
     color: rgb(249, 249, 249);
     font-size: 8vh;
@@ -134,22 +138,22 @@ const Data = styled.div`
     position:relative;
     justify-content: center;
 `
-const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-    opacity: 0.8;
+    const Background = styled.div`
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+        opacity: 0.8;
 
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit:cover;
-        filter: brightness(50%);
-    }
-`
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+            filter: brightness(50%);
+        }
+    `
 const ImageTitle = styled.div`
     max-height: 35vh;
     max-width: 35vh;
@@ -193,7 +197,7 @@ const PlayButton = styled.button`
 const TrailerButton = styled(PlayButton)`
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgb(249, 249, 249);
-    color: rgb(249, 249,249)
+    color: rgb(249, 249,249);
   
 `
 const SubTitle = styled.div`

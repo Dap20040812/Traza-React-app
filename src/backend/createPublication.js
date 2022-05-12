@@ -72,8 +72,8 @@ function createPublication(uid,name,photo,origin,oriAddress,destination,destAddr
         restrictions: restrictions,
         publiImg: publiImgs,
         state: "active",
-        fechaDeVisualizacion:today,
-        horaDeVisualizacion:present
+        favorite: false,
+        fechaDeCreacion:firebase.firestore.Timestamp.fromDate(new Date())
     })
     
     db.collection('empresas').doc(uid).update( {
