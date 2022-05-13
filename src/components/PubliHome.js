@@ -7,8 +7,10 @@ import { setPublis} from "../features/publi/publiSlice"
 import countryData from '../data/countrydata'
 import queryPublications from '../backend/queryPublications'
 import showRequest from '../backend/showRequest'
-import { addFavoritePublication } from '../backend/favoritePublications'
+import { addFavoritePublication, searchFavoritePublication } from '../backend/favoritePublications'
 import createRandomPublication from '../test/createRandomPublication'
+import { acceptedRequest, finalAcceptance, finalRejection, rejectRequest} from '../backend/statusRequest'
+import cancelRequest from '../backend/changeRequest'
 
 function PubliHome() {
 
@@ -45,13 +47,10 @@ function PubliHome() {
      */
     const handleSubmit = e => {
         e.preventDefault();
-        createRandomPublication()
         queryPublications(dispatch,origin,destination,date,products)
+        //aca
+        cancelRequest('367e92dc-47a1-4914-9064-64698da45d4e')
     }
-     
-    
-
-
 
   return (
     <Container>

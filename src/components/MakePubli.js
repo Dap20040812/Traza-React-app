@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Form from "react-bootstrap/Form"
 import cancelledPublicationsRefresh from '../backend/endedPublications'
 import {Spinner} from "reactstrap"
+import { searchFavoritePublication, addFavoritePublication } from '../backend/favoritePublications'
 
 
 function MakePubli() {
@@ -93,7 +94,7 @@ function MakePubli() {
              newErrors.freeSpaceDimensions = 'Las dimensiones no conciden, revisa las medidas para continuar'
          }
         if( !truckUnidades || truckUnidades === '' ) newErrors.truckUnidades = 'Escoge las unidades para continuar'
-        if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
+        //if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
         if ( !restrictions || restrictions === '' ) newErrors.restrictions = 'Ingresa las restricciones del envio para continuar'
         
         return newErrors
