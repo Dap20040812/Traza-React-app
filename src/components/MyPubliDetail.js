@@ -48,11 +48,7 @@ function MyDetail() {
      setCancelStatus(true); 
   }
   const deletepubli =() => {
-<<<<<<< HEAD
-    deletePublication(id,'nmWTt5OChHRGbjIZNgQw4aNaksC3');
-=======
     deletePublication(id,publi.empresaUid);
->>>>>>> 9b5113fabc48d576f7cfb5affd9f18f313b8e6ab
     setCancelStatus(false);
     window.alert("Publicación Elmiminada con Exito")
     history.push("/publimy")

@@ -10,7 +10,7 @@ import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
-import { HashLink } from 'react-router-hash-link';
+//import { HashLink } from 'react-router-hash-link';
 
 
 function Detail() {
@@ -121,11 +121,12 @@ const Container = styled.div`
     position:relative;
     justify-content: center;
 `
-const HashLink1 = styled(HashLink)`
-    top: 0;
-    left: 0;
-    text-decoration: none;
-`
+// const HashLink1 = styled(HashLink)`
+//     top: 0;
+//     left: 0;
+//     text-decoration: none;
+// `
+
 const Title = styled.div`
     color: rgb(249, 249, 249);
     font-size: 8vh;

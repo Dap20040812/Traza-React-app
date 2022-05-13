@@ -1,5 +1,6 @@
 import db from '../firebase'
 import { setPublis } from '../features/publi/publiSlice'
+import { ExtensionTwoTone } from '@material-ui/icons'
 /**
  * Esta función sirve para añadir una publicación como favorita
  * @param {String} idEmpresa ID de la empresa a la cual se quiere agragar la publicación como favorita
@@ -12,6 +13,7 @@ function addFavoritePublication(idEmpresa,idPublication)
             db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idPublication).set(doc.data())
         })
     })
+
 }
 /**
  * Esta función sirve para mostrar las publicaciones favoritas de una empresa
@@ -37,4 +39,19 @@ function deleteFavoritePulication(idEmpresa,idp)
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).delete();
 }
 
-export {addFavoritePublication,showFavoritePublication,deleteFavoritePulication}
+function searchFavoritePublication(idEmpresa,idp)
+{
+    let exists=false;
+
+    db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).get().then(doc =>{
+        if (doc.exists)
+        {
+            exists=true;
+        }
+    })
+
+    console.log(exists)
+    return exists;
+}
+
+export {addFavoritePublication,showFavoritePublication,deleteFavoritePulication,searchFavoritePublication}
