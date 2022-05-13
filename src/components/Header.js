@@ -89,8 +89,10 @@ function Header() {
               <span>SERVICIOS</span>            
             </a>
             <a>
-              <img src='/images/support.png'></img>    
-              <span>SOPORTE</span>            
+              <StyledLink to={`/chat`}>
+                <img src='/images/support.png'></img>    
+                <span>SOPORTE</span>
+              </StyledLink>            
             </a>
           </NavMenu>
           <RightMenu>
