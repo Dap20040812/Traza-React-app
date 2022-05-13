@@ -41,7 +41,7 @@ function deleteFavoritePulication(idEmpresa,idp)
 
 function searchFavoritePublication(idEmpresa,idp)
 {
-    let exists=false;
+    var exists=false;
 
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).get().then(doc =>{
         if (doc.exists)
