@@ -16,7 +16,7 @@ function Info (props) {
                 {props.origin} -- {props.destination}
             </TitleLeft>
             <TitleRight>
-                <Icon onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                <Icon onClick={() => setIsHovered(true)}>
                     {isHovered ? <Favorite /> : <FavoriteBorder/>}
                 </Icon>
             </TitleRight>
