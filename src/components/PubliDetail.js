@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import {saveRecentPublications,showRecentPublication} from '../backend/recentPublications'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
+import { Link } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
@@ -95,7 +96,7 @@ function Detail() {
                         <Description>
                             {publi.serviceDescription}
                         </Description>
-
+                        <StyledLink to={`/current/${publi.id}`}><Button><span>hola</span></Button></StyledLink>
                 </LeftData> 
                 <RigthData>
                     {getContent()}
@@ -251,3 +252,34 @@ const Price = styled.div`
     font-size: 4vh;
 `
 
+const Button = styled.button`
+    border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 6vh;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 0.15vh;
+    cursor: pointer;
+    text-align: center; 
+    
+
+    &:hover {
+        background: rgb(198, 198, 198);
+    }
+`
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: white;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`

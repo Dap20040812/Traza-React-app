@@ -15,6 +15,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import MyDetail from './components/MyPubliDetail';
 import MyRequest from './components/MyRequest';
 import Chat from './components/Chat';
+import CurrentService from './components/CurrentService';
 
 
 function App() {
@@ -57,13 +58,12 @@ function App() {
         <Route path='/prueba'>
           <App1/>
         </Route>
-        <Route path='/'>
-          <Home/>
-        </Route>
-        <Route path='/current'>
+        <Route path='/current/:id'>
           <CurrentService />
         </Route>
-        
+        <Route path='/'>
+          <Home/>
+        </Route> 
       </Switch>
     </Router>
     </div>

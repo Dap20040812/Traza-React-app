@@ -8,6 +8,7 @@ import {storage} from '../firebase'
 import { useDispatch } from "react-redux"
 import {Spinner} from "reactstrap"
 import {setUserLogin} from "../features/user/userSlice"
+import {Link} from "react-router-dom"
 
 
 
@@ -88,7 +89,9 @@ function Profile() {
                     <SubTitle>Email : </SubTitle>
                     <Text>{company.correoEmpresa}</Text>
                 </Texts>
+                
             </Data>
+            
            </>
         )} 
     </Container>
@@ -105,6 +108,14 @@ const Container = styled.div`
     position:relative;
     justify-content: center;
 
+`
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: white;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
 `
 const ImageTitle = styled.div`
     max-height: 35vh;
