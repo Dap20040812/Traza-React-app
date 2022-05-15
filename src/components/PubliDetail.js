@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import {saveRecentPublications,showRecentPublication} from '../backend/recentPublications'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
+import { Link } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
@@ -52,7 +53,7 @@ function Detail() {
     else if (page === 'Request'){
       if(publi.empresaUid === userUid)
       {
-        window.alert("No puedes realizar un solicitud a tu publicación")
+        window.alert("No puedes realizar una solicitud a tu publicación")
         return(
             <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} uid={publi.empresaUid} name={publi.empresaName}/>   
         )
@@ -74,7 +75,6 @@ function Detail() {
         { publi && (
            <>
                 <Background>
-                    <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
                 </Background>
                 <Data >
                 <LeftData>
@@ -96,7 +96,7 @@ function Detail() {
                         <Description>
                             {publi.serviceDescription}
                         </Description>
-
+                        <StyledLink to={`/current/${publi.id}`}><Button><span>hola</span></Button></StyledLink>
                 </LeftData> 
                 <RigthData>
                     {getContent()}
@@ -145,7 +145,10 @@ const Data = styled.div`
         bottom: 0;
         right: 0;
         z-index: -1;
-        opacity: 0.8;
+        background: url("/images/home-background.png") center center /cover 
+        no-repeat fixed;
+        content: "";
+        position: absolute;
 
         img{
             width: 100%;
@@ -252,3 +255,34 @@ const Price = styled.div`
     font-size: 4vh;
 `
 
+const Button = styled.button`
+    border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 6vh;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 0.15vh;
+    cursor: pointer;
+    text-align: center; 
+    
+
+    &:hover {
+        background: rgb(198, 198, 198);
+    }
+`
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: white;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`

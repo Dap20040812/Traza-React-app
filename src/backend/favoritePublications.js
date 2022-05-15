@@ -38,15 +38,26 @@ function deleteFavoritePulication(idEmpresa,idp)
 {
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).delete();
 }
+<<<<<<< HEAD
 
 function searchFavoritePublication(idEmpresa,idp)
 {   
     var exists=false;
+=======
+let exists = false;
+async function searchFavoritePublication(idEmpresa,idp)
+{
+    function setExists(a)
+    {
+        exists = a
+    }
+>>>>>>> 4abdb52e85c725d4556ad8dd6ad82a8d6f95d625
 
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).get().then(doc =>{
 
         if (doc.exists)
         {
+<<<<<<< HEAD
             exists=true;
             console.log(exists)
         }else{
@@ -55,6 +66,16 @@ function searchFavoritePublication(idEmpresa,idp)
         }
     })
     return exists;
+=======
+            setExists(true)
+        }
+        else
+        {
+            setExists(false)
+        }
+    })
+    return exists
+>>>>>>> 4abdb52e85c725d4556ad8dd6ad82a8d6f95d625
 }
 
 export {addFavoritePublication,showFavoritePublication,deleteFavoritePulication,searchFavoritePublication}

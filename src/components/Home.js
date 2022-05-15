@@ -34,7 +34,7 @@ const Container = styled.main`
    overflow-y: hidden;
 
    &:before {
-       background: url("/images/home-background.png") center center /cover 
+      background: url("/images/home-background.png") center center /cover 
        no-repeat fixed;
        content: "";
        position: absolute;
@@ -46,7 +46,7 @@ const Container = styled.main`
    }
 `
 const Title = styled.div`
-    color: black;
+    color: white;
     font-size: 8vh;
     min-height: 3vh;
     margin: 3vh;
