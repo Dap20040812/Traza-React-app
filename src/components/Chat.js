@@ -53,7 +53,6 @@ function Chat()
 
     <Container>
         <Background>
-            <img src='https://www.seguridadvialenlaempresa.com/media/blog/consejos-carga-descarga-camion-1194x585-1.jpg'/>
         </Background>
         <Data>
             <input type="text" value={inputValue} onChange={test} ref={textInput} />
@@ -85,7 +84,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

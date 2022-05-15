@@ -20,7 +20,6 @@ function MyRequest() {
   return (
     <Container>
         <Background>
-            <img src="https://www.tradelog.com.ar/blog/wp-content/uploads/2017/10/camiones-de-carga-pesada.jpg" />
         </Background>
         <Title>Mis Solicitudes</Title>
        <Request myrequest={true}/>
@@ -46,7 +45,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
     
 
     img{

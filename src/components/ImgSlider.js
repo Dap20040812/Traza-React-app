@@ -25,7 +25,7 @@ function ImgSlider() {
             <img src="/images/slider3.png"/>
         </Wrap>
         <Wrap>
-            <img src="/images/slider4.png"/>
+            <img src="/images/slider4.jpg"/>
         </Wrap>
     </Carousel>
   )
