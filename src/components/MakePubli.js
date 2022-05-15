@@ -93,7 +93,7 @@ function MakePubli() {
              newErrors.freeSpaceDimensions = 'Las dimensiones no conciden, revisa las medidas para continuar'
          }
         if( !truckUnidades || truckUnidades === '' ) newErrors.truckUnidades = 'Escoge las unidades para continuar'
-        if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
+        //if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
         if ( !restrictions || restrictions === '' ) newErrors.restrictions = 'Ingresa las restricciones del envio para continuar'
         
         return newErrors
