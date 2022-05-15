@@ -14,6 +14,7 @@ import App1 from './components/pruba';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import MyDetail from './components/MyPubliDetail';
 import MyRequest from './components/MyRequest';
+import CurrentService from './components/CurrentService';
 
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
         </Route>
         <Route path='/'>
           <Home/>
+        </Route>
+        <Route path='/current'>
+          <CurrentService />
         </Route>
         
       </Switch>
