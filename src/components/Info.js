@@ -10,20 +10,27 @@ function Info (props) {
 
  const [isHovered, setIsHovered] = useState(searchFavoritePublication(props.user,props.id))
 
- const prueba = searchFavoritePublication(props.user,props.id)
+ 
 
  const setFavorite = () => {
-     console.log(prueba)
+     
      if(isHovered) {
          setIsHovered(false) 
          deleteFavoritePulication(props.user,props.id)
+         console.log("mal")
      }
      else {
          setIsHovered(true)
          addFavoritePublication(props.user,props.id)
+         console.log("bien")
      }
- }
+     const prueba = searchFavoritePublication(props.user,props.id)
+     console.log(prueba)
+    
 
+     
+ }
+ 
   return (
     <Container>
         <PubliTitle> 

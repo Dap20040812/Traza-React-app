@@ -1,14 +1,69 @@
 import React from 'react'
 import styled from 'styled-components'
+import db from '../firebase'
+import {useSelector} from "react-redux"
+import {selecUserUid} from "../features/user/userSlice"
+import { useState } from 'react';
+import chatSetupp from '../backend/chatSetup'
 
-function Chat() {
+
+function Chat() 
+{
+    const [inputValue, setInputValue] = useState("");
+    const userUid = useSelector(selecUserUid);
+    const text = document.querySelector("#divtext")
+    let textInput = React.createRef();
+    let sendMessage = e =>{
+        
+        if(inputValue!="")
+        {
+               chatSetupp(userUid,inputValue)
+        }
+        setInputValue("")
+    }
+    let test = e =>{
+        setInputValue(e.target.value)        
+    }
+
+    db.collection('empresas').doc('nmWTt5OChHRGbjIZNgQw4aNaksC3').collection('supportChat').orderBy('date').onSnapshot(snapshot=>
+        {
+            text.innerHTML = ''
+            snapshot.forEach(doc=>{
+                if(doc.data().company===userUid)
+                {
+                    text.innerHTML +=`
+                        <div>
+                            <span class="d-flex justify-content-end">${doc.data().text}</span>
+                        </div>       
+                    `
+                }
+                else
+                {
+                    text.innerHTML +=`
+                        <div>
+                            <span class="d-flex justify-content-start">${doc.data().text}</span>
+                        </div> 
+                    `
+                }
+            })
+        })   
+
+    
   return (
+
     <Container>
         <Background>
             <img src='https://www.seguridadvialenlaempresa.com/media/blog/consejos-carga-descarga-camion-1194x585-1.jpg'/>
         </Background>
-        <Data></Data>
+        <Data>
+            <input type="text" value={inputValue} onChange={test} ref={textInput} />
+            <button onClick={sendMessage}>Enviar mensaje</button>
+            <div class="mt-3"id="divtext">
+
+            </div>
+        </Data>
     </Container>
+
   )
 }
 
@@ -53,4 +108,14 @@ const Data = styled.div`
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+`
+const Test = styled.select`
+    font-size: 16px;
+    margin: 5px;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    padding: 0.25em 0.5em;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
 `

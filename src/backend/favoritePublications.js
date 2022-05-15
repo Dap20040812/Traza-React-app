@@ -38,20 +38,25 @@ function deleteFavoritePulication(idEmpresa,idp)
 {
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).delete();
 }
-
-function searchFavoritePublication(idEmpresa,idp)
+let exists = false;
+async function searchFavoritePublication(idEmpresa,idp)
 {
-    var exists=false;
+    function setExists(a)
+    {
+        exists = a
+    }
 
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).get().then(doc =>{
         if (doc.exists)
         {
-            exists=true;
+            setExists(true)
+        }
+        else
+        {
+            setExists(false)
         }
     })
-
-    console.log(exists)
-    return exists;
+    return exists
 }
 
 export {addFavoritePublication,showFavoritePublication,deleteFavoritePulication,searchFavoritePublication}
