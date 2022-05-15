@@ -18,7 +18,6 @@ function Detail() {
     const {id} = useParams();
     const [publi, setPubli] = useState()
     const userUid = useSelector(selecUserUid);
-    const dispatch = useDispatch()
     useEffect(() =>{
         db.collection("publications")
         .doc(id)
@@ -30,7 +29,6 @@ function Detail() {
     
             }
         })
-        recommendedPublications(dispatch);
         saveRecentPublications(userUid,id)
       },[])
 

@@ -14,7 +14,7 @@ import App1 from './components/pruba';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import MyDetail from './components/MyPubliDetail';
 import MyRequest from './components/MyRequest';
-import CurrentService from './components/CurrentService';
+import Chat from './components/Chat';
 
 
 function App() {
@@ -35,6 +35,9 @@ function App() {
         </Route>
         <Route path='/homepubli'>
           <PubliHome/>
+        </Route>
+        <Route path='/chat'>
+          <Chat/>
         </Route>
         <Route path='/publi/make'>
           <MakePubli/>
