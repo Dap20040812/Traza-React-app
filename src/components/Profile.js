@@ -64,7 +64,6 @@ function Profile() {
         { company && (
            <>
             <Background>
-            <img src="https://ibertransit.com/wp-content/uploads/camiones.png" />
             </Background>
             <Data>
                 <Title>Perfil Empresa</Title>
@@ -154,7 +153,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

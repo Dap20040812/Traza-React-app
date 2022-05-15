@@ -55,7 +55,6 @@ function PubliHome() {
   return (
     <Container>
         <Background>
-            <img src="https://www.ecestaticos.com/imagestatic/clipping/2a9/b8a/2a9b8ad7e8acf162441cde81351c2f16/el-exito-del-primer-camion-100-autonomo-anuncia-el-fin-de-los-transportistas.jpg?mtime=1640954821"/>
         </Background>
         <Navegator>
             <Origin  id="origi" onChange={e => setOrigin(e.target.value)}>
@@ -102,7 +101,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

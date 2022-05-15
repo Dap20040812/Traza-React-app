@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo&family=Lexend+Deca:wght@300&family=Signika&display=swap');
+
+@font-face {
+   font-family: 'Azonix';
+   src: url('../public/Azonix.otf') format("opentype");
+   font-weight: inherit;
+}
 body {
   margin: 0;
   color: white;
-  background-color: #9e9fa170;
+  background-color: black;
   font-family: 'Lexend Deca', sans-serif;
 
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

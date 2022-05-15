@@ -22,7 +22,6 @@ function MyPubli() {
   return (
     <Container>
         <Background>
-            <img src="https://www.semana.com/resizer/pxkdm8iOSLbj0Y3QWYUMj5p5L_U=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NJC5QSBBZZEQPABT3MEMZPZVOM.jpg" />
         </Background>
         <Title>Mis Publicaciones</Title>
         <Publi mypubli={true}/>
@@ -48,7 +47,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

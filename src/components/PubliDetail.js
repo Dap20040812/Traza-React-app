@@ -73,7 +73,6 @@ function Detail() {
         { publi && (
            <>
                 <Background>
-                    <img src="https://gates.scene7.com/is/image/gates/truck-and-bus?$Image_Responsive_Preset$&scl=1"/>
                 </Background>
                 <Data >
                 <LeftData>
@@ -144,7 +143,10 @@ const Data = styled.div`
         bottom: 0;
         right: 0;
         z-index: -1;
-        opacity: 0.8;
+        background: url("/images/home-background.png") center center /cover 
+        no-repeat fixed;
+        content: "";
+        position: absolute;
 
         img{
             width: 100%;
