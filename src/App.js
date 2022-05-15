@@ -60,6 +60,9 @@ function App() {
         <Route path='/'>
           <Home/>
         </Route>
+        <Route path='/current'>
+          <CurrentService />
+        </Route>
         
       </Switch>
     </Router>
