@@ -8,17 +8,18 @@ import {addFavoritePublication, deleteFavoritePulication, searchFavoritePublicat
 
 function Info (props) {
 
- const [isHovered, setIsHovered] = useState(searchFavoritePublication(props.user,props.id))
+ const [isHovered, setIsHovered] = useState(props.like)
 
+ console.log(isHovered) 
  const prueba = searchFavoritePublication(props.user,props.id)
 
  const setFavorite = () => {
-     console.log(prueba)
+     console.log(props.id)
      if(isHovered) {
          setIsHovered(false) 
          deleteFavoritePulication(props.user,props.id)
      }
-     else {
+     else if(!isHovered) {
          setIsHovered(true)
          addFavoritePublication(props.user,props.id)
      }
