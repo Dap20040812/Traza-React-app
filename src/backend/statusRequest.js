@@ -5,7 +5,9 @@ import db from '../firebase'
 function acceptedRequest(idr)
 {
     db.collection('request').doc(idr).update({
-        accepted: true
+        accepted: true,
+        comentarios: com,
+        finalPrice: price
     })
 }
 
@@ -19,8 +21,7 @@ function finalAcceptance(idr,idp,com,price)
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
                 finalAcceptance: true,
-                comentarios: com,
-                finalPrice: price
+    
 
             })
         
