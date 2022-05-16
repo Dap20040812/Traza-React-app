@@ -58,7 +58,6 @@ function Chat()
             <input type="text" value={inputValue} onChange={test} ref={textInput} />
             <button onClick={sendMessage}>Enviar mensaje</button>
             <div class="mt-3"id="divtext">
-
             </div>
         </Data>
     </Container>
