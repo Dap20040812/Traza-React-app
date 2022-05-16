@@ -19,5 +19,14 @@ function showAcceptedRequest(uid,dispatch)
         dispatch(setRequests(tempPublis));
     }) 
 }
+function showRequest(uid,dispatch)
+{
+    db.collection('request').where('EmpresaUid','==',uid).onSnapshot((snapshot)=>{
+        let tempPublis = snapshot.docs.map((doc)=>{
+            return {id: doc.id, ...doc.data()}
+        }) 
+        dispatch(setRequests(tempPublis));
+    }) 
+}
 
-export {showAcceptedRequest,showUnacceptedRequest}
+export {showAcceptedRequest,showUnacceptedRequest,showRequest}
