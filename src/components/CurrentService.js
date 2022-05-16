@@ -10,10 +10,10 @@ function CurrentService() {
     const {id} = useParams();
     const [publi, setPubli] = useState()
     const userUid = useSelector(selecUserUid);
-    const [checked1, setChecked1] = useState(false)
-    const [checked2, setChecked2] = useState(false)
-    const [checked3, setChecked3] = useState(false)
-    const [checked4, setChecked4] = useState(false)
+    const [checked1, setChecked1] = useState(false);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
+    const [checked4, setChecked4] = useState(false);
     const[changeStatus1, setChangeStatus1] = useState(false);
     const[changeStatus2, setChangeStatus2] = useState(false);
     const[changeStatus3, setChangeStatus3] = useState(false);
@@ -35,6 +35,10 @@ function CurrentService() {
     const handleClick1 = (e) => {
         setChangeStatus1(false);
         setChecked1(!checked1);
+        setChecked2(false)
+        setChecked3(false)
+        setChecked4(false)
+        return true
     }
 
     const handleClick2 = (e) => {
@@ -65,10 +69,10 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus1(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                            {!checked1 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                            {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                             <p>Hola</p>
                         </CheckDiv>
-                        <Input onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={checked1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -79,11 +83,10 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus2(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                        {checked2 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-
+                        {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                             <p>Hola</p>
                         </CheckDiv>
-                        <Input onClick={()=> setChangeStatus2(!changeStatus2)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={checked1 === true && checked2 === false} onClick={()=> setChangeStatus2(!changeStatus2)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -94,11 +97,11 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus3(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                            {checked3 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                            {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
                             <p>Hola</p>
                         </CheckDiv>
-                        <Input onClick={()=> setChangeStatus3(!changeStatus3)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={checked2 === true && checked3 === false} onClick={()=> setChangeStatus3(!changeStatus3)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -109,11 +112,11 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus4(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                        {checked4 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                        {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
                             <p>Hola</p>
                         </CheckDiv>
-                        <Input onClick={()=> setChangeStatus4(!changeStatus4)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={checked3 === true && checked4 === false} onClick={()=> setChangeStatus4(!changeStatus4)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                 </Wrap>
             )
@@ -165,7 +168,7 @@ function CurrentService() {
                 </TimelineContainer>
             </LeftData>
             <RightData>
-                <h3>{publi.originPlace} - {publi.destinationPlace}</h3>
+                 <h3>{publi.originPlace} - {publi.destinationPlace}</h3>
                 <p>{publi.departureDate}</p>
                 <Price>
                     {publi.price}
@@ -240,7 +243,7 @@ const LeftData = styled.div`
     background-color: #929294BA;
     margin-top: 5vh;
     width: 130vh;
-    margin-left: 8vh;
+    margin-right: 4vh;
     max-height: max-content;
     overflow: hidden;
     color: black;
@@ -300,9 +303,8 @@ const Input = styled.input `
    letter-spacing: 1.5px;
    text-transform: uppercase;
    background-color: #2A3EABED;
-   transition: all 0.2s ease 0s;
    cursor: pointer;
-
+   transform: ${props => props.show ===false ? 'translatex(200%)': 'translatey(0%)'};
    &:hover {
        background-color: #22B14CED;
        color: #000;

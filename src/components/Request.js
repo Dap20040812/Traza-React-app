@@ -79,6 +79,7 @@ function Request(props) {
                                  <>
                                     {request.accepted === false ? 
                                     <>
+                                       
                                     </>
                                     :
                                     <>
@@ -91,8 +92,24 @@ function Request(props) {
                                  </>
                                  :
                                 <>
-                                    <StyledLink to={`/accept/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
-                                    <StyledLink to={`/reject/${request.id}`}><Button2>Rechazar</Button2></StyledLink>
+                                 {request.accepted ? 
+                                    <>
+                                       
+                                    </>
+                                    :
+                                    <>
+                                        {request.accepted === false? 
+                                        <>
+                                        </>
+                                        :
+                                        <>
+                                            <StyledLink to={`/accept/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <StyledLink to={`/reject/${request.id}`}><Button2>Rechazar</Button2></StyledLink>
+                                        </>
+                                        }
+                                    </>
+                                    }
+                                    
                                 </>    
                                 }
                                 
