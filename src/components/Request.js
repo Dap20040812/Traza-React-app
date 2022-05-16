@@ -52,7 +52,7 @@ function Request(props) {
                                     <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
                                  :
                                 <>
-                                    <Button1>Aceptar</Button1>
+                                    <StyledLink to={`/accept`}><Button1>Aceptar</Button1></StyledLink>
                                     <Button2>Rechazar</Button2>
                                 </>    
                                 }

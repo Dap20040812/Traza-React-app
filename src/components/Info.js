@@ -19,7 +19,7 @@ function Info (props) {
          deleteFavoritePulication(props.user,props.id)
          console.log("mal")
      }
-     else {
+     if(!isHovered) {
          setIsHovered(true)
          addFavoritePublication(props.user,props.id)
          console.log("bien")
