@@ -1,10 +1,16 @@
 import React , {useState}from 'react'
 import styled from 'styled-components'
 import Form from "react-bootstrap/Form"
+import { acceptedRequest } from '../backend/statusRequest'
+import { useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
 
 function AcceptRequest(props) {
   const [ errors, setErrors ] = useState({})
   const [ form, setForm ] = useState({})
+  const {id} = useParams();
+  const history = useHistory()
 
   const setField = (field, value) => {
     setForm({
@@ -26,15 +32,33 @@ function AcceptRequest(props) {
     return newErrors
   }
 
+  function handleSubmit (e) {
+
+    e.preventDefault();
+
+    const comentarios = e.target.elements.comen.value;
+    const price = e.target.elements.price.value;
+  
+    const newErrors = findFormErrors()
+    if ( Object.keys(newErrors).length > 0 ) {
+        setErrors(newErrors)
+    }else 
+    {
+        acceptedRequest(id,comentarios,price)
+        window.alert("Solicitud aceptada con Exito")
+        history.push("/mypubly") 
+    }
+}
+
    return(
      <Container>
        <Background/>
        <Data>
-         <Form1>
+         <Form1 onSubmit={handleSubmit}>
           <Title>Aceptar Solicitud</Title> 
           <Form.Group className='col-md-4 w-100'>
               <Form.Label id="comen1" className="form-label">Comentarios Finales :</Form.Label>
-              <textarea id="comen1" rows="3" placeholder="Comentarios Finales" className="form-control" onChange={ e => setField('comentarios', e.target.value) } required/>
+              <textarea id="comen" rows="3" placeholder="Comentarios Finales" className="form-control" onChange={ e => setField('comentarios', e.target.value) } required/>
           </Form.Group>
           <Form.Group className='col-md-6'>
             <Form.Label className='form-label' > Propuesta de Precio Final : </Form.Label>
