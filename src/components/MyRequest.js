@@ -5,7 +5,7 @@ import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import Request from './Request'
-import showRequest from '../backend/showRequest'
+import {showRequest} from '../backend/showRequest'
 
 function MyRequest() {
     
