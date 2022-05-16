@@ -1,10 +1,11 @@
-import { Collections } from '@material-ui/icons'
 import db from '../firebase'
 
-function acceptedRequest(idr)
+function acceptedRequest(idr,com,price)
 {
     db.collection('request').doc(idr).update({
-        accepted: true
+        accepted: true,
+        comentarios: com,
+        finalPrice: price
     })
 }
 
@@ -17,7 +18,9 @@ function finalAcceptance(idr,idp)
         {
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
-                finalAcceptance: true
+                finalAcceptance: true,
+    
+
             })
         
                 db.collection('publications').doc(idp).update({
@@ -32,10 +35,11 @@ function finalAcceptance(idr,idp)
     })
 }
 
-function rejectRequest(idr)
+function rejectRequest(idr,mo)
 {
     db.collection('request').doc(idr).update({
-        accepted: false
+        accepted: false,
+        motivosR: mo
     })
 }
 

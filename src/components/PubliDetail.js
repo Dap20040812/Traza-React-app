@@ -9,7 +9,7 @@ import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { Link } from 'react-router-dom'
 import { useDispatch } from "react-redux"
-import Publi from './Publi';
+//import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
 //import { HashLink } from 'react-router-hash-link';
 

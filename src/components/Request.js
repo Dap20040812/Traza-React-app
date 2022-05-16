@@ -49,11 +49,31 @@ function Request(props) {
                             </PubliContent>
                             <ButtonContent>
                                 {props.myrequest === true ? 
-                                    <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
-                                 :
-                                <>
+                                 <>
+                                 {request.accepted ? 
+                                 <>
                                     <Button1>Aceptar</Button1>
                                     <Button2>Rechazar</Button2>
+                                 </>
+                                 : 
+                                 <>
+                                    {request.accepted === false ? 
+                                    <>
+                                        <Button>Detalles del Rechazo</Button>
+                                    </>
+                                    :
+                                    <>
+                                        <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
+                                    </>
+                                    }
+
+                                 </>
+                                }    
+                                 </>
+                                 :
+                                <>
+                                    <StyledLink to={`/accept/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                    <StyledLink to={`/reject/${request.id}`}><Button2>Rechazar</Button2></StyledLink>
                                 </>    
                                 }
                                 
@@ -79,9 +99,9 @@ const Container = styled.div`
     padding: 2vw 2vh;
 `
 const Content = styled.div`
-    display: flex;
-    flex-direction: column;
     width: 100%;
+    display: grid;
+    grid-gap: 8vh; 
 `
 const Wrap = styled.div`
     padding: 2vw 2vh;

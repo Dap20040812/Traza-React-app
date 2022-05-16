@@ -61,7 +61,7 @@ function Header() {
     }
   return (
     <Nav>
-        <Logo src="/images/trazaLogo.png"/>
+        <Logo src="/images/TrazaLogo.png"/>
         {!userName ? (
           <LoginContainer>
             <StyledLink to={`/login`}>
@@ -208,7 +208,7 @@ const BurgerNav = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  background: white;
+  background: #B5B5B5;
   border: 3px solid rgba(136, 148, 122, 0.7); 
   box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
   rgb(0 0 0 / 73%) 0px 16px 10px -10px;
@@ -233,7 +233,7 @@ const BurgerNav = styled.div`
         border-radius: 0.6vh;
         border-color: rgba(249, 249, 249 , 0.8);
         color: white;
-        background-color: #0000003D;
+        background-color: #305A98ED;
         opacity: 0.9;
     }
   }
