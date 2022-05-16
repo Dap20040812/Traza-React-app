@@ -16,6 +16,7 @@ import MyDetail from './components/MyPubliDetail';
 import MyRequest from './components/MyRequest';
 import Chat from './components/Chat';
 import CurrentService from './components/CurrentService';
+import AcceptRequest from './components/AcceptRequest';
 
 
 function App() {
@@ -60,6 +61,9 @@ function App() {
         </Route>
         <Route path='/current/:id'>
           <CurrentService />
+        </Route>
+        <Route path='/accept'>
+          <AcceptRequest/>
         </Route>
         <Route path='/'>
           <Home/>

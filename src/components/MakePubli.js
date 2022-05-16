@@ -59,6 +59,10 @@ function MakePubli() {
     ];
 
     const setField = (field, value) => {
+        if(field === "truckUnidades")
+        {
+            setUnity(value)
+        }
         setForm({
           ...form,
           [field]: value
@@ -128,7 +132,6 @@ function MakePubli() {
         const freeSpaceLength = e.target.elements.freeSpaceLength.value;
         const freeSpaceWidth = e.target.elements.freeSpaceWidth.value;
         const freeSpaceUnidades = e.target.elements.freeSpaceUnidades.value;
-        setUnity(freeSpaceUnidades)
 
         const newErrors = findFormErrors()
 
