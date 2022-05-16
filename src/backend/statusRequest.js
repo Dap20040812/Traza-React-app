@@ -1,4 +1,5 @@
 import { Collections } from '@material-ui/icons'
+import { CommentsDisabled } from '@mui/icons-material'
 import db from '../firebase'
 
 function acceptedRequest(idr)
@@ -8,7 +9,7 @@ function acceptedRequest(idr)
     })
 }
 
-function finalAcceptance(idr,idp)
+function finalAcceptance(idr,idp,com,price)
 {
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
@@ -17,7 +18,10 @@ function finalAcceptance(idr,idp)
         {
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
-                finalAcceptance: true
+                finalAcceptance: true,
+                comentarios: com,
+                finalPrice: price
+
             })
         
                 db.collection('publications').doc(idp).update({
