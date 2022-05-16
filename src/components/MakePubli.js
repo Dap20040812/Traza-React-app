@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Form from "react-bootstrap/Form"
 import cancelledPublicationsRefresh from '../backend/endedPublications'
 import {Spinner} from "reactstrap"
+import { searchFavoritePublication, addFavoritePublication } from '../backend/favoritePublications'
 
 
 function MakePubli() {
@@ -163,7 +164,6 @@ function MakePubli() {
   return (
     <Container>
         <Background>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Optimusprimealtmoviemode.jpg/1200px-Optimusprimealtmoviemode.jpg"/>
         </Background>
         <Data>
                 <Title>Nueva Publicación</Title>
@@ -360,7 +360,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

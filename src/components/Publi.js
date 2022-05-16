@@ -50,10 +50,10 @@ const Wrap = styled.div`
     color: black;
     max-height: calc(100vw - 25vh);
     max-width: calc(100vh - 10vw);
-    border: 3px solid rgba(249, 249, 249, 0.1); 
+    border: 3px solid transparent; 
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-    background-color: #FFFFFFBA;
+    background-color: #B5B5B5ED;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 
     img{
@@ -66,7 +66,7 @@ const Wrap = styled.div`
         transform: scale(1.02);
         box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
         rgb(0 0 0 / 72%) 0px 30px 22px -10px;
-        border-color: rgba(249, 249, 249 , 0.8);
+        border-color: #FBB03BED;
         color: white;
         background-color: #000000ED;
         opacity: 0.9;

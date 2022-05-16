@@ -61,7 +61,7 @@ function Header() {
     }
   return (
     <Nav>
-        <Logo src="/images/traza.png"/>
+        <Logo src="/images/trazaLogo.png"/>
         {!userName ? (
           <LoginContainer>
             <StyledLink to={`/login`}>
@@ -89,8 +89,10 @@ function Header() {
               <span>SERVICIOS</span>            
             </a>
             <a>
-              <img src='/images/support.png'></img>    
-              <span>SOPORTE</span>            
+              <StyledLink to={`/chat`}>
+                <img src='/images/support.png'></img>    
+                <span>SOPORTE</span>
+              </StyledLink>            
             </a>
           </NavMenu>
           <RightMenu>
@@ -117,12 +119,22 @@ export default Header
 
 
 const Nav = styled.nav`
-      height: 70px;
-      background: #ff7300;
+      height: 85px;
       display: flex;
       align-items: center;
       padding: 0 36px;
       overflow-x: hidden;
+      &:before {
+      background: url("/images/header-background.png") center center /cover 
+       no-repeat fixed;
+       content: "";
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       z-index: -1;
+   }
 
 `
 const Logo = styled.img`
@@ -241,8 +253,11 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     color: white;
 
-    &:focus, &:hover, &:visited, &:link, &:active {
+    &:focus, &:visited, &:link, &:active {
         text-decoration: none;
+    }
+    &:hover{
+      color: white;
     }
 `
 const StyledLink1 = styled(Link)`

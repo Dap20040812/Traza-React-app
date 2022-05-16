@@ -3,12 +3,34 @@ import styled from 'styled-components'
 import ImgSliderPubli from './ImgSliderPubli'
 import db from '../firebase'
 import { Favorite, FavoriteBorder, FavoriteBorderOutlined} from '@material-ui/icons'
+import {addFavoritePublication, deleteFavoritePulication, searchFavoritePublication} from "../backend/favoritePublications"
 
 
 function Info (props) {
 
- const [isHovered, setIsHovered] = useState(false)
+ const [isHovered, setIsHovered] = useState(searchFavoritePublication(props.user,props.id))
 
+ 
+
+ const setFavorite = () => {
+     
+     if(isHovered) {
+         setIsHovered(false) 
+         deleteFavoritePulication(props.user,props.id)
+         console.log("mal")
+     }
+     else {
+         setIsHovered(true)
+         addFavoritePublication(props.user,props.id)
+         console.log("bien")
+     }
+     const prueba = searchFavoritePublication(props.user,props.id)
+     console.log(prueba)
+    
+
+     
+ }
+ 
   return (
     <Container>
         <PubliTitle> 
@@ -16,7 +38,7 @@ function Info (props) {
                 {props.origin} -- {props.destination}
             </TitleLeft>
             <TitleRight>
-                <Icon onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                <Icon onClick={setFavorite}>
                     {isHovered ? <Favorite /> : <FavoriteBorder/>}
                 </Icon>
             </TitleRight>

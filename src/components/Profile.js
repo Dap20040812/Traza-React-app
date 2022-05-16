@@ -8,6 +8,7 @@ import {storage} from '../firebase'
 import { useDispatch } from "react-redux"
 import {Spinner} from "reactstrap"
 import {setUserLogin} from "../features/user/userSlice"
+import {Link} from "react-router-dom"
 
 
 
@@ -64,7 +65,6 @@ function Profile() {
         { company && (
            <>
             <Background>
-            <img src="https://ibertransit.com/wp-content/uploads/camiones.png" />
             </Background>
             <Data>
                 <Title>Perfil Empresa</Title>
@@ -88,7 +88,9 @@ function Profile() {
                     <SubTitle>Email : </SubTitle>
                     <Text>{company.correoEmpresa}</Text>
                 </Texts>
+                
             </Data>
+            
            </>
         )} 
     </Container>
@@ -105,6 +107,14 @@ const Container = styled.div`
     position:relative;
     justify-content: center;
 
+`
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: white;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
 `
 const ImageTitle = styled.div`
     max-height: 35vh;
@@ -154,7 +164,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;

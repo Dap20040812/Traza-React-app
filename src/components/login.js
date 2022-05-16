@@ -303,8 +303,10 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.8;
-    background:#9e9fa170;
+    background: url("/images/home-background.png") center center /cover 
+    no-repeat fixed;
+    content: "";
+    position: absolute;
 
     img{
         width: 100%;
@@ -378,6 +380,7 @@ const Input3  = styled.input`
 
 `
 const Input4 = styled.input`
+  background-color: #336699ED;
   border-radius: 0.5vh;
   font-weight: bold;
   font-size: 2.5vh;
@@ -392,12 +395,11 @@ const Input4 = styled.input`
   cursor: pointer;
   justify-content: center;
   &:hover {
-      background: #FFAD66;
+    background: #336699ED;
   }
 `
 const Input5 = styled.select`
     font-size: 2vh;
-    type: password;
     margin: 2vh;
     font-size: max(16px, 1em);
     font-family: inherit;
@@ -439,7 +441,7 @@ const Button = styled.button`
     text-align: center; 
 
     &:hover {
-        background: rgb(198, 198, 198);
+        background: #336699ED;
     }
 `
 const Error = styled.div`
