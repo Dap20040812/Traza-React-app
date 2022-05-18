@@ -45,17 +45,8 @@ function rejectRequest(idr,mo)
 
 function finalRejection(idr)
 {
-    db.collection('request').where('id','==',idr).get().then(snapshot=>{
-        
-        snapshot.forEach(doc=>{
-            if(doc.data().accepted)
-        {
-            console.log("SI")
-            db.collection('request').doc(doc.data().id).update({
-                finalAcceptance: false
-            })
-        }
-        })
+    db.collection('request').doc(idr).update({
+        finalacceptance: false,
     })
 }
 

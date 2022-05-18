@@ -10,6 +10,7 @@ import { finalRejection } from '../backend/statusRequest'
 function Request(props) {
     const requests = useSelector(selectRequests);  
     const[cancelStatus, setCancelStatus] = useState(false);
+    const[fCancelStatus, setFCancelStatus] = useState(false);
     const[detailStatus, setDetailStatus] = useState(false);
     const[idRe, setidRe] = useState();
     
@@ -17,11 +18,32 @@ function Request(props) {
     const cancel = () =>  {
         setCancelStatus(true); 
     }
+
+
     const deleteRe =() => {
         console.log(idRe);
         deleteRequest(idRe);
         setCancelStatus(false);
         window.alert("Solicitud Elmiminada con Exito")
+      }
+      const fdeleteRe =() => {
+        finalRejection(idRe)
+        console.log(idRe)
+        setDetailStatus(false);
+        window.alert("Solicitud Rechazada con Exito")
+      }    
+      const ffDeleteRe =() => {
+        deleteRequest(idRe)
+        setFCancelStatus(false);
+        window.alert("Solicitud Elmiminada con Exito")
+      }   
+      const re =(idr) => {
+        setidRe(idr)
+        setDetailStatus(true)
+      } 
+      const ro =(idr) => {
+        setidRe(idr)
+        setFCancelStatus(true)
       }
 
   return (
@@ -35,17 +57,25 @@ function Request(props) {
                 <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
             </ButtonContent1>
         </Alert>
+        <Alert show={detailStatus}>
+            <p>¿Estas seguro que deseas rechazar la solicitud?</p>
+            <ButtonContent1>
+                <Button1 onClick={fdeleteRe}>Continuar</Button1>
+                <Button2 onClick={()=> setDetailStatus(false)}>Cancelar</Button2>
+            </ButtonContent1>
+        </Alert>
+        <Alert show={fCancelStatus}>
+            <p>La empresa Rechazo tu solicitud</p>
+            <ButtonContent1>
+                <Button1 onClick={ffDeleteRe}>Aceptar</Button1>
+            </ButtonContent1>
+        </Alert>
         <Content>
              { requests && 
                 requests.map((request) => (
+                    <>
                     <Wrap key={request.id}>
-                        <Alert show={detailStatus}>
-                            <p>¿Estas seguro que deseas rechazar la solicitud?</p>
-                            <ButtonContent1>
-                                <Button1 onClick={finalRejection(request.id)}>Continuar</Button1>
-                                <Button2 onClick={()=> setDetailStatus(false)}>Cancelar</Button2>
-                            </ButtonContent1>
-                        </Alert>
+                        
                         <h3>Id: {request.id}</h3>
                         <Data>
                             <PubliContent>
@@ -55,6 +85,7 @@ function Request(props) {
                                 <p>Descripción del Producto : {request.prodDescription}</p>
                                 <p>Dimensiones : {request.packageDimensions.packagHeight} x {request.packageDimensions.packageWidth} x {request.packageDimensions.packageLength} {request.packageDimensions.packageUnidades}</p>
                                 <p>Fecha de creación de la solicitud: {request.requestDate}</p>
+                                <p>{request.finalAcceptance}</p>
                                 {request.accepted === false ?
                                     <p style={{color: "red"}}>Motivos de rechazo : {request.motivosR}</p>
                                     : <></>
@@ -72,8 +103,18 @@ function Request(props) {
                                  <>
                                  {request.accepted ? 
                                  <>
-                                    <Button1>Aceptar</Button1>
-                                    <Button2 onClick={() => setDetailStatus(true)}>Rechazar</Button2>
+                                    {request.finalacceptance === false?
+                                      <>
+                                        <Button>Rechazada</Button>
+                                      </>
+                                      :
+                                      <>
+                                            <StyledLink to={`/pay/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <Button2 onClick={() => re(request.id)}>Rechazar</Button2>
+                                      </>
+                                      }  
+                                      
+                                    
                                  </>
                                  : 
                                  <>
@@ -94,7 +135,14 @@ function Request(props) {
                                 <>
                                  {request.accepted ? 
                                     <>
-                                       
+                                      {request.finalacceptance === false?
+                                      <>
+                                        <Button2 onClick={() => ro(request.id)}>Solicitud Rechazada</Button2>
+                                      </>
+                                      :
+                                      <>
+                                      </>
+                                      }  
                                     </>
                                     :
                                     <>
@@ -118,6 +166,7 @@ function Request(props) {
                         </Data>
                         
                     </Wrap>
+                    </>
                     ))
                 }
         </Content>

@@ -61,7 +61,7 @@ function Header() {
     }
   return (
     <Nav>
-        <Logo src="/images/TrazaLogo.png"/>
+        <Logo src="/images/TrazaBlanco.png"/>
         {!userName ? (
           <LoginContainer>
             <StyledLink to={`/login`}>
