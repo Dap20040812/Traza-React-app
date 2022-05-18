@@ -18,7 +18,6 @@ function OrderInProgress(props) {
                 ordersInProgress.map((orderInProgress) => (
                     <Wrap key={orderInProgress.id}>
                         <StyledLink to={`/current/${orderInProgress.id}` }>
-                            <img src={orderInProgress.publiImg}/>
                         <PubliContent>
                             <h2>{orderInProgress.originPlace} - {orderInProgress.destinationPlace}</h2>
                             <h3>$ {orderInProgress.price}</h3>
