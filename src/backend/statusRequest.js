@@ -27,7 +27,7 @@ function finalAcceptance(idr,idp)
             })
         
                 db.collection('publications').doc(idp).update({
-                    request: idr
+                    request: idr    
             })
 
             deleteRequest(idr)
