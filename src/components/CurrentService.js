@@ -8,7 +8,7 @@ import {useSelector} from "react-redux"
 function CurrentService() {
 
     const {id} = useParams();
-    const [publi, setPubli] = useState()
+    const [orderInProgress, setOrderInProgress] = useState()
     const userUid = useSelector(selecUserUid);
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -20,12 +20,12 @@ function CurrentService() {
     const[changeStatus4, setChangeStatus4] = useState(false);
 
     useEffect(() =>{
-        db.collection("publications")
+        db.collection("orderInProgress")
         .doc(id)
         .get()
         .then((doc) => {
             if(doc.exists){
-                setPubli(doc.data());
+                setOrderInProgress(doc.data());
             }else {
     
             }
@@ -57,7 +57,7 @@ function CurrentService() {
     }
 
     const getContent = (props) => {
-        if(publi.empresaUid === userUid) {
+        if(orderInProgress.empresaPublication === userUid) {
             return(
                 <Wrap>
                     <TimelineItem>
@@ -70,7 +70,7 @@ function CurrentService() {
                                 </ButtonContent1>
                             </Alert>
                             {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                            <p>Hola</p>
+                            <p>El camión ha salido de la dirección de origen.</p>
                         </CheckDiv>
                         <Input show={checked1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -84,7 +84,7 @@ function CurrentService() {
                                 </ButtonContent1>
                             </Alert>
                         {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                            <p>Hola</p>
+                            <p>El camión va en camino a la dirección de destino.</p>
                         </CheckDiv>
                         <Input show={checked1 === true && checked2 === false} onClick={()=> setChangeStatus2(!changeStatus2)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -99,7 +99,7 @@ function CurrentService() {
                             </Alert>
                             {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
-                            <p>Hola</p>
+                            <p>El camión ha llegado a la dirección de destino</p>
                         </CheckDiv>
                         <Input show={checked2 === true && checked3 === false} onClick={()=> setChangeStatus3(!changeStatus3)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -114,7 +114,7 @@ function CurrentService() {
                             </Alert>
                         {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
-                            <p>Hola</p>
+                            <p>El servicio ha sido entregado y finalizado</p>
                         </CheckDiv>
                         <Input show={checked3 === true && checked4 === false} onClick={()=> setChangeStatus4(!changeStatus4)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -168,10 +168,10 @@ function CurrentService() {
                 </TimelineContainer>
             </LeftData>
             <RightData>
-                 <h3>{publi.originPlace} - {publi.destinationPlace}</h3>
-                <p>{publi.departureDate}</p>
+                 <h3>{orderInProgress.oriAddress} - {orderInProgress.destination}</h3>
+                <p>{orderInProgress.date}</p>
                 <Price>
-                    {publi.price}
+                    {orderInProgress.price}
                 </Price>
             </RightData>
         </Data>
