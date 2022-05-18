@@ -105,6 +105,7 @@ function Header() {
               <UserImg src={userPhoto}/>
               <StyledLink1 to={`/publimy`}><li>Mis Publicaciones</li></StyledLink1>
               <StyledLink1 to={`/myrequest`}><li>Mis Solicitudes</li></StyledLink1>
+              <StyledLink1 to={`/inprogress`}><li>Mis Servicios Activos</li></StyledLink1>
               <StyledLink1  to={`/publi/make`}><li>Realiza una Publicación</li></StyledLink1>
               <StyledLink1 to={`/profile`}><li>Perfil</li></StyledLink1>
               <StyledLink1 onClick={signOut} ><li>Cerrar Sesión</li></StyledLink1>
