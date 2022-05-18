@@ -109,11 +109,11 @@ function Request(props) {
                                       </>
                                       :
                                       <>
-                                            <StyledLink to={`/pay/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <StyledLink to={`/pay/${request.id}/${request.publication}`}><Button1>Aceptar</Button1></StyledLink>
                                             <Button2 onClick={() => re(request.id)}>Rechazar</Button2>
                                       </>
                                       }  
-                                      
+
                                     
                                  </>
                                  : 
