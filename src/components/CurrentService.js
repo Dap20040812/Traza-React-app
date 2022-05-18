@@ -156,7 +156,7 @@ function CurrentService() {
   return (
     <Container>
         
-        { publi && (
+        { orderInProgress && (
             <>
         <Background>
         </Background>
