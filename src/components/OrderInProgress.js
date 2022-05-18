@@ -12,39 +12,20 @@ function OrderInProgress(props) {
     const ordersInProgress = useSelector(selectOrderInProgress);  
 
   return (
-    <Container> 
+    <Container>
         <Content>
              { ordersInProgress && 
                 ordersInProgress.map((orderInProgress) => (
-                    <>
                     <Wrap key={orderInProgress.id}>
-                        
-                        <h3>Id: {orderInProgress.id}</h3>
-                        <Data>
-                            <PubliContent>
-                                <p>Empresa que realiza la solicitud : {orderInProgress.NombreEmpresa}</p>
-                                <p>Descripción : {orderInProgress.description}</p>
-                                <p>Producto : {orderInProgress.products}</p>
-                                <p>Descripción del Producto : {orderInProgress.prodDescription}</p>
-                                <p>Dimensiones : {orderInProgress.packageDimensions.packagHeight} x {orderInProgress.packageDimensions.packageWidth} x {orderInProgress.packageDimensions.packageLength} {orderInProgress.packageDimensions.packageUnidades}</p>
-                                <p>Fecha de creación de la solicitud: {orderInProgress.requestDate}</p>
-                                <p>{orderInProgress.finalAcceptance}</p>
-                                {orderInProgress.accepted === false ?
-                                    <p style={{color: "red"}}>Motivos de rechazo : {orderInProgress.motivosR}</p>
-                                    : <></>
-                                }
-                                {orderInProgress.accepted ? 
-                                 <>
-                                   <p style={{color: "green"}}>Comentarios : {orderInProgress.comentarios}</p>
-                                   <p style={{color: "green"}}>Precio Final : {orderInProgress.finalPrice}</p> 
-                                 </>
-                                 : <></>
-                                }
-                            </PubliContent>
-                        </Data>
-                        
+                        <StyledLink to={`/current/${orderInProgress.id}` }>
+                            <img src={orderInProgress.publiImg}/>
+                        <PubliContent>
+                            <h2>{orderInProgress.originPlace} - {orderInProgress.destinationPlace}</h2>
+                            <h3>$ {orderInProgress.price}</h3>
+                            <p>Fecha: {orderInProgress.departureDate}</p>
+                        </PubliContent>
+                        </StyledLink>
                     </Wrap>
-                    </>
                     ))
                 }
         </Content>
