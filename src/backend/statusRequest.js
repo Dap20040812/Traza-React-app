@@ -1,5 +1,6 @@
 import db from '../firebase'
 import { publicationInProgress } from './changePublication'
+import deleteRequest from './deleteRequest'
 
 function acceptedRequest(idr,com,price)
 {
@@ -26,8 +27,10 @@ function finalAcceptance(idr,idp)
             })
         
                 db.collection('publications').doc(idp).update({
-                    request: idr
+                    request: idr    
             })
+
+            deleteRequest(idr)
         }
         else
         {

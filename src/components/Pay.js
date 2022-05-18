@@ -5,6 +5,7 @@ import {useSelector} from "react-redux"
 import { useParams } from 'react-router-dom';
 import createOrderInProgress from '../backend/createOrderInProgress';
 import { useHistory } from 'react-router-dom'
+import db from '../firebase'
 
 function Pay() {
 
@@ -27,7 +28,7 @@ function Pay() {
     
             }
         })
-        db.collection("requests")
+        db.collection("request")
         .doc(id)
         .get()  
         .then((doc) => {
@@ -41,8 +42,8 @@ function Pay() {
 
   const start = () => {
       finalAcceptance(id,id1)
-      createOrderInProgress(id1,id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
-      history.push("/mypubli")
+      createOrderInProgress(publi.id,request.id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
+      history.push("/inprogress")
   }  
   return (
     <Container>

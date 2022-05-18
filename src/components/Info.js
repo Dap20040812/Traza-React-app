@@ -8,7 +8,7 @@ import {addFavoritePublication, deleteFavoritePulication, searchFavoritePublicat
 
 function Info (props) {
 
- const [isHovered, setIsHovered] = useState(searchFavoritePublication(props.user,props.id))
+ const [isHovered, setIsHovered] = useState(props.like)
 
  
 

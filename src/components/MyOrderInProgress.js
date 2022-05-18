@@ -18,7 +18,7 @@ function MyOrderInProgress() {
      * Muestra las publicaciones actuales de la empresa
      */
     useEffect(() => {
-        showOrderInProgress(userUid,dispatch);  
+        showOrderInProgress(dispatch);  
     },[]) 
     
   return (
@@ -26,7 +26,7 @@ function MyOrderInProgress() {
         <Background>
         </Background>
         <Title>Mis Servicios Activos</Title>
-        <OrderInProgress inprogress={true}/>
+        <OrderInProgress/>
     </Container>
   )
 }

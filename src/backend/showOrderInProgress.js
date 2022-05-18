@@ -2,14 +2,15 @@ import db from '../firebase'
 import { setPublis } from '../features/publi/publiSlice'
 import {setOrdersInProgress} from '../features/inProgress/orderInProgressSlice'
 
-function showOrderInProgress(dispatch)
+function showOrderInProgress(uid,dispatch)
 {
-    db.collection("OrderInProgress").onSnapshot((snapshot)=>{
+    db.collection("OrderInProgress").where('empresaPublication','==',uid).onSnapshot((snapshot)=>{
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
         dispatch(setOrdersInProgress(tempPublis));
     })
+    console.log('SiEstoy')
 }
 
 export default showOrderInProgress
