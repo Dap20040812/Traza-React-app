@@ -28,7 +28,7 @@ function AcceptRequest(props) {
     const {price} = form
     const newErrors = {}
     // name errors
-    if(!price || price === "") newErrors.price = "Ingresa el precio final para continuar"
+    if(!price || price === "") newErrors.price = "Ingresa el precio final para continuar."
     return newErrors
   }
 
@@ -45,7 +45,7 @@ function AcceptRequest(props) {
     }else 
     {
         acceptedRequest(id,comentarios,price)
-        window.alert("Solicitud aceptada con Exito")
+        window.alert("Solicitud aceptada con éxito.")
         history.push("/mypubly") 
     }
 }

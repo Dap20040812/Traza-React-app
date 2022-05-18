@@ -48,7 +48,7 @@ function Pay() {
     <Container>
         <Background/>
         <Data>
-            <Title>Metodo de pago</Title>
+            <Title>Método de pago</Title>
             <Payments>
                 <Payment><div style={{margin: "2vh"}}>PSE</div><img width={'20%'} src='https://eca.edu.co/wp-content/uploads/2020/04/logo-pse-300x300.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>Tarjeta</div><img width={'20%'} src='https://cdn-icons-png.flaticon.com/512/82/82219.png'/></Payment>

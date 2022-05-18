@@ -39,28 +39,28 @@ function RequestForm(props) {
         const {description,products, prodDescription,embalaje,requestHeight,requestWidth,requestLength,requestUnidades} = form
         const newErrors = {}
         // name errors
-        if ( !description || description === '') newErrors.description = 'Ingresa una descripción para continuar'
-        if ( !products || products === '' ) newErrors.products = 'Ingresa un tipo de producto para continuar'
-        if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa ls descripción del producto para continuar'
-        if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Ingresa la razón social de la empresa para continuar'
+        if ( !description || description === '') newErrors.description = 'Ingresa una descripción para continuar.'
+        if ( !products || products === '' ) newErrors.products = 'Ingresa un tipo de producto para continuar.'
+        if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa la descripción del producto para continuar.'
+        if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Ingresa la razón social de la empresa para continuar.'
         if ( !requestHeight || requestHeight === '' ) {
-          newErrors.requestHeight = 'Ingresa la altura para continuar'
+          newErrors.requestHeight = 'Ingresa la altura para continuar.'
         }else if (requestHeight > props.freeSpaces1) {
-          newErrors.requestHeight = 'La altura ingresada supera el espacio disponible'
+          newErrors.requestHeight = 'La altura ingresada supera el espacio disponible.'
         }
         if ( !requestWidth|| requestWidth === '' ) {
-          newErrors.requestWidth = 'Ingrese el ancho para continuar'
+          newErrors.requestWidth = 'Ingrese el ancho para continuar.'
         }
         else if (requestWidth > props.freeSpaces2) {
-          newErrors.requestWidth = 'El ancho ingresado supera el espacio disponible'
+          newErrors.requestWidth = 'El ancho ingresado supera el espacio disponible.'
         }
         if ( !requestLength|| requestLength === '' ) {
-            newErrors.requestLength = 'Ingrese el largo para continuar'
+            newErrors.requestLength = 'Ingrese el largo para continuar.'
         }
         else if (requestLength > props.freeSpaces3) {
-            newErrors.requestLength = 'El largo ingresado supera el espacio disponible'
+            newErrors.requestLength = 'El largo ingresado supera el espacio disponible.'
         }
-        if ( !requestUnidades || requestUnidades === '' ) newErrors.requestUnidades = 'Ingresa las unidades para continuar'
+        if ( !requestUnidades || requestUnidades === '' ) newErrors.requestUnidades = 'Ingresa las unidades para continuar.'
         
         return newErrors
     }
@@ -85,7 +85,7 @@ function RequestForm(props) {
         }else 
         {
             createRequest(name,userUid,props.publi,today,embalaje,description,requestHeight,requestWidth,requestLength,requestUnidades,products,prodDescription);
-            window.alert("Solicitud Creada con Exito")
+            window.alert("Solicitud creada con éxito")
             history.push("/myrequest") 
         }
     }
@@ -114,7 +114,7 @@ function RequestForm(props) {
             </Form.Control.Feedback>  
           </Form.Group>
           <Form.Group className='col-md-6'>
-            <Form.Label id="prod1" className="form-label">TIpo de Productos a Transportar :</Form.Label>
+            <Form.Label id="prod1" className="form-label">Tipo de Productos a Transportar :</Form.Label>
             <Form.Select id="prod" placeholder="Productos" className="form-control" onChange={ e => setField('products', e.target.value) } isInvalid={ !!errors.products }> 
             {
                 ProductData.map((e, key) => {
