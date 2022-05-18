@@ -18,6 +18,7 @@ import Chat from './components/Chat';
 import CurrentService from './components/CurrentService';
 import AcceptRequest from './components/AcceptRequest';
 import RejectRequest from './components/RejectRequest';
+import Pay from './components/Pay';
 
 
 function App() {
@@ -68,6 +69,9 @@ function App() {
         </Route>
         <Route path='/reject/:id'>
           <RejectRequest/>
+        </Route>
+        <Route path='/pay/:id'>
+          <Pay/>
         </Route>
         <Route path='/'>
           <Home/>

@@ -66,7 +66,7 @@ function MyDetail() {
     }
     else if (page === 'Request'){
         return(
-            <Request myrequest={false}/>
+            <Request myrequest={false}/> 
           ) 
     }
   }
