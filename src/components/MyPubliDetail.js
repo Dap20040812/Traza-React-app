@@ -13,7 +13,7 @@ import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
 import Request from './Request';
 import showMyRequest from '../backend/showMyRequest';
-import deletePublication from '../backend/deletePublication';
+import {deletePublication} from '../backend/deletePublication';
 
 
 function MyDetail() {

@@ -1,5 +1,6 @@
 import db from '../firebase'
 import { publicationInProgress } from './changePublication'
+import { deleteOnlyPublication } from './deletePublication'
 
 function acceptedRequest(idr,com,price)
 {
@@ -12,7 +13,8 @@ function acceptedRequest(idr,com,price)
 
 function finalAcceptance(idr,idp)
 {
-    publicationInProgress(idr)
+    publicationInProgress(idp)
+    deleteOnlyPublication(idp)
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{

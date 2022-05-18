@@ -9,7 +9,11 @@ function deletePublication(idp,idempresa)
     db.collection('empresas').doc(idempresa).collection('publicacionesRecientes').doc(idp).delete();
     db.collection('empresas').doc(idempresa).collection('favoritePublications').doc(idp).delete();
 }
+function deleteOnlyPublication(idp)
+{
+    db.collection('publications').doc(idp).delete();
+}
 
 
 
-export default deletePublication
+export {deletePublication, deleteOnlyPublication}

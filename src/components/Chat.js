@@ -4,7 +4,6 @@ import db from '../firebase'
 import {useSelector} from "react-redux"
 import {selecUserUid} from "../features/user/userSlice"
 import { useState } from 'react';
-import chatSetupp from '../backend/chatSetup'
 import firebase from 'firebase/compat/app';
 
 
@@ -14,24 +13,25 @@ function Chat()
     const userUid = useSelector(selecUserUid);
     const text = document.querySelector("#divtext")
     let textInput = React.createRef();
-    let sendMessage = e =>{
-        
+    let sendMessage = e =>
+    {
+    
         if(inputValue!="")
         {
-               chatSetupp(userUid,inputValue)
-               db.collection("orderInProgress").doc('fasfas').collection("chat").add({
+            db.collection("orderInProgress").doc('9f99788a-10d4-4103-a11e-d74ef17664a5').collection("chat").add({
                 text:inputValue,
                 date: firebase.firestore.Timestamp.fromDate(new Date()),
                 company:userUid
             })
         }
+    
         setInputValue("")
     }
     let test = e =>{
         setInputValue(e.target.value)        
     }
 
-    db.collection("orderInProgress").doc("Ingrese id de orderInProgress").collection("chat").orderBy('date').onSnapshot(snapshot=>
+    db.collection("orderInProgress").doc("9f99788a-10d4-4103-a11e-d74ef17664a5").collection("chat").orderBy('date').onSnapshot(snapshot=>
         {
             text.innerHTML = ''
             snapshot.forEach(doc=>{
