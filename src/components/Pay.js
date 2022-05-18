@@ -18,6 +18,16 @@ function Pay() {
 
 
     useEffect(() =>{
+        db.collection("request")
+        .doc(id)
+        .get()  
+        .then((doc1) => {
+            if(doc1.exists){
+                setRequest(doc1.data());
+            }else {
+    
+            }
+        })
         db.collection("publications")
         .doc(id1)
         .get()  
@@ -28,24 +38,15 @@ function Pay() {
     
             }
         })
-        db.collection("request")
-        .doc(id)
-        .get()  
-        .then((doc) => {
-            if(doc.exists){
-                setRequest(doc.data());
-            }else {
-    
-            }
-        })
       },[])
 
-  const start = () => {
+  const starts = () => {
+      createOrderInProgress(publi.empresaUid,request.EmpresaUid,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       finalAcceptance(id,id1)
-      createOrderInProgress(publi.id,request.id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       history.push("/inprogress")
+
   }  
-  return (
+  return (  
     <Container>
         <Background/>
         <Data>
@@ -56,7 +57,7 @@ function Pay() {
                 <Payment><div style={{margin: "2vh"}}>PayPal</div><img width={'30%'} src='https://www.actualidadecommerce.com/wp-content/uploads/2020/10/paypal.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>Nequi</div><img width={'20%'} src='https://artesla.com.co/wp-content/uploads/2021/01/nequi-logo.png'/></Payment>
             </Payments>
-            <Button1 onClick={start}>Pagar</Button1>
+            <Button1 onClick={starts}>PAGAR</Button1>
         </Data>
     </Container>
   )
@@ -157,4 +158,26 @@ const Button1 = styled.button`
        border-color: transparent;
    }
 
+`
+const CancelButton = styled.button`
+border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 6vh;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 0.15vh;
+    cursor: pointer;
+    text-align: center; 
+    
+
+    &:hover {
+        background: #E80D0DED;
+    }
 `
