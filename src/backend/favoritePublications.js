@@ -1,6 +1,7 @@
 import db from '../firebase'
 import { setPublis } from '../features/publi/publiSlice'
 import { ExtensionTwoTone } from '@material-ui/icons'
+import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils'
 /**
  * Esta función sirve para añadir una publicación como favorita
  * @param {String} idEmpresa ID de la empresa a la cual se quiere agragar la publicación como favorita
@@ -38,44 +39,28 @@ function deleteFavoritePulication(idEmpresa,idp)
 {
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).delete();
 }
-<<<<<<< HEAD
 
 function searchFavoritePublication(idEmpresa,idp)
-{   
-    var exists=false;
-=======
-let exists = false;
-async function searchFavoritePublication(idEmpresa,idp)
 {
-    function setExists(a)
-    {
-        exists = a
-    }
->>>>>>> 4abdb52e85c725d4556ad8dd6ad82a8d6f95d625
-
     db.collection('empresas').doc(idEmpresa).collection('favoritePublications').doc(idp).get().then(doc =>{
+
+        exists=false;
 
         if (doc.exists)
         {
-<<<<<<< HEAD
             exists=true;
-            console.log(exists)
-        }else{
-            exists=false;
-            console.log(exists)
-        }
-    })
-    return exists;
-=======
-            setExists(true)
+            //console.log(exists)
+            console.log('si')
         }
         else
         {
-            setExists(false)
+            exists=false;
+            //console.log(exists)
+            console.log('no')
         }
+        //console.log(exists)
     })
-    return exists
->>>>>>> 4abdb52e85c725d4556ad8dd6ad82a8d6f95d625
+    return exists;
 }
 
 export {addFavoritePublication,showFavoritePublication,deleteFavoritePulication,searchFavoritePublication}

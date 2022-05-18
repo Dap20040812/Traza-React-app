@@ -1,5 +1,6 @@
 import { Collections } from '@material-ui/icons'
 import db from '../firebase'
+import deleteRequest from './deleteRequest'
 
 function acceptedRequest(idr)
 {
@@ -23,6 +24,8 @@ function finalAcceptance(idr,idp)
                 db.collection('publications').doc(idp).update({
                     request: idr
             })
+
+            deleteRequest(idr)
         }
         else
         {

@@ -25,7 +25,7 @@ function Chat()
         setInputValue(e.target.value)        
     }
 
-    db.collection('empresas').doc('nmWTt5OChHRGbjIZNgQw4aNaksC3').collection('supportChat').orderBy('date').onSnapshot(snapshot=>
+    db.collection('empresas').doc(userUid).collection('supportChat').orderBy('date').onSnapshot(snapshot=>
         {
             text.innerHTML = ''
             snapshot.forEach(doc=>{

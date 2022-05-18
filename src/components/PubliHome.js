@@ -49,7 +49,7 @@ function PubliHome() {
         e.preventDefault();
         queryPublications(dispatch,origin,destination,date,products)
         //aca
-        //searchFavoritePublication('wbxKn7BYeRWr8LzdA3sqrOGwJS23','863d78eb-bf20-462f-bd2a-1b2024552188')
+        console.log(searchFavoritePublication('gHml45qa3wexQLIHUGGqHjN7mHz1','0d4d470b-4cc4-439e-b2f1-80fb61aabf22'))
     }
 
   return (

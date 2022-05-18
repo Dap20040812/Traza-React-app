@@ -1,5 +1,4 @@
 import db from '../firebase'
-
 /**
  * Esta función sirve para cambiar la publicación de estado (Active, inPrgoress, cancelled, ended)
  * @param {String} idp id de la publicación a la que se le quiere hacer el cambio de estado
