@@ -1,17 +1,48 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import styled from 'styled-components'
 import { finalAcceptance } from '../backend/statusRequest'
 import {useSelector} from "react-redux"
 import { useParams } from 'react-router-dom';
-
+import createOrderInProgress from '../backend/createOrderInProgress';
+import { useHistory } from 'react-router-dom'
 
 function Pay() {
 
+    const [publi, setPubli] = useState()
+    const [request, setRequest] = useState()
     const {id} = useParams();
     const {id1} = useParams();
+    const history = useHistory()
+
+
+
+    useEffect(() =>{
+        db.collection("publications")
+        .doc(id1)
+        .get()  
+        .then((doc) => {
+            if(doc.exists){
+                setPubli(doc.data());
+            }else {
+    
+            }
+        })
+        db.collection("requests")
+        .doc(id)
+        .get()  
+        .then((doc) => {
+            if(doc.exists){
+                setRequest(doc.data());
+            }else {
+    
+            }
+        })
+      },[])
 
   const start = () => {
       finalAcceptance(id,id1)
+      createOrderInProgress(id1,id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
+      history.push("/mypubli")
   }  
   return (
     <Container>
@@ -24,7 +55,7 @@ function Pay() {
                 <Payment><div style={{margin: "2vh"}}>PayPal</div><img width={'30%'} src='https://www.actualidadecommerce.com/wp-content/uploads/2020/10/paypal.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>Nequi</div><img width={'20%'} src='https://artesla.com.co/wp-content/uploads/2021/01/nequi-logo.png'/></Payment>
             </Payments>
-            <Button1>Pagar</Button1>
+            <Button1 onClick={start}>Pagar</Button1>
         </Data>
     </Container>
   )
