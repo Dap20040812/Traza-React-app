@@ -96,7 +96,6 @@ function Detail() {
                         <Description>
                             {publi.serviceDescription}
                         </Description>
-                        <StyledLink to={`/current/${publi.id}`}><Button><span>hola</span></Button></StyledLink>
                 </LeftData> 
                 <RigthData>
                     {getContent()}

@@ -120,7 +120,7 @@ function Request(props) {
                                  <>
                                     {request.accepted === false ? 
                                     <>
-                                       
+                                       <Button2 onClick={() => ro(request.id)}>Solicitud Rechazada</Button2>
                                     </>
                                     :
                                     <>

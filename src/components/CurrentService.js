@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import db from '../firebase'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 
 function CurrentService() {
 
@@ -57,7 +58,7 @@ function CurrentService() {
     }
 
     const getContent = (props) => {
-        if(orderInProgress.empresaPublication === userUid) {
+        if(orderInProgress.userId !== userUid) {
             return(
                 <Wrap>
                     <TimelineItem>
@@ -70,7 +71,7 @@ function CurrentService() {
                                 </ButtonContent1>
                             </Alert>
                             {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                            <p>El camión ha salido de la dirección de origen.</p>
+                             <p>El camión ha salido de la dirección de origen.</p>
                         </CheckDiv>
                         <Input show={checked1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -126,25 +127,25 @@ function CurrentService() {
                 <Wrap>
                 <TimelineItem>
                     <CheckDiv>
-                    {checked1 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha salido de la dirección de origen.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked2 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión va en camino a la dirección de destino.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked3 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha llegado a la dirección de destino</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked4 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El servicio ha sido entregado y finalizado.</p>
                     </CheckDiv>
                 </TimelineItem>
@@ -168,11 +169,12 @@ function CurrentService() {
                 </TimelineContainer>
             </LeftData>
             <RightData>
-                 <h3>{orderInProgress.oriAddress} - {orderInProgress.destination}</h3>
+                 <h3>{orderInProgress.origin} - {orderInProgress.destination}</h3>
                 <p>{orderInProgress.date}</p>
                 <Price>
-                    {orderInProgress.price}
+                    {orderInProgress.precioFinal}
                 </Price>
+                <StyledLink to={`/chat`}><Button1>Chat</Button1></StyledLink>
             </RightData>
         </Data>
         </>
@@ -191,7 +193,14 @@ const Container = styled.div `
     position:relative;
     justify-content: center;
 `
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: white;
 
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`
 const Background = styled.div`
     position: fixed;
     top: 0;

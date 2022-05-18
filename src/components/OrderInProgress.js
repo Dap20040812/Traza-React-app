@@ -7,21 +7,22 @@ import { Button } from 'reactstrap'
 import deleteRequest from '../backend/deleteRequest'
 import { finalRejection } from '../backend/statusRequest'
 
-function OrderInProgress(props) {
+function OrderInProgress() {
     
     const ordersInProgress = useSelector(selectOrderInProgress);  
+    console.log(ordersInProgress)
 
   return (
     <Container>
         <Content>
              { ordersInProgress && 
-                ordersInProgress.map((orderInProgress) => (
-                    <Wrap key={orderInProgress.id}>
-                        <StyledLink to={`/current/${orderInProgress.id}` }>
+                ordersInProgress.map((orderInProgres) => (
+                    <Wrap key={orderInProgres.id}>
+                        <StyledLink to={`/current/${orderInProgres.id}` }>
                         <PubliContent>
-                            <h2>{orderInProgress.oriAddress} - {orderInProgress.destination}</h2>
-                            <h3>$ {orderInProgress.price}</h3>
-                            <p>Fecha: {orderInProgress.date}</p>
+                            <h2>{orderInProgres.origin} - {orderInProgres.destination}</h2>
+                            <h3>$ {orderInProgres.precioFinal}</h3>
+                            <p>Fecha: {orderInProgres.date}</p>
                         </PubliContent>
                         </StyledLink>
                     </Wrap>

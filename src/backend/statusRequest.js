@@ -13,7 +13,7 @@ function acceptedRequest(idr,com,price)
 
 function finalAcceptance(idr,idp)
 {
-    publicationInProgress(idr)
+    publicationInProgress(idp)
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{
@@ -22,14 +22,8 @@ function finalAcceptance(idr,idp)
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
                 finalAcceptance: true,
-    
 
             })
-        
-                db.collection('publications').doc(idp).update({
-                    request: idr    
-            })
-
             deleteRequest(idr)
         }
         else
