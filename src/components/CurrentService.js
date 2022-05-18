@@ -62,10 +62,17 @@ function CurrentService() {
         updateStep4(orderInProgress.id)
     }
 
+    const start = () => {
+        setChecked1(orderInProgress.step1)
+        setChecked2(orderInProgress.step2)
+        setChecked3(orderInProgress.step3)
+        setChecked4(orderInProgress.step4)
+    }
+
     const getContent = (props) => {
         if(orderInProgress.userId !== userUid) {
             return(
-                <Wrap>
+                <Wrap onLoad={start}>
                     <TimelineItem>
                         <CheckDiv>
                             <Alert show={changeStatus1}>
