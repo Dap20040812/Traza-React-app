@@ -9,6 +9,10 @@ import firebase from 'firebase/compat/app';
 
 function Chat() 
 {
+    const styles = {
+        backgroundColor: "black",
+        padding: "10px"
+    }
     const [inputValue, setInputValue] = useState("");
     const userUid = useSelector(selecUserUid);
     const text = document.querySelector("#divtext")
@@ -62,7 +66,7 @@ function Chat()
         </Background>
         <Data>
             <input type="text" value={inputValue} onChange={test} ref={textInput} />
-            <button onClick={sendMessage}>Enviar mensaje</button>
+            <Button onClick={sendMessage}>Enviar mensaje</Button>
             <div class="mt-3"id="divtext">
             </div>
         </Data>
@@ -125,4 +129,23 @@ const Test = styled.select`
     background-color: #fff;
     border: 2px solid var(--input-border);
     border-radius: 4px;
+`
+
+const Button = styled.button `
+    border: 1px solid #f9f9f9;
+   padding: 6px 12px;
+   margin: 1vw 1vh;
+   border-radius: 4px;
+   letter-spacing: 1.1px;
+   text-transform: uppercase;
+   background-color: #A8A8A8;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+   font-size: 12px;
+
+   &:hover {
+       background-color: #22B14CED;
+       color: #000;
+       border-color: transparent;
+   }
 `
