@@ -12,6 +12,7 @@ import createRandomPublication from '../test/createRandomPublication'
 import { acceptedRequest, finalAcceptance, finalRejection, rejectRequest} from '../backend/statusRequest'
 import cancelRequest from '../backend/changeRequest'
 import createOrderInProgress from '../backend/createOrderInProgress'
+import showOrderInProgress from '../backend/showOrderInProgress'
 
 function PubliHome() {
 
@@ -51,7 +52,7 @@ function PubliHome() {
         createOrderInProgress('ddBACYLz45VEmBpApRuHBCsG1UC3','LVjxP0iTrPMdU2Nqrht2wlrDcxs1')
         queryPublications(dispatch,origin,destination,date,products)
         //aca
-        console.log(searchFavoritePublication('gHml45qa3wexQLIHUGGqHjN7mHz1','0d4d470b-4cc4-439e-b2f1-80fb61aabf22'))
+        //showOrderInProgress();
     }
 
   return (
