@@ -70,8 +70,8 @@ function App() {
         <Route path='/reject/:id'>
           <RejectRequest/>
         </Route>
-        <Route path='/pay/:id'>
-          <Pay/>
+        <Route path='/pay/:id/:id1'>
+          <Pay  />
         </Route>
         <Route path='/'>
           <Home/>

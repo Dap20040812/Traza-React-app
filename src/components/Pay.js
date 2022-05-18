@@ -1,7 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { finalAcceptance } from '../backend/statusRequest'
+import {useSelector} from "react-redux"
+import { useParams } from 'react-router-dom';
+
 
 function Pay() {
+
+    const {id} = useParams();
+    const {id1} = useParams();
+
+  const start = () => {
+      finalAcceptance(id,id1)
+  }  
   return (
     <Container>
         <Background/>
