@@ -19,9 +19,9 @@ function OrderInProgress(props) {
                     <Wrap key={orderInProgress.id}>
                         <StyledLink to={`/current/${orderInProgress.id}` }>
                         <PubliContent>
-                            <h2>{orderInProgress.originPlace} - {orderInProgress.destinationPlace}</h2>
+                            <h2>{orderInProgress.oriAddress} - {orderInProgress.destination}</h2>
                             <h3>$ {orderInProgress.price}</h3>
-                            <p>Fecha: {orderInProgress.departureDate}</p>
+                            <p>Fecha: {orderInProgress.date}</p>
                         </PubliContent>
                         </StyledLink>
                     </Wrap>
