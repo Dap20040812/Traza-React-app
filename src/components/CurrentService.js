@@ -36,7 +36,7 @@ function CurrentService() {
 
     const handleClick1 = (e) => {
         setChangeStatus1(false);
-        setChecked1(!checked1);
+        setChecked1(true)
         setChecked2(false)
         setChecked3(false)
         setChecked4(false)
@@ -45,19 +45,19 @@ function CurrentService() {
     }
 
     const handleClick2 = (e) => {
-        setChecked2(!checked2)
+        setChecked2(true)
         setChangeStatus2(false);
         updateStep2(orderInProgress.id)
     }
 
     const handleClick3 = (e) => {
-        setChecked3(!checked3)
+        setChecked3(true)
         setChangeStatus3(false);
         updateStep3(orderInProgress.id)
     }
 
     const handleClick4 = (e) => {
-        setChecked4(!checked4)
+        setChecked4(true)
         setChangeStatus4(false);
         updateStep4(orderInProgress.id)
     }
