@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import createOrderInProgress from '../backend/createOrderInProgress';
 import { useHistory } from 'react-router-dom'
 import db from '../firebase'
+import {selecUserUid} from "../features/user/userSlice"
 
 function Pay() {
 
@@ -13,6 +14,7 @@ function Pay() {
     const [request, setRequest] = useState()
     const {id} = useParams();
     const {id1} = useParams();
+    const userUid = useSelector(selecUserUid);
     const history = useHistory()
 
 
@@ -41,7 +43,7 @@ function Pay() {
       },[])
 
   const starts = () => {
-      createOrderInProgress(publi.empresaUid,request.EmpresaUid,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
+      createOrderInProgress(publi.empresaUid,request.EmpresaUid,userUid,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       finalAcceptance(id,id1)
       history.push("/inprogress")
 
