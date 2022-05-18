@@ -11,6 +11,7 @@ import { addFavoritePublication, searchFavoritePublication } from '../backend/fa
 import createRandomPublication from '../test/createRandomPublication'
 import { acceptedRequest, finalAcceptance, finalRejection, rejectRequest} from '../backend/statusRequest'
 import cancelRequest from '../backend/changeRequest'
+import createOrderInProgress from '../backend/createOrderInProgress'
 
 function PubliHome() {
 
@@ -47,6 +48,7 @@ function PubliHome() {
      */
     const handleSubmit = e => {
         e.preventDefault();
+        createOrderInProgress('ddBACYLz45VEmBpApRuHBCsG1UC3','LVjxP0iTrPMdU2Nqrht2wlrDcxs1')
         queryPublications(dispatch,origin,destination,date,products)
         //aca
         cancelRequest('367e92dc-47a1-4914-9064-64698da45d4e')

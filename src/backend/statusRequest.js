@@ -1,4 +1,5 @@
 import db from '../firebase'
+import { publicationInProgress } from './changePublication'
 
 function acceptedRequest(idr,com,price)
 {
@@ -11,6 +12,7 @@ function acceptedRequest(idr,com,price)
 
 function finalAcceptance(idr,idp)
 {
+    publicationInProgress(idr)
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{
@@ -48,6 +50,7 @@ function finalRejection(idr)
     db.collection('request').doc(idr).update({
         finalacceptance: false,
     })
+
 }
 
 export {acceptedRequest,finalAcceptance,rejectRequest,finalRejection}

@@ -5,6 +5,7 @@ import {useSelector} from "react-redux"
 import {selecUserUid} from "../features/user/userSlice"
 import { useState } from 'react';
 import chatSetupp from '../backend/chatSetup'
+import firebase from 'firebase/compat/app';
 
 
 function Chat() 
@@ -18,6 +19,11 @@ function Chat()
         if(inputValue!="")
         {
                chatSetupp(userUid,inputValue)
+               db.collection("orderInProgress").doc('fasfas').collection("chat").add({
+                text:inputValue,
+                date: firebase.firestore.Timestamp.fromDate(new Date()),
+                company:userUid
+            })
         }
         setInputValue("")
     }

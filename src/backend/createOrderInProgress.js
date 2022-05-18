@@ -10,3 +10,5 @@ function createOrderInProgress(empresaP,empresaR)
         empresaRequest: empresaR
     })
 }
+
+export default createOrderInProgress
