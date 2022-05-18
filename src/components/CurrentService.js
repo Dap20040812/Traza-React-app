@@ -127,25 +127,25 @@ function CurrentService() {
                 <TimelineItem>
                     <CheckDiv>
                     {checked1 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                        <p>Hola</p>
+                        <p>El camión ha salido de la dirección de origen.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
                     {checked2 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                        <p>Hola</p>
+                        <p>El camión va en camino a la dirección de destino.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
                     {checked3 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                        <p>Hola</p>
+                        <p>El camión ha llegado a la dirección de destino</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
                     {checked4 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                        <p>Hola</p>
+                        <p>El servicio ha sido entregado y finalizado.</p>
                     </CheckDiv>
                 </TimelineItem>
             </Wrap>
