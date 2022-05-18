@@ -38,28 +38,28 @@ function Login() {
     const {email,password,name,razonSocial,nit,nit2,sector,tel} = form
     const newErrors = {}
     // name errors
-    if ( !email || email === '' ) newErrors.email = 'Ingresa un correo para continuar'
-    if ( !password || password === '' ) newErrors.password = 'Ingresa una contraseña para continuar'
-    if ( !name || name === '' ) newErrors.name = 'Ingresa el nombre de la empresa para continuar'
-    if ( !razonSocial || razonSocial === '' ) newErrors.razonSocial = 'Ingresa la razón social de la empresa para continuar'
+    if ( !email || email === '' ) newErrors.email = 'Ingresa un correo para continuar.'
+    if ( !password || password === '' ) newErrors.password = 'Ingresa una contraseña para continuar.'
+    if ( !name || name === '' ) newErrors.name = 'Ingresa el nombre de la empresa para continuar.'
+    if ( !razonSocial || razonSocial === '' ) newErrors.razonSocial = 'Ingresa la razón social de la empresa para continuar.'
     if ( !nit || nit === '' ) {
-      newErrors.nit = 'Ingresa el NIT del empresa para continuar'
+      newErrors.nit = 'Ingresa el NIT del empresa para continuar.'
     }
     else if (nit.length != 9) {
-      newErrors.nit = 'Este NIT no es válido'
+      newErrors.nit = 'Este NIT no es válido.'
     }
     if ( !nit2 || nit2 === '' ) {
-      newErrors.nit2 = 'Ingresa el número de verificación del NIT del empresa para continuar'
+      newErrors.nit2 = 'Ingresa el número de verificación del NIT del empresa para continuar.'
     }
     else if (nit2.length != 1) {
-      newErrors.nit2 = 'Este número de verificación del NIT no es válido'
+      newErrors.nit2 = 'Este número de verificación del NIT no es válido.'
     }
-    if ( !sector || sector === '' ) newErrors.sector = 'Ingresa el sector de la empresa para continuar'
+    if ( !sector || sector === '' ) newErrors.sector = 'Ingresa el sector de la empresa para continuar.'
     if ( !tel || tel === '' ) { 
-      newErrors.tel = 'Ingresa un telefono valido para continuar'
+      newErrors.tel = 'Ingresa un teléfono válido para continuar.'
     }
     else if (tel.length != 10) {
-      newErrors.tel = 'Télefono no válido'
+      newErrors.tel = 'Télefono no válido.'
     }
 
     return newErrors
@@ -96,7 +96,7 @@ function Login() {
       setErrors(newErrors) 
   })
   .catch(FirebaseAuthWeakPasswordException => {
-    newErrors.password = "La contraseña debe contener mas de 6 caracteres"
+    newErrors.password = "La contraseña debe contener más de 6 caracteres"
     setErrors(newErrors) 
   })
 
@@ -134,7 +134,7 @@ function Login() {
       const email = e.target.elements.email.value;
       const password = e.target.elements.password.value;
       const newErrors = findFormErrors()
-      if(newErrors.email  !== "Ingresa un correo para continuar"  && newErrors.password !== "Ingresa una contraseña para continuar"){
+      if(newErrors.email  !== "Ingresa un correo para continuar."  && newErrors.password !== "Ingresa una contraseña para continuar."){
           auth.signInWithEmailAndPassword(email, password)
           .then((result) => {
                 let user = result.user
@@ -147,10 +147,10 @@ function Login() {
                 history.push("/")
 
             }).catch(ERROR_INVALID_EMAIL => {
-              newErrors.email = "Correo no valido"
+              newErrors.email = "Correo no válido."
               setErrors(newErrors)
               }).catch(ERROR_WRONG_PASSWORD => {
-                newErrors.password = "Contraseña no valida"
+                newErrors.password = "Contraseña no válida."
                 setErrors(newErrors)
               })
         }

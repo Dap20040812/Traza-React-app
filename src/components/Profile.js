@@ -55,7 +55,7 @@ function Profile() {
                 
             }))
         },function(error) {
-            window.alert("No se puedo cargar la imagen")
+            window.alert("No se pudo cargar la imagen.")
          });
         
     }

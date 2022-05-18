@@ -82,9 +82,9 @@ function MyDetail() {
                 <Background>
                 </Background>
                 <Alert show={cancelStatus}>
-                    <h2>Advertencia!!!!!!</h2>
-                    <h4>La publicación se eliminara permanentemente</h4>
-                    <p>¿Desear continuar?</p>
+                    <h2>¡Advertencia!</h2>
+                    <h4>La publicación se eliminará permanentemente.</h4>
+                    <p>¿Desea continuar?</p>
                     <ButtonContent>
                         <Button1 onClick={deletepubli}>Continuar</Button1>
                         <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
@@ -104,7 +104,7 @@ function MyDetail() {
                                 <span>Ver solicitudes</span>
                             </PlayButton>
                             <TrailerButton  onClick={toPage('Info')}>
-                                <span>+ INFO</span>
+                                <span>Información</span>
                             </TrailerButton>
                             <CancelButton onClick={cancel}>
                                 <span>Eliminar</span>

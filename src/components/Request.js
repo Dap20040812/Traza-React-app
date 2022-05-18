@@ -49,9 +49,9 @@ function Request(props) {
   return (
     <Container> 
         <Alert show={cancelStatus}>
-            <h2>Advertencia!!!!!!</h2>
-            <h4>La Solicitud se eliminara permanentemente</h4>
-            <p>¿Desear continuar?</p>
+            <h2>¡Advertencia!</h2>
+            <h4>La solicitud se eliminará permanentemente.</h4>
+            <p>¿Desea continuar?</p>
             <ButtonContent1>
                 <Button1 onClick={deleteRe}>Continuar</Button1>
                 <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
@@ -65,7 +65,7 @@ function Request(props) {
             </ButtonContent1>
         </Alert>
         <Alert show={fCancelStatus}>
-            <p>La empresa Rechazo tu solicitud</p>
+            <p>La empresa rechazó tu solicitud</p>
             <ButtonContent1>
                 <Button1 onClick={ffDeleteRe}>Aceptar</Button1>
             </ButtonContent1>
@@ -109,18 +109,18 @@ function Request(props) {
                                       </>
                                       :
                                       <>
-                                            <StyledLink to={`/pay/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <StyledLink to={`/pay/${request.id}/${request.publication}`}><Button1>Aceptar</Button1></StyledLink>
                                             <Button2 onClick={() => re(request.id)}>Rechazar</Button2>
                                       </>
                                       }  
-                                      
+
                                     
                                  </>
                                  : 
                                  <>
                                     {request.accepted === false ? 
                                     <>
-                                       
+                                       <Button2 onClick={() => ro(request.id)}>Solicitud Rechazada</Button2>
                                     </>
                                     :
                                     <>
