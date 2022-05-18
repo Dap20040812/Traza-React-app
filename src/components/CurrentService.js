@@ -5,6 +5,7 @@ import db from '../firebase'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import {Link} from "react-router-dom"
+import { updateStep1, updateStep2, updateStep3, updateStep4 } from '../backend/updateOrderInProgress'
 
 function CurrentService() {
 
@@ -39,22 +40,26 @@ function CurrentService() {
         setChecked2(false)
         setChecked3(false)
         setChecked4(false)
+        updateStep1(orderInProgress.id)
         return true
     }
 
     const handleClick2 = (e) => {
         setChecked2(!checked2)
         setChangeStatus2(false);
+        updateStep2(orderInProgress.id)
     }
 
     const handleClick3 = (e) => {
         setChecked3(!checked3)
         setChangeStatus3(false);
+        updateStep3(orderInProgress.id)
     }
 
     const handleClick4 = (e) => {
         setChecked4(!checked4)
         setChangeStatus4(false);
+        updateStep4(orderInProgress.id)
     }
 
     const getContent = (props) => {
@@ -174,7 +179,7 @@ function CurrentService() {
                 <Price>
                     {orderInProgress.precioFinal}
                 </Price>
-                <StyledLink to={`/chat`}><Button1>Chat</Button1></StyledLink>
+                <StyledLink to={`/chat/${orderInProgress.id}`}><Button1>Chat</Button1></StyledLink>
             </RightData>
         </Data>
         </>
