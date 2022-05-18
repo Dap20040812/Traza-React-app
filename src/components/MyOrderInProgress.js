@@ -1,33 +1,37 @@
 import React,{useEffect} from 'react'
 import styled from 'styled-components'
-import queryMyPublications from '../backend/queryMyPublication'
+import showOrderInProgress from '../backend/showOrderInProgress'
+import Publi from './Publi'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
-import Request from './Request'
-import {showRequest} from '../backend/showRequest'
+import {Link} from "react-router-dom"
+import OrderInProgress from './OrderInProgress'
 
-function MyRequest() {
+
+function MyOrderInProgress() {
     
     const dispatch = useDispatch()
     const userUid = useSelector(selecUserUid);
 
+    /**
+     * Muestra las publicaciones actuales de la empresa
+     */
     useEffect(() => {
-        showRequest(userUid,dispatch);  
+        showOrderInProgress(userUid,dispatch);  
     },[]) 
-    
     
   return (
     <Container>
         <Background>
         </Background>
-        <Title>Mis Solicitudes</Title>
-       <Request myrequest={true}/>
+        <Title>Mis Servicios Activos</Title>
+        <OrderInProgress inprogress={true}/>
     </Container>
   )
 }
 
-export default MyRequest
+export default MyOrderInProgress
 
 const Container = styled.div`
     min-height: calc(100vh - 70px);
@@ -49,13 +53,13 @@ const Background = styled.div`
     no-repeat fixed;
     content: "";
     position: absolute;
-    
 
     img{
         width: 100%;
         height: 100%;
         object-fit:cover;
         filter: brightness(50%);
+
     }
 
 `

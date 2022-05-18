@@ -5,21 +5,45 @@ import {selectRequests} from '../features/request/requestSlice'
 import { useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
 import deleteRequest from '../backend/deleteRequest'
+import { finalRejection } from '../backend/statusRequest'
 
 function Request(props) {
     const requests = useSelector(selectRequests);  
     const[cancelStatus, setCancelStatus] = useState(false);
+    const[fCancelStatus, setFCancelStatus] = useState(false);
+    const[detailStatus, setDetailStatus] = useState(false);
     const[idRe, setidRe] = useState();
     
 
     const cancel = () =>  {
         setCancelStatus(true); 
     }
+
+
     const deleteRe =() => {
         console.log(idRe);
         deleteRequest(idRe);
         setCancelStatus(false);
         window.alert("Solicitud Elmiminada con Exito")
+      }
+      const fdeleteRe =() => {
+        finalRejection(idRe)
+        console.log(idRe)
+        setDetailStatus(false);
+        window.alert("Solicitud Rechazada con Exito")
+      }    
+      const ffDeleteRe =() => {
+        deleteRequest(idRe)
+        setFCancelStatus(false);
+        window.alert("Solicitud Elmiminada con Exito")
+      }   
+      const re =(idr) => {
+        setidRe(idr)
+        setDetailStatus(true)
+      } 
+      const ro =(idr) => {
+        setidRe(idr)
+        setFCancelStatus(true)
       }
 
   return (
@@ -33,10 +57,25 @@ function Request(props) {
                 <Button2 onClick={()=> setCancelStatus(false)}>Cancelar</Button2>
             </ButtonContent1>
         </Alert>
+        <Alert show={detailStatus}>
+            <p>¿Estas seguro que deseas rechazar la solicitud?</p>
+            <ButtonContent1>
+                <Button1 onClick={fdeleteRe}>Continuar</Button1>
+                <Button2 onClick={()=> setDetailStatus(false)}>Cancelar</Button2>
+            </ButtonContent1>
+        </Alert>
+        <Alert show={fCancelStatus}>
+            <p>La empresa Rechazo tu solicitud</p>
+            <ButtonContent1>
+                <Button1 onClick={ffDeleteRe}>Aceptar</Button1>
+            </ButtonContent1>
+        </Alert>
         <Content>
              { requests && 
                 requests.map((request) => (
+                    <>
                     <Wrap key={request.id}>
+                        
                         <h3>Id: {request.id}</h3>
                         <Data>
                             <PubliContent>
@@ -46,14 +85,79 @@ function Request(props) {
                                 <p>Descripción del Producto : {request.prodDescription}</p>
                                 <p>Dimensiones : {request.packageDimensions.packagHeight} x {request.packageDimensions.packageWidth} x {request.packageDimensions.packageLength} {request.packageDimensions.packageUnidades}</p>
                                 <p>Fecha de creación de la solicitud: {request.requestDate}</p>
+                                <p>{request.finalAcceptance}</p>
+                                {request.accepted === false ?
+                                    <p style={{color: "red"}}>Motivos de rechazo : {request.motivosR}</p>
+                                    : <></>
+                                }
+                                {request.accepted ? 
+                                 <>
+                                   <p style={{color: "green"}}>Comentarios : {request.comentarios}</p>
+                                   <p style={{color: "green"}}>Precio Final : {request.finalPrice}</p> 
+                                 </>
+                                 : <></>
+                                }
                             </PubliContent>
                             <ButtonContent>
                                 {props.myrequest === true ? 
-                                    <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
+                                 <>
+                                 {request.accepted ? 
+                                 <>
+                                    {request.finalacceptance === false?
+                                      <>
+                                        <Button>Rechazada</Button>
+                                      </>
+                                      :
+                                      <>
+                                            <StyledLink to={`/pay/${request.id}/${request.publication}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <Button2 onClick={() => re(request.id)}>Rechazar</Button2>
+                                      </>
+                                      }  
+
+                                    
+                                 </>
+                                 : 
+                                 <>
+                                    {request.accepted === false ? 
+                                    <>
+                                       
+                                    </>
+                                    :
+                                    <>
+                                        <Button2 onClick={cancel} onClickCapture={() => setidRe(request.id)}>Cancelar</Button2>
+                                    </>
+                                    }
+
+                                 </>
+                                }    
+                                 </>
                                  :
                                 <>
-                                    <Button1>Aceptar</Button1>
-                                    <Button2>Rechazar</Button2>
+                                 {request.accepted ? 
+                                    <>
+                                      {request.finalacceptance === false?
+                                      <>
+                                        <Button2 onClick={() => ro(request.id)}>Solicitud Rechazada</Button2>
+                                      </>
+                                      :
+                                      <>
+                                      </>
+                                      }  
+                                    </>
+                                    :
+                                    <>
+                                        {request.accepted === false? 
+                                        <>
+                                        </>
+                                        :
+                                        <>
+                                            <StyledLink to={`/accept/${request.id}`}><Button1>Aceptar</Button1></StyledLink>
+                                            <StyledLink to={`/reject/${request.id}`}><Button2>Rechazar</Button2></StyledLink>
+                                        </>
+                                        }
+                                    </>
+                                    }
+                                    
                                 </>    
                                 }
                                 
@@ -62,6 +166,7 @@ function Request(props) {
                         </Data>
                         
                     </Wrap>
+                    </>
                     ))
                 }
         </Content>
@@ -79,9 +184,9 @@ const Container = styled.div`
     padding: 2vw 2vh;
 `
 const Content = styled.div`
-    display: flex;
-    flex-direction: column;
     width: 100%;
+    display: grid;
+    grid-gap: 8vh; 
 `
 const Wrap = styled.div`
     padding: 2vw 2vh;
@@ -151,6 +256,42 @@ const Data = styled.div`
 
 
 const Alert = styled.div`
+  position: fixed;
+  top: 0;
+  right: 30vw;
+  background: white;
+  border: 3px solid rgba(136, 148, 122, 0.7); 
+  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+  rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  max-width: 100vh;
+  z-index: 16;
+  list-style: none;
+  padding: 2vw 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: ${props => props.show ===false ? 'translatey(-200%)': 'translatey(0%)'};
+  transition: transform 0.2s;
+  li{
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+
+    a{
+      font-weight: 600; 
+    }
+    &:hover {
+        border-radius: 0.6vh;
+        border-color: rgba(249, 249, 249 , 0.8);
+        color: white;
+        background-color: #0000003D;
+        opacity: 0.9;
+    }
+  }
+`
+
+const Detail = styled.div`
   position: fixed;
   top: 0;
   right: 30vw;

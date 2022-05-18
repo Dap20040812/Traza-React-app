@@ -3,7 +3,7 @@ import db from '../firebase'
 function cancelRequest(idr)
 {
     db.collection('request').doc(idr).update({
-        state: 'cancel'
+        state: 'Cancel'
     })
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         snapshot.forEach(doc=>{

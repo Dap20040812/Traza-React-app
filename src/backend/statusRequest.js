@@ -1,16 +1,19 @@
-import { Collections } from '@material-ui/icons'
 import db from '../firebase'
+import { publicationInProgress } from './changePublication'
 import deleteRequest from './deleteRequest'
 
-function acceptedRequest(idr)
+function acceptedRequest(idr,com,price)
 {
     db.collection('request').doc(idr).update({
-        accepted: true
+        accepted: true,
+        comentarios: com,
+        finalPrice: price
     })
 }
 
 function finalAcceptance(idr,idp)
 {
+    publicationInProgress(idr)
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{
@@ -18,7 +21,9 @@ function finalAcceptance(idr,idp)
         {
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
-                finalAcceptance: true
+                finalAcceptance: true,
+    
+
             })
         
                 db.collection('publications').doc(idp).update({
@@ -35,27 +40,20 @@ function finalAcceptance(idr,idp)
     })
 }
 
-function rejectRequest(idr)
+function rejectRequest(idr,mo)
 {
     db.collection('request').doc(idr).update({
-        accepted: false
+        accepted: false,
+        motivosR: mo
     })
 }
 
 function finalRejection(idr)
 {
-    db.collection('request').where('id','==',idr).get().then(snapshot=>{
-        
-        snapshot.forEach(doc=>{
-            if(doc.data().accepted)
-        {
-            console.log("SI")
-            db.collection('request').doc(doc.data().id).update({
-                finalAcceptance: false
-            })
-        }
-        })
+    db.collection('request').doc(idr).update({
+        finalacceptance: false,
     })
+
 }
 
 export {acceptedRequest,finalAcceptance,rejectRequest,finalRejection}

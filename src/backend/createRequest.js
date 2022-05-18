@@ -36,7 +36,11 @@ function createRequest(name,uid,idr,requestDate,embalajeRequest,descriptionReque
         products:products,
         prodDescription: prodDescription,
         state:'Unaccepted',
-        id:uuidr
+        id:uuidr,
+        comentarios:"",
+        finalPrice:"",
+        motivosr:""
+        
     })
 
 

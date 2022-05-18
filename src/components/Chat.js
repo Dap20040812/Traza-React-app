@@ -5,6 +5,7 @@ import {useSelector} from "react-redux"
 import {selecUserUid} from "../features/user/userSlice"
 import { useState } from 'react';
 import chatSetupp from '../backend/chatSetup'
+import firebase from 'firebase/compat/app';
 
 
 function Chat() 
@@ -18,6 +19,11 @@ function Chat()
         if(inputValue!="")
         {
                chatSetupp(userUid,inputValue)
+               db.collection("orderInProgress").doc('fasfas').collection("chat").add({
+                text:inputValue,
+                date: firebase.firestore.Timestamp.fromDate(new Date()),
+                company:userUid
+            })
         }
         setInputValue("")
     }
@@ -25,7 +31,7 @@ function Chat()
         setInputValue(e.target.value)        
     }
 
-    db.collection('empresas').doc(userUid).collection('supportChat').orderBy('date').onSnapshot(snapshot=>
+    db.collection("orderInProgress").doc("Ingrese id de orderInProgress").collection("chat").orderBy('date').onSnapshot(snapshot=>
         {
             text.innerHTML = ''
             snapshot.forEach(doc=>{
@@ -58,7 +64,6 @@ function Chat()
             <input type="text" value={inputValue} onChange={test} ref={textInput} />
             <button onClick={sendMessage}>Enviar mensaje</button>
             <div class="mt-3"id="divtext">
-
             </div>
         </Data>
     </Container>

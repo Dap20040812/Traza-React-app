@@ -16,6 +16,10 @@ import MyDetail from './components/MyPubliDetail';
 import MyRequest from './components/MyRequest';
 import Chat from './components/Chat';
 import CurrentService from './components/CurrentService';
+import AcceptRequest from './components/AcceptRequest';
+import RejectRequest from './components/RejectRequest';
+import Pay from './components/Pay';
+import MyOrderInProgress from './components/MyOrderInProgress';
 
 
 function App() {
@@ -52,6 +56,9 @@ function App() {
         <Route path='/myrequest'>
           <MyRequest/>
         </Route>
+        <Route path='/inprogress'>
+          <MyOrderInProgress/>
+        </Route>
         <Route path='/login'>
           <Login/>
         </Route>
@@ -60,6 +67,15 @@ function App() {
         </Route>
         <Route path='/current/:id'>
           <CurrentService />
+        </Route>
+        <Route path='/accept/:id'>
+          <AcceptRequest/>
+        </Route>
+        <Route path='/reject/:id'>
+          <RejectRequest/>
+        </Route>
+        <Route path='/pay/:id/:id1'>
+          <Pay  />
         </Route>
         <Route path='/'>
           <Home/>

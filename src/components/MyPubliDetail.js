@@ -12,7 +12,6 @@ import { useHistory } from 'react-router-dom'
 import Publi from './Publi';
 import recommendedPublications from '../backend/recommendedPublication';
 import Request from './Request';
-import showRequest from '../backend/showRequest';
 import showMyRequest from '../backend/showMyRequest';
 import deletePublication from '../backend/deletePublication';
 
@@ -67,7 +66,7 @@ function MyDetail() {
     }
     else if (page === 'Request'){
         return(
-            <Request myrequest={false}/>
+            <Request myrequest={false}/> 
           ) 
     }
   }
