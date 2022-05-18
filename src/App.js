@@ -41,7 +41,7 @@ function App() {
         <Route path='/homepubli'>
           <PubliHome/>
         </Route>
-        <Route path='/chat'>
+        <Route path='/chat/:id'>
           <Chat/>
         </Route>
         <Route path='/publi/make'>

@@ -174,7 +174,7 @@ function CurrentService() {
                 <Price>
                     {orderInProgress.precioFinal}
                 </Price>
-                <StyledLink to={`/chat`}><Button1>Chat</Button1></StyledLink>
+                <StyledLink to={`/chat/${orderInProgress.id}`}><Button1>Chat</Button1></StyledLink>
             </RightData>
         </Data>
         </>

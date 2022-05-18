@@ -1,10 +1,6 @@
 import db from '../firebase'
 import { publicationInProgress } from './changePublication'
-<<<<<<< HEAD
-import { deleteOnlyPublication } from './deletePublication'
-=======
 import deleteRequest from './deleteRequest'
->>>>>>> e23aabeba0bca2b49dfa3ae04042062654bd02b1
 
 function acceptedRequest(idr,com,price)
 {
@@ -18,10 +14,6 @@ function acceptedRequest(idr,com,price)
 function finalAcceptance(idr,idp)
 {
     publicationInProgress(idp)
-<<<<<<< HEAD
-    deleteOnlyPublication(idp)
-=======
->>>>>>> e23aabeba0bca2b49dfa3ae04042062654bd02b1
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{
