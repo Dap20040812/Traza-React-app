@@ -41,7 +41,7 @@ function Pay() {
 
   const start = () => {
       finalAcceptance(id,id1)
-      createOrderInProgress(id1,id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
+      createOrderInProgress(publi.id,request.id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       history.push("/mypubli")
   }  
   return (
