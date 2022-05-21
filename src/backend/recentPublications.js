@@ -35,8 +35,7 @@ function saveRecentPublications(uuidEmpresa,idReciente)
  */
 function showRecentPublication(uuidEmpresa,dispatch)
 {
-
-    db.collection("empresas").doc(uuidEmpresa).collection('publicacionesRecientes').orderBy('fechaDeVisualizacion','desc').limit(4).where('state','==','active').onSnapshot((snapshot)=>{
+    db.collection("empresas").doc(uuidEmpresa).collection('publicacionesRecientes').orderBy('fechaDeVisualizacion','desc').limit(4).where('idle','==',true).onSnapshot((snapshot)=>{
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
