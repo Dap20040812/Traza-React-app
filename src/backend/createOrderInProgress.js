@@ -8,6 +8,7 @@ function createOrderInProgress(empresaP,empresaR,oriAddress,destination,date,pri
         id:uuidO,
         empresaPublication: empresaP,
         empresaRequest: empresaR,
+        idBusqueda:{empresaP,empresaR},
         step1: false,
         step2: false,
         step3: false,

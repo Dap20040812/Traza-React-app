@@ -13,7 +13,7 @@ function acceptedRequest(idr,com,price)
 
 function finalAcceptance(idr,idp)
 {
-    publicationInProgress(idr)
+    publicationInProgress(idp)
     db.collection('request').where('id','==',idr).get().then(snapshot=>{
         
         snapshot.forEach(doc=>{

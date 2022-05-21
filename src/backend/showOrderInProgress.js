@@ -4,7 +4,7 @@ import {setOrdersInProgress} from '../features/inProgress/orderInProgressSlice'
 
 function showOrderInProgress(uid,dispatch)
 {
-    db.collection("OrderInProgress").where('empresaPublication','==',uid).onSnapshot((snapshot)=>{
+    db.collection("OrderInProgress").where('idBusqueda','array-contains-any',['uid']).onSnapshot((snapshot)=>{
         let tempPublis = snapshot.docs.map((doc)=>{
             return {id: doc.id, ...doc.data()}
         }) 
