@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import db from '../firebase'
 import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
+import { updateStep1, updateStep2, updateStep3, updateStep4 } from '../backend/updateOrderInProgress'
 
 function CurrentService() {
 
@@ -34,32 +36,43 @@ function CurrentService() {
 
     const handleClick1 = (e) => {
         setChangeStatus1(false);
-        setChecked1(!checked1);
+        setChecked1(true)
         setChecked2(false)
         setChecked3(false)
         setChecked4(false)
+        updateStep1(orderInProgress.id)
         return true
     }
 
     const handleClick2 = (e) => {
-        setChecked2(!checked2)
+        setChecked2(true)
         setChangeStatus2(false);
+        updateStep2(orderInProgress.id)
     }
 
     const handleClick3 = (e) => {
-        setChecked3(!checked3)
+        setChecked3(true)
         setChangeStatus3(false);
+        updateStep3(orderInProgress.id)
     }
 
     const handleClick4 = (e) => {
-        setChecked4(!checked4)
+        setChecked4(true)
         setChangeStatus4(false);
+        updateStep4(orderInProgress.id)
+    }
+
+    const start = () => {
+        setChecked1(orderInProgress.step1)
+        setChecked2(orderInProgress.step2)
+        setChecked3(orderInProgress.step3)
+        setChecked4(orderInProgress.step4)
     }
 
     const getContent = (props) => {
-        if(orderInProgress.empresaPublication === userUid) {
+        if(orderInProgress.userId !== userUid) {
             return(
-                <Wrap>
+                <Wrap onLoad={start}>
                     <TimelineItem>
                         <CheckDiv>
                             <Alert show={changeStatus1}>
@@ -70,7 +83,7 @@ function CurrentService() {
                                 </ButtonContent1>
                             </Alert>
                             {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
-                            <p>El camión ha salido de la dirección de origen.</p>
+                             <p>El camión ha salido de la dirección de origen.</p>
                         </CheckDiv>
                         <Input show={checked1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
@@ -126,25 +139,25 @@ function CurrentService() {
                 <Wrap>
                 <TimelineItem>
                     <CheckDiv>
-                    {checked1 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha salido de la dirección de origen.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked2 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión va en camino a la dirección de destino.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked3 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha llegado a la dirección de destino</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked4 ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El servicio ha sido entregado y finalizado.</p>
                     </CheckDiv>
                 </TimelineItem>
@@ -168,11 +181,12 @@ function CurrentService() {
                 </TimelineContainer>
             </LeftData>
             <RightData>
-                 <h3>{orderInProgress.oriAddress} - {orderInProgress.destination}</h3>
+                 <h3>{orderInProgress.origin} - {orderInProgress.destination}</h3>
                 <p>{orderInProgress.date}</p>
                 <Price>
-                    {orderInProgress.price}
+                    {orderInProgress.precioFinal}
                 </Price>
+                <StyledLink to={`/chat/${orderInProgress.id}`}><Button1>Chat</Button1></StyledLink>
             </RightData>
         </Data>
         </>
@@ -191,7 +205,14 @@ const Container = styled.div `
     position:relative;
     justify-content: center;
 `
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: white;
 
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`
 const Background = styled.div`
     position: fixed;
     top: 0;

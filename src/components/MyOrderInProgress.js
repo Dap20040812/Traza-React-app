@@ -11,7 +11,7 @@ import OrderInProgress from './OrderInProgress'
 
 function MyOrderInProgress() {
     
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const userUid = useSelector(selecUserUid);
 
     /**

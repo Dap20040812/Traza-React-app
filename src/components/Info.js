@@ -49,13 +49,13 @@ function Info (props) {
                     <PubliInfo>
                         <li>Empresa: {props.name}</li>
                         <li>Fecha: {props.date}</li>
-                        <li>Vehículo disponible</li>
+                        <li>Vehículo disponible: </li>
                         <li>Dirección de Origen: {props.oriAddress} </li>
                         <li>Dirección de Destino:{props.destAddress}</li>
                     </PubliInfo> 
                 </Data>
                 <Data>
-                    <h2>Productos transportados:</h2>
+                    <h2>Productos transportados</h2>
                     <PubliInfo>
                         <li>{props.products}</li>
                         <Description>
@@ -64,11 +64,11 @@ function Info (props) {
                     </PubliInfo>
                 </Data>
                 <Data>
-                    <h2>Detalles del embalaje:</h2>
+                    <h2>Detalles del embalaje</h2>
                     <PubliInfo>
                         <li>Tipo de Embalaje: {props.embalaje}</li>
                         <li>Dimensiones del Camion: {props.truckDimensions1} x {props.truckDimensions2} x {props.truckDimensions3} {props.truckDimensions4}</li>
-                        <li>ESpacio disponible {props.freeSpaces1} x {props.freeSpaces2} x {props.freeSpaces3} {props.freeSpaces4}</li>
+                        <li>Espacio disponible {props.freeSpaces1} x {props.freeSpaces2} x {props.freeSpaces3} {props.freeSpaces4}</li>
                     </PubliInfo>
                 </Data>
                 <Data>

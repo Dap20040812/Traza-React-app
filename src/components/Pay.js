@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import createOrderInProgress from '../backend/createOrderInProgress';
 import { useHistory } from 'react-router-dom'
 import db from '../firebase'
+import {selecUserUid} from "../features/user/userSlice"
 
 function Pay() {
 
@@ -13,11 +14,22 @@ function Pay() {
     const [request, setRequest] = useState()
     const {id} = useParams();
     const {id1} = useParams();
+    const userUid = useSelector(selecUserUid);
     const history = useHistory()
 
 
 
     useEffect(() =>{
+        db.collection("request")
+        .doc(id)
+        .get()  
+        .then((doc1) => {
+            if(doc1.exists){
+                setRequest(doc1.data());
+            }else {
+    
+            }
+        })
         db.collection("publications")
         .doc(id1)
         .get()  
@@ -28,35 +40,26 @@ function Pay() {
     
             }
         })
-        db.collection("request")
-        .doc(id)
-        .get()  
-        .then((doc) => {
-            if(doc.exists){
-                setRequest(doc.data());
-            }else {
-    
-            }
-        })
       },[])
 
-  const start = () => {
+  const starts = () => {
+      createOrderInProgress(publi.empresaUid,request.EmpresaUid,userUid,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       finalAcceptance(id,id1)
-      createOrderInProgress(publi.id,request.id,publi.originPlace,publi.destinationPlace,publi.departureDate,request.finalPrice)
       history.push("/inprogress")
+
   }  
-  return (
+  return (  
     <Container>
         <Background/>
         <Data>
-            <Title>Metodo de pago</Title>
+            <Title>Método de pago</Title>
             <Payments>
                 <Payment><div style={{margin: "2vh"}}>PSE</div><img width={'20%'} src='https://eca.edu.co/wp-content/uploads/2020/04/logo-pse-300x300.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>Tarjeta</div><img width={'20%'} src='https://cdn-icons-png.flaticon.com/512/82/82219.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>PayPal</div><img width={'30%'} src='https://www.actualidadecommerce.com/wp-content/uploads/2020/10/paypal.png'/></Payment>
                 <Payment><div style={{margin: "2vh"}}>Nequi</div><img width={'20%'} src='https://artesla.com.co/wp-content/uploads/2021/01/nequi-logo.png'/></Payment>
             </Payments>
-            <Button1 onClick={start}>Pagar</Button1>
+            <Button1 onClick={starts}>PAGAR</Button1>
         </Data>
     </Container>
   )
@@ -157,4 +160,26 @@ const Button1 = styled.button`
        border-color: transparent;
    }
 
+`
+const CancelButton = styled.button`
+border-radius: 1vh;
+    font-size: 2vh;
+    margin-top: 2vh;
+    text-align:center;
+    padding: 0 3vh;
+    margin-right: 3vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 6vh;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 0.15vh;
+    cursor: pointer;
+    text-align: center; 
+    
+
+    &:hover {
+        background: #E80D0DED;
+    }
 `

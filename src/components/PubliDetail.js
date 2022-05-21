@@ -53,7 +53,7 @@ function Detail() {
     else if (page === 'Request'){
       if(publi.empresaUid === userUid)
       {
-        window.alert("No puedes realizar una solicitud a tu publicación")
+        window.alert("No puedes realizar una solicitud a tu publicación.")
         return(
             <Info origin={publi.originPlace} oriAddress={publi.originAddress} destination={publi.destinationPlace} destAddress={publi.destinationAddress} date={publi.departureDate} products={publi.products} proDescription={publi.productsDescription} embalaje={publi.embalaje} truckDimensions1={publi.truckDimensions.truckHeight} truckDimensions2={publi.truckDimensions.truckWidth} truckDimensions3={publi.truckDimensions.truckLength} truckDimensions4={publi.truckDimensions.truckUnidades} freeSpaces1={publi.truckFreeSpace.freeSpaceHeight} freeSpaces2={publi.truckFreeSpace.freeSpaceWidth} freeSpaces3={publi.truckFreeSpace.freeSpaceLength} freeSpaces4={publi.truckFreeSpace.freeSpaceUnidades} restrictions={publi.restrictions} uid={publi.empresaUid} name={publi.empresaName}/>   
         )
@@ -89,14 +89,13 @@ function Detail() {
                                 <span>SOLICITAR</span>
                             </PlayButton>
                             <TrailerButton  onClick={toPage('Info')}>
-                                <span>+ INFO</span>
+                                <span>Información</span>
                             </TrailerButton>
                         </Controls>
                         <SubTitle>{publi.empresaName}</SubTitle>
                         <Description>
                             {publi.serviceDescription}
                         </Description>
-                        <StyledLink to={`/current/${publi.id}`}><Button><span>hola</span></Button></StyledLink>
                 </LeftData> 
                 <RigthData>
                     {getContent()}

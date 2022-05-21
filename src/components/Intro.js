@@ -9,7 +9,8 @@ function Login() {
             <CTALogoOne src="/images/Traza.png"/>
             <SigUp>UNETE A LA FAMILIA TRAZA</SigUp>
             <Description>
-                Obten los beneficios de compartir los espacios de almacenamiento, descubre esta nueva forma de transportar tus productos de forma segura y economica para tu empresa    
+                Brindamos una experiencia eficiente, confiable e innovadora a empresas de productos tangibles, siendo social y ambientalmente responsables.
+                {/* Obten los beneficios de compartir los espacios de almacenamiento, descubre esta nueva forma de transportar tus productos de forma segura y economica para tu empresa     */}
             </Description>
         </CTA>
     </Container>

@@ -22,14 +22,8 @@ function finalAcceptance(idr,idp)
             console.log("SI")
             db.collection('request').doc(doc.data().id).update({
                 finalAcceptance: true,
-    
 
             })
-        
-                db.collection('publications').doc(idp).update({
-                    request: idr    
-            })
-
             deleteRequest(idr)
         }
         else

@@ -78,28 +78,28 @@ function MakePubli() {
         const {origin, oriAddress, destination, destAddress, date, price, description, products, prodDescription, embalaje, restrictions, med1, med2, truckHeight, freeSpaceHeight, truckLength, truckUnidades, freeSpaceLength, truckWidth, freeSpaceWidth, freeSpaceUnidades} = form 
         const newErrors = {}
 
-        if ( !origin || origin === '' ) newErrors.origin = 'Escoge un punto de origen para continuar'
-        if ( !oriAddress || oriAddress === '' ) newErrors.oriAddress = 'Ingresa la direccion de origen para continuar'
-        if ( !destination || destination === '' ) newErrors.destination = 'Escoge un punto de destino para continuar'
-        if ( !destAddress || destAddress === '' ) newErrors.destAddress = 'Ingresa la direccion de destino para continuar'
-        if ( !date || date === '' ) newErrors.date = 'Escoge una fecha de salida para continuar'
-        if ( !price || price === '' ) newErrors.price = 'Ingresa el precio estimado para continuar'
-        if ( !description || description === '' ) newErrors.description = 'Ingresa la descripcion del envio para continuar'
-        if ( !products || products === '' ) newErrors.products = 'Escoge el tipo de producto transportado para continuar'
-        if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa la descripcion de los productos para continuar'
-        if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Escoge el tipo de embalaje para continuar'
-        if ( !truckHeight || truckHeight === '' ) newErrors.truckHeight = 'Ingresa la altura para continuar'
-        if ( !truckLength || truckLength === '' ) newErrors.truckLength = 'Ingresa el largo para continuar'
-        if ( !truckWidth || truckWidth === '' )newErrors.truckWidth = 'Ingresa el ancho para continuar'
-        if ( !freeSpaceHeight || freeSpaceHeight === '' ) newErrors.freeSpaceHeight = 'Ingresa la altura para continuar'
-        if ( !freeSpaceLength || freeSpaceLength === '' ) newErrors.freeSpaceLength = 'Ingresa el largo para continuar'
-        if ( !freeSpaceWidth || freeSpaceWidth === ''  )newErrors.freeSpaceWidth = 'Ingresa el ancho para continuar'
+        if ( !origin || origin === '' ) newErrors.origin = 'Escoge un punto de origen para continuar.'
+        if ( !oriAddress || oriAddress === '' ) newErrors.oriAddress = 'Ingresa la dirección de origen para continuar.'
+        if ( !destination || destination === '' ) newErrors.destination = 'Escoge un punto de destino para continuar.'
+        if ( !destAddress || destAddress === '' ) newErrors.destAddress = 'Ingresa la dirección de destino para continuar.'
+        if ( !date || date === '' ) newErrors.date = 'Escoge una fecha de salida para continuar.'
+        if ( !price || price === '' ) newErrors.price = 'Ingresa el precio estimado para continuar.'
+        if ( !description || description === '' ) newErrors.description = 'Ingresa la descripción del envío para continuar.'
+        if ( !products || products === '' ) newErrors.products = 'Escoge el tipo de producto transportado para continuar.'
+        if ( !prodDescription || prodDescription === '' ) newErrors.prodDescription = 'Ingresa la descripción de los productos para continuar.'
+        if ( !embalaje || embalaje === '' ) newErrors.embalaje = 'Escoge el tipo de embalaje para continuar.'
+        if ( !truckHeight || truckHeight === '' ) newErrors.truckHeight = 'Ingresa la altura para continuar.'
+        if ( !truckLength || truckLength === '' ) newErrors.truckLength = 'Ingresa el largo para continuar.'
+        if ( !truckWidth || truckWidth === '' )newErrors.truckWidth = 'Ingresa el ancho para continuar.'
+        if ( !freeSpaceHeight || freeSpaceHeight === '' ) newErrors.freeSpaceHeight = 'Ingresa la altura para continuar.'
+        if ( !freeSpaceLength || freeSpaceLength === '' ) newErrors.freeSpaceLength = 'Ingresa el largo para continuar.'
+        if ( !freeSpaceWidth || freeSpaceWidth === ''  )newErrors.freeSpaceWidth = 'Ingresa el ancho para continuar.'
         if (med1 < med2 || truckHeight < freeSpaceHeight || truckLength < freeSpaceLength || truckWidth < freeSpaceWidth) {
-             newErrors.freeSpaceDimensions = 'Las dimensiones no conciden, revisa las medidas para continuar'
+             newErrors.freeSpaceDimensions = 'Las dimensiones no conciden, revisa las medidas para continuar.'
          }
-        if( !truckUnidades || truckUnidades === '' ) newErrors.truckUnidades = 'Escoge las unidades para continuar'
+        if( !truckUnidades || truckUnidades === '' ) newErrors.truckUnidades = 'Escoge las unidades para continuar.'
         //if( !freeSpaceUnidades || freeSpaceUnidades === '' ) newErrors.freeSpaceUnidades = 'Escoge las unidades para continuar'
-        if ( !restrictions || restrictions === '' ) newErrors.restrictions = 'Ingresa las restricciones del envio para continuar'
+        if ( !restrictions || restrictions === '' ) newErrors.restrictions = 'Ingresa las restricciones del envío para continuar.'
         
         return newErrors
     }
@@ -141,7 +141,7 @@ function MakePubli() {
         else 
         {
             createPublication(userUid,userName,userPhoto,origin,oriAddress,destination,destAddress,date,price,description,products,prodDescription,embalaje,truckHeight,truckWidth,truckLength,truckUnidades, freeSpaceHeight,freeSpaceWidth,freeSpaceLength,freeSpaceUnidades,restrictions,publiImg);
-            window.alert("Publicación Creada con Exito")
+            window.alert("¡Publicación creada con éxito!")
             history.push("/homepubli") 
         }
     }

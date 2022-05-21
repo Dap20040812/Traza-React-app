@@ -30,7 +30,7 @@ function RejectRequest() {
       const comentarios = e.target.elements.comen.value;
     
       rejectRequest(id,comentarios)
-      window.alert("Solicitud aceptada con Exito")
+      window.alert("Solicitud aceptada con éxito.")
       history.push("/mypubly") 
   }
   
