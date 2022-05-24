@@ -34,32 +34,31 @@ function CurrentService() {
         })
       },[])
 
-    const handleClick1 = (e) => {
+  
+      
+
+    const handleClick1 = () => {
+        updateStep1(orderInProgress.id)
         setChangeStatus1(false);
         setChecked1(true)
-        setChecked2(false)
-        setChecked3(false)
-        setChecked4(false)
-        updateStep1(orderInProgress.id)
-        return true
     }
 
-    const handleClick2 = (e) => {
+    const handleClick2 = () => {
+        updateStep2(orderInProgress.id)
         setChecked2(true)
         setChangeStatus2(false);
-        updateStep2(orderInProgress.id)
     }
 
-    const handleClick3 = (e) => {
-        setChecked3(true)
-        setChangeStatus3(false);
+    const handleClick3 = () => {
         updateStep3(orderInProgress.id)
+        setChecked3(true)
+        setChangeStatus3(false);    
     }
 
-    const handleClick4 = (e) => {
+    const handleClick4 = () => {
+        updateStep4(orderInProgress.id)
         setChecked4(true)
         setChangeStatus4(false);
-        updateStep4(orderInProgress.id)
     }
 
     const start = () => {
