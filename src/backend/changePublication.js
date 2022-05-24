@@ -7,7 +7,8 @@ import db from '../firebase'
 function publicationInProgress(idp)
 {
     db.collection('publications').doc(idp).update({
-        state:'In progress'
+        state:'In progress',
+        idle:false
     })
 
     db.collection('publications').where('id','==',idp).get().then((snapshot)=>{
@@ -21,7 +22,8 @@ function publicationEnded(idp)
 {
     console.log('test')
     db.collection('publicationInProgress').doc(idp).update({
-        state:'Ended'
+        state:'Ended',
+        idle:false
     })
     db.collection('publicationInProgress').where('id','==',idp).get().then((snapshot)=>{
         snapshot.forEach((doc) =>{
@@ -33,7 +35,8 @@ function publicationEnded(idp)
 function publicationCancelled(idp)
 {
     db.collection('publications').doc(idp).update({
-        state:'Cancelled'
+        state:'Cancelled',
+        idle:false
     })
 
     db.collection('publications').where('id','==',idp).get().then((snapshot)=>{

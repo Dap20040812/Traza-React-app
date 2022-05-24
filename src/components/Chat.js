@@ -37,7 +37,7 @@ function Chat()
         setInputValue(e.target.value)        
     }
 
-    db.collection("orderInProgress").doc("9f99788a-10d4-4103-a11e-d74ef17664a5").collection("chat").orderBy('date').onSnapshot(snapshot=>
+    db.collection("orderInProgress").doc(id).collection("chat").orderBy('date').onSnapshot(snapshot=>
         {
             text.innerHTML = ''
             snapshot.forEach(doc=>{

@@ -52,7 +52,8 @@ function PubliHome() {
         createOrderInProgress('ddBACYLz45VEmBpApRuHBCsG1UC3','LVjxP0iTrPMdU2Nqrht2wlrDcxs1')
         queryPublications(dispatch,origin,destination,date,products)
         //aca
-        //showOrderInProgress();
+        //console.log(db.collection("empresas").doc('0VBPQ9ceBYOcW2rwyJ5CSZdLqRE2').collection('publicacionesRecientes').orderBy('fechaDeVisualizacion','desc').limit(4).where('state','==','active'))
+
     }
 
   return (
