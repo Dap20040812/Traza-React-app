@@ -6,10 +6,10 @@ import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import { useDispatch } from "react-redux"
 import {Link} from "react-router-dom"
-import EndPubli from './EndPubli'
+import showEndedPublications from '../backend/showEndedPublications'
 
 
-function MyPubli() {
+function EndPubli() {
     
     const dispatch = useDispatch()
     const userUid = useSelector(selecUserUid);
@@ -18,23 +18,24 @@ function MyPubli() {
      * Muestra las publicaciones actuales de la empresa
      */
     useEffect(() => {
-        queryMyPublications(userUid,dispatch);  
+        showEndedPublications(userUid,dispatch)  
     },[]) 
     
   return (
-        <Container>
-            <Background>
-            </Background>
-            <Title>Mis Publicaciones</Title>
-            <Publi mypubli={true}/> 
-        </Container>
+    <Container>
+        <Background>
+        </Background>
+        <Title>Publicaciones Finalizadas</Title>
+        <Publi mypubli={true}/> 
+    </Container>    
   )
 }
 
-export default MyPubli
+export default EndPubli
 
 const Container = styled.div`
-        min-height: calc(100vh - 70px);
+
+    min-height: calc(100vh - 70px);
     padding: 0 calc(3.5vw + 5px);
     display: flex;
     flex-direction: column;

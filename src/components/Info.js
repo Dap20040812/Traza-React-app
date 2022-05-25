@@ -38,9 +38,6 @@ function Info (props) {
                 {props.origin} -- {props.destination}
             </TitleLeft>
             <TitleRight>
-                <Icon onClick={setFavorite}>
-                    {isHovered ? <Favorite /> : <FavoriteBorder/>}
-                </Icon>
             </TitleRight>
         </PubliTitle>
             <RigthInfo>    

@@ -6,20 +6,20 @@ import {selecUserUid} from "../features/user/userSlice"
 import {useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import { updateStep1, updateStep2, updateStep3, updateStep4 } from '../backend/updateOrderInProgress'
+import endOrderInProgress from '../backend/changeOrderInPorgress'
+import { useHistory } from 'react-router-dom'
 
 function CurrentService() {
 
     const {id} = useParams();
     const [orderInProgress, setOrderInProgress] = useState()
     const userUid = useSelector(selecUserUid);
-    const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
     const[changeStatus1, setChangeStatus1] = useState(false);
     const[changeStatus2, setChangeStatus2] = useState(false);
     const[changeStatus3, setChangeStatus3] = useState(false);
     const[changeStatus4, setChangeStatus4] = useState(false);
+    const history = useHistory()
+
 
     useEffect(() =>{
         db.collection("orderInProgress")
@@ -32,7 +32,7 @@ function CurrentService() {
     
             }
         })
-      },[])
+      })
 
   
       
@@ -40,38 +40,34 @@ function CurrentService() {
     const handleClick1 = () => {
         updateStep1(orderInProgress.id)
         setChangeStatus1(false);
-        setChecked1(true)
     }
 
     const handleClick2 = () => {
         updateStep2(orderInProgress.id)
-        setChecked2(true)
         setChangeStatus2(false);
     }
 
     const handleClick3 = () => {
         updateStep3(orderInProgress.id)
-        setChecked3(true)
         setChangeStatus3(false);    
     }
 
     const handleClick4 = () => {
         updateStep4(orderInProgress.id)
-        setChecked4(true)
+        endOrderInProgress(orderInProgress.id,orderInProgress.publiid)
         setChangeStatus4(false);
+        history.push("/publi/end")  
+
     }
 
-    const start = () => {
-        setChecked1(orderInProgress.step1)
-        setChecked2(orderInProgress.step2)
-        setChecked3(orderInProgress.step3)
-        setChecked4(orderInProgress.step4)
-    }
+    
 
     const getContent = (props) => {
         if(orderInProgress.userId !== userUid) {
             return(
-                <Wrap onLoad={start}>
+                <Wrap>
+                    { orderInProgress && (
+                    <>
                     <TimelineItem>
                         <CheckDiv>
                             <Alert show={changeStatus1}>
@@ -81,10 +77,10 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus1(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                            {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                            {orderInProgress.step1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                              <p>El camión ha salido de la dirección de origen.</p>
                         </CheckDiv>
-                        <Input show={checked1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={orderInProgress.step1 === false} onClick={()=> setChangeStatus1(!changeStatus1)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -95,10 +91,10 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus2(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                        {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                        {orderInProgress.step2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                             <p>El camión va en camino a la dirección de destino.</p>
                         </CheckDiv>
-                        <Input show={checked1 === true && checked2 === false} onClick={()=> setChangeStatus2(!changeStatus2)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={orderInProgress.step1 === true && orderInProgress.step2 === false} onClick={()=> setChangeStatus2(!changeStatus2)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -109,11 +105,11 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus3(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                            {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                            {orderInProgress.step3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
                             <p>El camión ha llegado a la dirección de destino</p>
                         </CheckDiv>
-                        <Input show={checked2 === true && checked3 === false} onClick={()=> setChangeStatus3(!changeStatus3)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={orderInProgress.step2 === true && orderInProgress.step3 === false} onClick={()=> setChangeStatus3(!changeStatus3)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
                     <TimelineItem>
                     <CheckDiv>
@@ -124,42 +120,48 @@ function CurrentService() {
                                     <Button2 onClick={()=> setChangeStatus4(false)}>Cancelar</Button2>
                                 </ButtonContent1>
                             </Alert>
-                        {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                        {orderInProgress.step4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
 
                             <p>El servicio ha sido entregado y finalizado</p>
                         </CheckDiv>
-                        <Input show={checked3 === true && checked4 === false} onClick={()=> setChangeStatus4(!changeStatus4)} type='submit' value='REALIZADO' ></Input>
+                        <Input show={orderInProgress.step3 === true && orderInProgress.step4 === false} onClick={()=> setChangeStatus4(!changeStatus4)} type='submit' value='REALIZADO' ></Input>
                     </TimelineItem>
+                    </>
+                    )}
                 </Wrap>
             )
         }
         else {
             return (
                 <Wrap>
-                <TimelineItem>
+                    { orderInProgress && (
+                    <>
+                    <TimelineItem>
                     <CheckDiv>
-                    {checked1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {orderInProgress.step1 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha salido de la dirección de origen.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {orderInProgress.step2 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión va en camino a la dirección de destino.</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {orderInProgress.step3 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El camión ha llegado a la dirección de destino</p>
                     </CheckDiv>
                 </TimelineItem>
                 <TimelineItem>
                 <CheckDiv>
-                    {checked4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
+                    {orderInProgress.step4 === false ? <CheckIcon src='/images/check.png' ></CheckIcon> : <CheckIcon1 src='/images/check.png' ></CheckIcon1>}
                         <p>El servicio ha sido entregado y finalizado.</p>
                     </CheckDiv>
                 </TimelineItem>
+                    </>
+                )}
             </Wrap>
             )
         }

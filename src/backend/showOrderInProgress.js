@@ -1,5 +1,4 @@
 import db from '../firebase'
-import { setPublis } from '../features/publi/publiSlice'
 import {setOrdersInProgress} from '../features/inProgress/orderInProgressSlice'
 
 function showOrderInProgress(dispatch)

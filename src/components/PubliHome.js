@@ -96,7 +96,6 @@ const Container = styled.div`
    position: relative;
    overflow-x: hidden;
    overflow-y: hidden;
-
 `
 const Background = styled.div`
     position: fixed;

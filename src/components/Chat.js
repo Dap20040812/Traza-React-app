@@ -32,6 +32,8 @@ function Chat()
         }
     
         setInputValue("")
+
+        
     }
     let test = e =>{
         setInputValue(e.target.value)        

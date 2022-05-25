@@ -14,7 +14,8 @@ function Publi(props) {
              { publis && 
                 publis.map((publi) => (
                     <Wrap key={publi.id}>
-                        <StyledLink to={props.mypubli === false ? `/detail/${publi.id}` : `/mydetail/${publi.id}`}>
+                        <StyledLink to={props.mypubli === false ? `/detail/${publi.id
+                        }` : `/mydetail/${publi.id}`}>
                             <img src={publi.publiImg}/>
                         <PubliContent>
                             <h2>{publi.originPlace} - {publi.destinationPlace}</h2>

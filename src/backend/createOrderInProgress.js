@@ -1,7 +1,7 @@
 import db from '../firebase'
 import { v4 as uuidv4 } from 'uuid';
 
-function createOrderInProgress(empresaP,empresaR,uid,oriAddress,destination,date,price)
+function createOrderInProgress(empresaP,empresaR,uid,oriAddress,destination,date,price,idp)
 {
     let uuidO = uuidv4() 
     db.collection("orderInProgress").doc(uuidO).set({
@@ -17,7 +17,8 @@ function createOrderInProgress(empresaP,empresaR,uid,oriAddress,destination,date
         origin: oriAddress,
         destination: destination,
         date: date,
-        precioFinal: price
+        precioFinal: price,
+        publiid: idp
 
     })
 }

@@ -20,6 +20,7 @@ import AcceptRequest from './components/AcceptRequest';
 import RejectRequest from './components/RejectRequest';
 import Pay from './components/Pay';
 import MyOrderInProgress from './components/MyOrderInProgress';
+import EndPubli from './components/EndPubli';
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route path='/publi/make'>
           <MakePubli/>
+        </Route>
+        <Route path='/publi/end'>
+          <EndPubli/>
         </Route>
         <Route path='/profile'>
           <Profile/>
